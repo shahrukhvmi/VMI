@@ -1,0 +1,44 @@
+{
+  "name": "vibrant-media-inc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export",
+    "postexport": "next-sitemap"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@heroicons/react": "^2.0.18",
+    "@mui/material": "^7.0.2",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@studio-freight/lenis": "^1.0.42",
+    "axios": "^0.27.2",
+    "gsap": "^3.13.0",
+    "next": "15.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
+    "react-input-mask": "^2.0.4",
+    "react-intersection-observer": "^9.16.0",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
+    "split-type": "^0.3.4",
+    "swiper": "^11.2.10",
+    "three": "^0.178.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "22.15.17",
+    "framer-motion": "^12.23.0",
+    "next-sitemap": "^4.2.3",
+    "tailwindcss": "^4",
+    "typescript": "5.8.3"
+  }
+}
