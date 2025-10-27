@@ -1,1 +1,4 @@
-export const meta_url = "https://vibrantmediainc.com/";
+// CONSTANT FILE
+
+export const app_url = "url";
+export default { app_url };

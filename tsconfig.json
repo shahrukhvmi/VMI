@@ -13,9 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",                      // ✅ Required for path aliases
+    "baseUrl": ".",                   
     "paths": {
-      "@/*": ["./*"]                     // ✅ Allow "@/..." alias
+      "@/*": ["./*"]                     
     }
   },
   "include": [
