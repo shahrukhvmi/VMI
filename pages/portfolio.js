@@ -3,7 +3,7 @@ import PortfolioDevelopmentWrap from "@/components/portfolio/PortfolioDevelopmen
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import PortfolioSeoWrap from "@/components/portfolio/PortfolioSeoWrap";
 import PortfolioSocialWrap from "@/components/portfolio/PortfolioSocialWrap";
-import { meta_url } from "@/config/constants";
+import  meta_url  from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import Link from "next/link";
 import React from "react";

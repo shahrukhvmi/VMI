@@ -3,7 +3,7 @@ import AboutVideo from "@/components/about/AboutVideo";
 import CeoSection from "@/components/about/CeoSection";
 import HorizontalScrollSection from "@/components/about/HorizontalScrollSection";
 import StarsCanvas from "@/components/StarsCanvas";
-import { meta_url } from "@/config/constants";
+import  meta_url  from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import { useRouter } from "next/router";
 import React from "react";
