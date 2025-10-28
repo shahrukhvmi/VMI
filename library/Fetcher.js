@@ -7,6 +7,8 @@ class Fetcher {
     this.setup();
   }
 
+  
+
   setup = async () => {
     this.axiosSetup = axios.create({
       baseURL: app_url,
