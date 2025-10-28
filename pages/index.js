@@ -6,7 +6,7 @@ import RingSection from "@/components/RingSection";
 import HomePortfolioSection from "@/components/HomePortfolioSection";
 import MetaLayout from "@/Meta/MetaLayout";
 import meta_url from "@/config/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 // const HaloCanvas = dynamic(() => import("@/components/HaloCanvas"), {
@@ -88,6 +88,7 @@ export default function Index({ data }) {
   // const testimonials = content?.testimonials;
   // const router = useRouter();
   useEffect(() => {
+    const app_url = process.env.NEXT_PUBLIC_APP_URL;
     const fetchData = async () => {
       try {
         const res = await fetch(`${app_url}/layout`);
