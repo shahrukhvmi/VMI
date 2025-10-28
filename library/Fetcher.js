@@ -1,5 +1,5 @@
+import { app_url } from "@/config/constants";
 import axios from "axios";
-import { app_url } from "../config/constants";
 
 class Fetcher {
   constructor() {

@@ -16,7 +16,8 @@ import HomePortfolioSection from "@/components/HomePortfolioSection";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import MetaLayout from "@/Meta/MetaLayout";
-import { meta_url } from "@/config/constants";
+import { app_url, meta_url } from "@/config/constants";
+import GetHomePageApi from "@/Api/GetHomePageApi";
 
 // const HaloCanvas = dynamic(() => import("@/components/HaloCanvas"), {
 //   ssr: false,
@@ -25,9 +26,48 @@ import { meta_url } from "@/config/constants";
 //   ssr: false,
 // });
 
-export default function Index() {
-  const router = useRouter();
 
+// export async function getStaticProps() {
+//   const res = await fetch(`${app_url}`);
+//   const data = await res.json();
+// console.log(data,"datadata")
+//   return {
+//     props: { data },
+//     // revalidate: 60,
+//   };
+// }
+
+
+
+
+export default function Index({ data }) {
+
+  // if (!data) {
+  //   return <p>Loading...</p>;
+
+  // }
+
+
+
+  // const { content, meta_title, meta_description } = data;
+
+  // const hero = content?.hero;
+  // const creative = content?.creative;
+  // const testimonials = content?.testimonials;
+  // const router = useRouter();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${app_url}`);
+        const data = await res.json();
+        console.log(res, "datadata");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <MetaLayout
