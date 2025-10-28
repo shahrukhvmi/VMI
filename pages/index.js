@@ -48,7 +48,7 @@ import GetHomePageApi from "@/Api/GetHomePageApi";
 export async function getServerSideProps() {
   try {
     const app_url = process.env.NEXT_PUBLIC_APP_URL;
-    const res = await fetch(`${app_url}/layout`);
+    const res = await fetch(`${app_url}/header`);
 
     if (!res.ok) {
       console.error("API call failed with status:", res.status);
