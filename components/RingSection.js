@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useRef, useEffect } from "react";
 
-const RingSection = () => {
+const RingSection = ({ ringContent }) => {
   const wrapperRef = useRef(null);
   const glowRef = useRef(null);
   const backgroundRef = useRef(null);
@@ -133,7 +133,7 @@ const RingSection = () => {
                   height={250}
                 />
               </div> */}
-              <p className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4">
+              {/* <p className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4">
                 At Vibrant Media, we design and deliver marketing, design, and
                 development solutions that put your business goals at the
                 center. Every strategy we create is tailored to your unique
@@ -151,13 +151,21 @@ const RingSection = () => {
                 the trust of agencies and businesses worldwide. With us, you
                 gain more than a service provider, you gain a committed partner
                 dedicated to your success in every market you serve.
-              </p>
+              </p> */}
+
+              <p
+                className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4"
+                dangerouslySetInnerHTML={{
+                  __html: ringContent?.fields[1].value,
+                }}
+              ></p>
             </div>
 
             {/* Right Graphic */}
             <div className="relative flex justify-center items-center ring-left-width">
               <Image
-                src="/second-right.png"
+                // src="/second-right.png"
+                src={ringContent?.fields[0].value}
                 alt="Decorative Graphic"
                 width={500}
                 height={500}

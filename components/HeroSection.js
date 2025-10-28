@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 
-export default function HeroSection() {
+export default function HeroSection({ bannerContent }) {
+  console.log(bannerContent, "Bannnnerrrrr Conetent");
+
   const router = useRouter();
   return (
     <>
@@ -13,14 +15,17 @@ export default function HeroSection() {
           <img src="/right.png" />
         </div>
         <span className="bg-white/10 text-sm available-text px-4 py-1 rounded-full border border-white/20 text-green-400 mb-4 z-10">
-          ● Available for New Projects
+          {/* ● Available for New Projects */}
+          {`● ${bannerContent?.fields[1].value}`}
         </span>
-        <h1 className="hero-text leading-tight z-10 olivera-font">
-          Purposeful Marketing <br /> Across Channels
+        <h1 className="hero-text leading-tight z-10 olivera-font max-w-[900px]">
+          {/* Purposeful Marketing <br /> Across Channels */}
+          {bannerContent?.fields[0].value}
           {/* <span className="hero-span olivera-font">Development</span> Agency */}
         </h1>
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
-          Your digital partner for every marketing execution.
+          {/* Your digital partner for every marketing execution. */}
+          {bannerContent?.fields[2].value}
         </p>
 
         {/* <GlowButton /> */}
@@ -39,7 +44,7 @@ export default function HeroSection() {
     `,
             }}
           >
-            Discuss your project{" "}
+            {bannerContent?.fields[3].value}{" "}
             {/* <span>
                   <img src="/btn-icon.svg" />
                 </span> */}
