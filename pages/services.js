@@ -4,7 +4,7 @@ import ServicesHero from "@/components/services/ServicesHero";
 import StarsCanvas from "@/components/StarsCanvas";
 import Technologia from "@/components/Technologia";
 import TestimonialSlider from "@/components/TestimonialSlider";
-import { meta_url } from "@/config/constants";
+import  meta_url  from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import { useRouter } from "next/router";
 import React from "react";
