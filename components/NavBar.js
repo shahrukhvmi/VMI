@@ -6,35 +6,42 @@ import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function NavBar() {
+
+  const [data, setData] = useState(null);
   const router = useRouter();
-  // useEffect(() => {
 
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(`${app_url}/header`);
-  //       const data = await res.json();
-  //       console.log(res, "headerdata");
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+  // Header API Call 😀😀🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${app_url}/header`);
+        const data = await res.json();
+        setData(data);
+        console.log(data, "datadatadata");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
-  const navItems = [
-    { label: "Home", url: "/" },
-    { label: "About Us", url: "/about" },
-    { label: "Services", url: "/services" },
-    { label: "Portfolio", url: "/portfolio" },
-    { label: "Contact Us", url: "/contact-us" },
-  ];
+    fetchData();
+  }, []);
+
+
+  const { menu, site, cta_link, header_cta } = data || {};
+  // const navItems = [
+  //   { label: "Home", url: "/" },
+  //   { label: "About Us", url: "/about" },
+  //   { label: "Services", url: "/services" },
+  //   { label: "Portfolio", url: "/portfolio" },
+  //   { label: "Contact Us", url: "/contact-us" },
+  // ];
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const currentIdx = navItems.findIndex(
-      (item) => item.url === router.pathname
+    const currentIdx = menu?.findIndex(
+      (item) => item?.url == router?.pathname
     );
     if (currentIdx !== -1) {
       setActiveIdx(currentIdx);
@@ -63,8 +70,8 @@ export default function NavBar() {
         >
           <Link href="/">
             <Image
-              src="/footer-logo.png"
-              alt="Vibrant Media Logo"
+              src={site?.logo?.src || "/vmi-logo-white.png"}
+              alt={site?.name}
               width={230}
               height={150}
             />
@@ -73,19 +80,18 @@ export default function NavBar() {
 
         {/* Desktop Nav - HIDDEN on mobile */}
         <ul className="hidden md:flex gap-6 text-sm text-white font-medium poppins-font">
-          {navItems.map((item, i) => (
+          {menu?.map((item, i) => (
             <li
               key={i}
-              className={`relative group nav-items${
-                activeIdx === i ? " active" : ""
-              }`}
+              className={`relative group nav-items${activeIdx === i ? " active" : ""
+                }`}
             >
               <Link
-                href={item.url}
+                href={item?.url || "#"}
                 className="hover:text-vibrant transition duration-300"
                 onClick={() => setActiveIdx(i)}
               >
-                {item.label}
+                {item?.title || "Menu Item"}
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-vibrant group-hover:w-full transition-all duration-300"></span>
               </Link>
             </li>
@@ -95,7 +101,7 @@ export default function NavBar() {
         {/* Desktop CTA Button */}
         <div className="hidden md:block nav-btn example-2 desktop-nav-btn">
           <button
-            onClick={() => router.push("/contact-us")}
+            onClick={() => router.push(cta_link || "/contact-us")}
             className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
             style={{
               background:
@@ -108,7 +114,7 @@ export default function NavBar() {
     `,
             }}
           >
-            Let's Talk
+            {header_cta || "Let's Talk"}
           </button>
         </div>
 
@@ -122,9 +128,8 @@ export default function NavBar() {
 
       {/* Fullscreen Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${
-          mobileOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden`}
+        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${mobileOpen ? "translate-x-0" : "translate-x-full"
+          } md:hidden`}
       >
         <div className="p-6 h-full mobile-nav-wrapper">
           {/* Close button top-right */}
@@ -139,19 +144,18 @@ export default function NavBar() {
 
           {/* Nav links center */}
           <div className="flex flex-col items-center space-y-6 text-white">
-            {navItems.map((item, i) => (
+            {menu?.map((item, i) => (
               <Link
                 key={i}
                 href={item.url}
-                className={`text-2xl mobile-links poppins-font ${
-                  activeIdx === i ? "footer-active" : "text-white"
-                }`}
+                className={`text-2xl mobile-links poppins-font ${activeIdx === i ? "footer-active" : "text-white"
+                  }`}
                 onClick={() => {
                   setActiveIdx(i);
                   setMobileOpen(false);
                 }}
               >
-                {item.label}
+                {item.title}
               </Link>
             ))}
 

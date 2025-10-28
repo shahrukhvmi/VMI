@@ -1,9 +1,29 @@
+import { app_url } from "@/config/constants";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function Footer() {
+  const [data, setData] = useState(null);
   const router = useRouter();
+
+  // Footer API Call 😀😀🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞🤞
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${app_url}/footer`);
+        const data = await res.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  const { menu, site, social, footer } = data || {};
   const currentPath = router.pathname;
 
   return (
@@ -12,15 +32,14 @@ function Footer() {
         <div className="footer-wrap">
           <div className="footer-left footer-col w-[50%]">
             <div className="footer-logo-img">
-              <img src="/footer-logo.png" />
+              <img src={site?.logo?.src || "/footer-logo.png"} />
             </div>
             <p className="mt-6 poppins-font">
-              Let’s collaborate for purpose-driven strategies and output! We
-              offer everything your business needs.
+              {footer?.sub_heading || "Let’s collaborate for purpose-driven strategies and output! We offer everything your business needs."}
             </p>
             <div className="example-2 footer-btn mt-6">
               <button
-                onClick={() => router.push("/contact-us")}
+                onClick={() => router.push(footer?.cta_link || "/contact-us")}
                 className="inner flex justify-center poppins-font text-xl items-center"
                 style={{
                   background:
@@ -33,7 +52,7 @@ function Footer() {
     `,
                 }}
               >
-                Discuss your project{" "}
+                {footer?.cta || " Discuss your project"}
                 {/* <span>
                   <img src="/btn-icon.svg" />
                 </span> */}
@@ -42,35 +61,29 @@ function Footer() {
 
             <div className="footer-navigation py-8 mt-20">
               <ul className="flex justify-between poppins-font footer-nav">
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "About Us", href: "/about" },
-                  { label: "Services", href: "/services" },
-                  { label: "Portfolio", href: "/portfolio" },
-                  { label: "Contact Us", href: "/contact-us" },
-                ].map(({ label, href }) => {
-                  const isActive = currentPath === href;
+                {menu?.map(({ title, url }, index) => {
+                  const isActive = currentPath === url;
 
                   return (
-                    <li key={label} className="cursor-pointer">
-                      <Link href={href}>
+                    <li key={index} className="cursor-pointer">
+                      <Link href={url} className="block">
                         <p
-                          className={`px-4 py-2 transition-all duration-300 ${
-                            isActive ? "footer-active" : ""
-                          }`}
+                          className={`px-4 py-2 transition-all duration-300 ${isActive ? "footer-active" : ""
+                            }`}
                         >
-                          {label}
+                          {title || "Footer Menu Item"}
                         </p>
                       </Link>
                     </li>
                   );
                 })}
+
               </ul>
             </div>
 
             <div className="footer-email pt-10 md:pt-20 poppins-font">
               <p className="email-text1">Email</p>
-              <p className="email-text2">info@vibrantmediainc.com</p>
+              <p className="email-text2">{footer?.email || "info@vibrantmediainc.com"}</p>
             </div>
 
             <div className="footer-email pt-10 pb-20 poppins-font">
@@ -78,7 +91,7 @@ function Footer() {
               <ul className="flex mt-4 gap-4 footer-icons">
                 <li>
                   <Link
-                    href="https://www.facebook.com/vibrantmediainc"
+                    href={social?.facebook || "https://www.facebook.com/vibrantmediainc"}
                     target="_blank"
                   >
                     <img src="/facebook.svg" />
@@ -86,7 +99,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="https://www.instagram.com/vibrantmediainc/"
+                    href={social?.instagram || "https://www.instagram.com/vibrantmediainc/"}
                     target="_blank"
                   >
                     <img src="/insta.svg" />
@@ -94,7 +107,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="https://www.linkedin.com/company/vibrantmedia-inc/"
+                    href={social?.linkedin || "https://www.linkedin.com/company/vibrantmedia-inc/"}
                     target="_blank"
                   >
                     <img src="/linkedin.svg" />
@@ -112,7 +125,7 @@ function Footer() {
         </div>
         <div className="rights-wrap flex justify-between pb-10 poppins-font">
           <p className="text-[#E9E9E9]">
-            © 2025 Vibrant Media Inc. All rights reserved
+            © {footer?.copyright || "2025 Vibrant Media Inc. All rights reserved"}
           </p>
           <p className="text-[#E9E9E9]">
             Privacy & Cookie Policy | Terms of Service
