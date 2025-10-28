@@ -1,4 +1,3 @@
-
 import { app_url } from "../config/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,20 +7,20 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 export default function NavBar() {
   const router = useRouter();
-  useEffect(() => {
+  // useEffect(() => {
 
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${app_url}/header`);
-        const data = await res.json();
-        console.log(res, "headerdata");
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await fetch(`${app_url}/header`);
+  //       const data = await res.json();
+  //       console.log(res, "headerdata");
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   const navItems = [
     { label: "Home", url: "/" },
     { label: "About Us", url: "/about" },

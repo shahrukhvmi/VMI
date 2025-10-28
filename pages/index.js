@@ -26,28 +26,30 @@ import GetHomePageApi from "@/Api/GetHomePageApi";
 //   ssr: false,
 // });
 
+export async function getServerSideProps() {
+  try {
+    // Fetch dynamic content from WordPress API (assuming you have an API endpoint)
+    const res = await fetch(`${app_url}/layout`);
+    const data = await res.json(); // Data contains content like meta titles, text, images
 
-// export async function getStaticProps() {
-//   const res = await fetch(`${app_url}`);
-//   const data = await res.json();
-// console.log(data,"datadata")
-//   return {
-//     props: { data },
-//     // revalidate: 60,
-//   };
-// }
-
-
-
+    return {
+      props: { data },
+    };
+  } catch (error) {
+    console.error("Error fetching data from WordPress API:", error);
+    return {
+      props: { data: null },
+    };
+  }
+}
 
 export default function Index({ data }) {
+  console.log(data, "Thissssss daaattaaaaaa");
 
   // if (!data) {
   //   return <p>Loading...</p>;
 
   // }
-
-
 
   // const { content, meta_title, meta_description } = data;
 
@@ -55,19 +57,19 @@ export default function Index({ data }) {
   // const creative = content?.creative;
   // const testimonials = content?.testimonials;
   // const router = useRouter();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${app_url}`);
-        const data = await res.json();
-        console.log(res, "datadata");
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await fetch(`${app_url}/layout`);
+  //       const data = await res.json();
+  //       console.log(res, "datadata");
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   return (
     <>
       <MetaLayout
