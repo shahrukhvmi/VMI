@@ -44,7 +44,9 @@ export async function getServerSideProps() {
 }
 
 export default function Index({ data }) {
-  console.log(data, "Thissssss daaattaaaaaa");
+  const pageData = data?.data?.page_data;
+  console.log(data, "Main Data");
+  console.log(pageData, "Thissssss daaattaaaaaa");
 
   // if (!data) {
   //   return <p>Loading...</p>;
@@ -82,9 +84,9 @@ export default function Index({ data }) {
 
         <div className="relative">
           {/* <HeroTwo /> */}
-          <HeroSection />
+          <HeroSection bannerContent={pageData?.sections[0]} />
 
-          <RingSection />
+          <RingSection ringContent={pageData?.sections[1]} />
         </div>
         {/* <StatsSection /> */}
         <Creative />
