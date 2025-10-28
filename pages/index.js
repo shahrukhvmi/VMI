@@ -43,10 +43,38 @@ import GetHomePageApi from "@/Api/GetHomePageApi";
 //   }
 // }
 
+
+// ==========================================
+export async function getServerSideProps() {
+  try {
+    // Access the environment variable to get the API URL
+    const app_url = process.env.NEXT_PUBLIC_APP_URL;
+    // Fetch data from the WordPress API
+    const res = await fetch(`${app_url}/layout`);
+    if (!res.ok) {
+      console.error("API call failed with status:", res.status);
+      return { props: { data: null } };
+    }
+    const data = await res.json();
+    return {
+      props: { data }, // Return the fetched data as props
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return { props: { data: null } }; // Return fallback data in case of error
+  }
+}
+
+
+
+
+
+
+
 export default function Index({ data }) {
-  const [pageData, setPageData] = useState();
-  
-  // const pageData = data?.data?.page_data;
+  // const [pageData, setPageData] = useState();
+
+  const pageData = data?.data?.page_data;
   console.log(data, "Main Data");
   console.log(pageData, "Thissssss daaattaaaaaa");
 
@@ -61,20 +89,20 @@ export default function Index({ data }) {
   // const creative = content?.creative;
   // const testimonials = content?.testimonials;
   // const router = useRouter();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${app_url}/layout`);
-        const data = await res.json();
-        setPageData(data?.data?.page_data)
-        console.log(res, "datadata");
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await fetch(`${app_url}/layout`);
+  //       const data = await res.json();
+  //       setPageData(data?.data?.page_data)
+  //       console.log(res, "datadata");
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <>
