@@ -1,4 +1,4 @@
-import app_url from "@/config/constants";
+import { app_url } from "@/config/constants";
 import axios from "axios";
 
 class Fetcher {
