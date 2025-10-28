@@ -1,104 +1,65 @@
-import NavBar from "@/components/NavBar";
+import { useEffect, useState } from 'react';
+import MetaLayout from "@/Meta/MetaLayout"; // Assuming MetaLayout is used for SEO/meta tags
+import { app_url, meta_url } from "@/config/constants";
 import HeroSection from "@/components/HeroSection";
-import dynamic from "next/dynamic";
-import StatsSection from "@/components/StatsSection";
+import RingSection from "@/components/RingSection";
 import Creative from "@/components/Creative";
-import GiffSection from "@/components/GiffSection";
+import HomePortfolioSection from "@/components/HomePortfolioSection";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import Technologia from "@/components/Technologia";
 import Footer from "@/components/Footer";
-import Rights from "@/components/Rights";
-import RingSection from "@/components/RingSection";
-import SecondNavbar from "@/components/SecondNavbar";
-import HeroTwo from "@/components/HeroTwo";
-import GlowCard from "@/components/GlowCard";
-import HomePortfolioSection from "@/components/HomePortfolioSection";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import MetaLayout from "@/Meta/MetaLayout";
-import { app_url, meta_url } from "@/config/constants";
-import GetHomePageApi from "@/Api/GetHomePageApi";
-
-// const HaloCanvas = dynamic(() => import("@/components/HaloCanvas"), {
-//   ssr: false,
-// });
-// const StarsCanvas = dynamic(() => import("@/components/StarsCanvas"), {
-//   ssr: false,
-// });
-
-// export async function getServerSideProps() {
-//   try {
-//     // Fetch dynamic content from WordPress API (assuming you have an API endpoint)
-//     const res = await fetch(`${app_url}/layout`);
-//     const data = await res.json(); // Data contains content like meta titles, text, images
-
-//     return {
-//       props: { data },
-//     };
-//   } catch (error) {
-//     console.error("Error fetching data from WordPress API:", error);
-//     return {
-//       props: { data: null },
-//     };
-//   }
-// }
-
-
-// ==========================================
+// getServerSideProps with error handling and loading state
 export async function getServerSideProps() {
   try {
-    // Access the environment variable to get the API URL
-    const app_url = process.env.NEXT_PUBLIC_APP_URL;
-    // Fetch data from the WordPress API
     const res = await fetch(`${app_url}/layout`);
     if (!res.ok) {
-      console.error("API call failed with status:", res.status);
-      return { props: { data: null } };
+      throw new Error('Failed to fetch data from the API');
     }
     const data = await res.json();
+    // Check if data structure is valid
+    if (!data || !data.data || !data.data.page_data) {
+      throw new Error('Invalid data structure received');
+    }
     return {
-      props: { data }, // Return the fetched data as props
+      props: { data },
     };
   } catch (error) {
-    console.error("Error fetching data:", error.message);
-    return { props: { data: null } }; // Return fallback data in case of error
+    console.error('Error fetching data:', error);
+    // Return fallback data in case of an error
+    return {
+      props: {
+        data: null, // Or fallback to empty data
+        error: error.message, // Pass the error message to the page for debugging
+      },
+    };
   }
 }
-
-
-export default function Index({ data }) {
-  // const [pageData, setPageData] = useState();
-
+export default function Index({ data, error }) {
+  const [hasError, setHasError] = useState(false);
+  useEffect(() => {
+    // If there is an error passed in, update the state to show the error message
+    if (error) {
+      setHasError(true);
+    }
+  }, [error]);
+  if (hasError) {
+    return (
+      <div className="error-page">
+        <h1>Something went wrong!</h1>
+        <p>{error}</p>
+        <p>Please try again later.</p>
+      </div>
+    );
+  }
+  if (!data) {
+    return (
+      <div className="loading-state">
+        <h1>Loading...</h1>
+        <p>We are fetching the data, please wait.</p>
+      </div>
+    );
+  }
   const pageData = data?.data?.page_data;
-  console.log(data, "Main Data");
-  console.log(pageData, "Thissssss daaattaaaaaa");
-
-  // if (!data) {
-  //   return <p>Loading...</p>;
-
-  // }
-
-  // const { content, meta_title, meta_description } = data;
-
-  // const hero = content?.hero;
-  // const creative = content?.creative;
-  // const testimonials = content?.testimonials;
-  // const router = useRouter();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(`${app_url}/layout`);
-  //       const data = await res.json();
-  //       setPageData(data?.data?.page_data)
-  //       console.log(res, "datadata");
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   return (
     <>
       <MetaLayout
@@ -107,157 +68,21 @@ export default function Index({ data }) {
         canonical={`${meta_url}`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
-        {/* <LiquidCursor /> */}
-
+        {/* Main Content */}
         <div className="relative">
-          {/* <HeroTwo /> */}
           <HeroSection bannerContent={pageData?.sections[0]} />
-
           <RingSection ringContent={pageData?.sections[1]} />
         </div>
-        {/* <StatsSection /> */}
+        {/* Creative Section */}
         <Creative />
-
-        {/* Mobile Section */}
-
-        <div className="mobile-ring-slider relative z-10">
-          <div className="w-6xl mx-auto max-container-width mb-20 z-10 ring-slider-responsive-heading">
-            <div className="inner-heading text-center w-full">
-              <h2 className="olivera-font">
-                <span className="">Plan Your First</span> <br />
-                <span className="inner-heading-span">Strategy with Us</span>
-              </h2>
-            </div>
-          </div>
-
-          <div className="relative w-full">
-            <div className="w-full mt-15 mb-40">
-              <div className="relative w-full flex items-center justify-center mb-10">
-                <div className="service-ring-card backdrop-blur-[20px] ">
-                  <div className="flex justify-center">
-                    <img src="/service-ring-1.png" />
-                  </div>
-                  <h3 className="mb-4 olivera-font">
-                    1. Fill Out Our Online Form
-                  </h3>
-                  <p className="poppins-font">
-                    Submit your queries, ideas, and requirements through our
-                    online form. You’ll be asked for a few necessary details.
-                    Ensure you provide only accurate information, so we can
-                    respond with clarity and precision.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative w-full flex items-center justify-center mb-10">
-                <div className="service-ring-card backdrop-blur-[20px] ">
-                  <div className="flex justify-center">
-                    <img src="/service-ring-2.png" />
-                  </div>
-                  <h3 className="mb-4 olivera-font">2. Let’s Do Our Work</h3>
-                  <p className="poppins-font">
-                    Our team will review your objectives, scope, and priorities
-                    in detail to prepare a quotation.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative w-full flex items-center justify-center mb-10">
-                <div className="service-ring-card backdrop-blur-[20px] ">
-                  <div className="flex justify-center">
-                    <img src="/service-ring-3.png" />
-                  </div>
-                  <h3 className="mb-4 olivera-font">3. Receive Quotation</h3>
-                  <p className="poppins-font">
-                    After we’ve thoroughly evaluated the provided information ,
-                    we’ll deliver you the quotation, outlining the recommended
-                    services, timelines, and estimated investment.
-                  </p>
-                </div>
-              </div>
-
-              <div className="relative w-full flex items-center justify-center mb-10">
-                <div className="service-ring-card backdrop-blur-[20px] ">
-                  <div className="flex justify-center">
-                    <img src="/service-ring-4.png" />
-                  </div>
-                  <h3 className="mb-4 olivera-font">
-                    4. Confirm and Get Started
-                  </h3>
-                  <p className="poppins-font">
-                    As soon as you approve the quotation, we’ll start building,
-                    executing, and reporting on your first marketing strategy.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        {/* Home Portfolio Section */}
         <HomePortfolioSection />
-
-        <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main md:pt-100 py-40 z-10 relative">
-          <div className="brand-secton-wrap center-content middle-quote-font">
-            <h3 className="text-center olivera-font">
-              A brand’s success goes beyond the launch. It exists because <br />
-              of continuous efforts for growth, visibility, and conversions.
-              That’s <br />
-              precisely what Vibrant Media Inc. does!
-            </h3>
-            {/* <div className="hero-btn example-2">
-            <button
-              onClick={() => router.push("/contact-us")}
-              className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
-              style={{
-                background:
-                  "linear-gradient(90deg,rgb(84, 47, 140),rgb(132, 72, 187))",
-                boxShadow: `
-      0 0 100px #9561c540,
-      0 0 40px #9561c550,
-      0 0 80px #9561c570,
-      0 0 120px #9561c530
-    `,
-              }}
-            >
-              Speak with Us{" "}
-            </button>
-          </div> */}
-          </div>
-        </div>
-        {/* <GiffSection /> */}
+        {/* Testimonials */}
         <TestimonialSlider />
+        {/* Technologia */}
         <Technologia />
-
-        <div className="max-container-width w-6xl mx-auto flex justify-center great-main items-center z-10 relative">
-          <div className="great-design-wrap center-content middle-quote-font">
-            <h3 className="text-center olivera-font">
-              The best agency doesn’t deliver more.
-              <br /> It delivers what’s needed.
-            </h3>
-            {/* Desktop CTA Button */}
-            <div className="flex justify-center mt-3">
-              <div className="hero-btn example-2">
-                <button
-                  onClick={() => router.push("/contact-us")}
-                  className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
-                  style={{
-                    background:
-                      "linear-gradient(90deg,rgb(84, 47, 140),rgb(132, 72, 187))",
-                    boxShadow: `
-      0 0 100px #9561c540,
-      0 0 40px #9561c550,
-      0 0 80px #9561c570,
-      0 0 120px #9561c530
-    `,
-                  }}
-                >
-                  Let's Talk{" "}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* <Rights /> */}
+        {/* Footer */}
+        <Footer />
       </main>
     </>
   );
