@@ -5,7 +5,8 @@ import Technologia from "@/components/Technologia";
 import RingSection from "@/components/RingSection";
 import HomePortfolioSection from "@/components/HomePortfolioSection";
 import MetaLayout from "@/Meta/MetaLayout";
-import  meta_url  from "@/config/constants";
+import meta_url from "@/config/constants";
+import { useEffect } from "react";
 
 
 // const HaloCanvas = dynamic(() => import("@/components/HaloCanvas"), {
@@ -34,42 +35,44 @@ import  meta_url  from "@/config/constants";
 // ==========================================
 
 
-export async function getServerSideProps() {
-  try {
-    const app_url = process.env.NEXT_PUBLIC_APP_URL;
-    const res = await fetch(`${app_url}/layout`);
+// export async function getServerSideProps() {
 
-    if (!res.ok) {
-      console.error("API call failed with status:", res.status);
-      return {
-        props: {
-          data: null,
-          error: `Error fetching data: ${res.statusText}`,
-        },
-      };
-    }
+// }
+// useEffect(() => {
+//   try {
+//     const app_url = process.env.NEXT_PUBLIC_APP_URL;
+//     const res =  fetch(`${app_url}/layout`);
 
-    const data = await res.json();
-    return {
-      props: { data },
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-    return {
-      props: {
-        data: null,
-        error: "An error occurred while fetching data.",
-      },
-    };
-  }
-}
+//     if (!res.ok) {
+//       console.error("API call failed with status:", res.status);
+//       return {
+//         props: {
+//           data: null,
+//           error: `Error fetching data: ${res.statusText}`,
+//         },
+//       };
+//     }
 
+//     const data =  res.json();
+//     return {
+//       props: { data },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching data:", error.message);
+//     return {
+//       props: {
+//         data: null,
+//         error: "An error occurred while fetching data.",
+//       },
+//     };
+//   }
+// }, []);
 
 
 export default function Index({ data }) {
-  // const [pageData, setPageData] = useState();
+  const [pageData, setPageData] = useState();
 
-  const pageData = data?.data?.page_data;
+  // const pageData = data?.data?.page_data;
   console.log(data, "Main Data");
   console.log(pageData, "Thissssss daaattaaaaaa");
 
@@ -84,20 +87,20 @@ export default function Index({ data }) {
   // const creative = content?.creative;
   // const testimonials = content?.testimonials;
   // const router = useRouter();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(`${app_url}/layout`);
-  //       const data = await res.json();
-  //       setPageData(data?.data?.page_data)
-  //       console.log(res, "datadata");
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${app_url}/layout`);
+        const data = await res.json();
+        setPageData(data?.data?.page_data)
+        console.log(res, "datadata");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   return (
     <>
