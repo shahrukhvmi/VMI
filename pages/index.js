@@ -66,11 +66,6 @@ export async function getServerSideProps() {
 }
 
 
-
-
-
-
-
 export default function Index({ data }) {
   // const [pageData, setPageData] = useState();
 
