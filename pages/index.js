@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import MetaLayout from "@/Meta/MetaLayout";
 import { app_url, meta_url } from "@/config/constants";
 import GetHomePageApi from "@/Api/GetHomePageApi";
+import { revalidatePath } from "next/cache";
 
 // const HaloCanvas = dynamic(() => import("@/components/HaloCanvas"), {
 //   ssr: false,
@@ -45,7 +46,7 @@ import GetHomePageApi from "@/Api/GetHomePageApi";
 
 
 // ==========================================
-export async function getServerSideProps() {
+export async function getStaticProps() {
   try {
     const app_url = process.env.NEXT_PUBLIC_APP_URL;
     const res = await fetch(`${app_url}/layout`);
@@ -53,6 +54,7 @@ export async function getServerSideProps() {
     if (!res.ok) {
       console.error("API call failed with status:", res.status);
       return {
+        revalidate: 10,
         props: {
           data: null,
           error: `Error fetching data: ${res.statusText}`,
