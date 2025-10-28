@@ -13,7 +13,7 @@ import SecondNavbar from "@/components/SecondNavbar";
 import HeroTwo from "@/components/HeroTwo";
 import GlowCard from "@/components/GlowCard";
 import HomePortfolioSection from "@/components/HomePortfolioSection";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import MetaLayout from "@/Meta/MetaLayout";
 import { app_url, meta_url } from "@/config/constants";
@@ -44,7 +44,9 @@ export async function getServerSideProps() {
 }
 
 export default function Index({ data }) {
-  const pageData = data?.data?.page_data;
+  const [pageData, setPageData] = useState();
+  
+  // const pageData = data?.data?.page_data;
   console.log(data, "Main Data");
   console.log(pageData, "Thissssss daaattaaaaaa");
 
@@ -59,19 +61,21 @@ export default function Index({ data }) {
   // const creative = content?.creative;
   // const testimonials = content?.testimonials;
   // const router = useRouter();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(`${app_url}/layout`);
-  //       const data = await res.json();
-  //       console.log(res, "datadata");
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${app_url}/layout`);
+        const data = await res.json();
+        setPageData(data?.data?.page_data)
+        console.log(res, "datadata");
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
+
   return (
     <>
       <MetaLayout
