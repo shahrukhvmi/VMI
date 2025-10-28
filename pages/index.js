@@ -31,8 +31,6 @@ import  meta_url  from "@/config/constants";
 //     };
 //   }
 // }
-
-
 // ==========================================
 export async function getServerSideProps() {
   try {
