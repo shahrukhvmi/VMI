@@ -1,23 +1,12 @@
-import NavBar from "@/components/NavBar";
 import HeroSection from "@/components/HeroSection";
-import dynamic from "next/dynamic";
-import StatsSection from "@/components/StatsSection";
 import Creative from "@/components/Creative";
-import GiffSection from "@/components/GiffSection";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import Technologia from "@/components/Technologia";
-import Footer from "@/components/Footer";
-import Rights from "@/components/Rights";
 import RingSection from "@/components/RingSection";
-import SecondNavbar from "@/components/SecondNavbar";
-import HeroTwo from "@/components/HeroTwo";
-import GlowCard from "@/components/GlowCard";
 import HomePortfolioSection from "@/components/HomePortfolioSection";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import MetaLayout from "@/Meta/MetaLayout";
-import { app_url, meta_url } from "@/config/constants";
-import GetHomePageApi from "@/Api/GetHomePageApi";
+import  meta_url  from "@/config/constants";
+
 
 // const HaloCanvas = dynamic(() => import("@/components/HaloCanvas"), {
 //   ssr: false,
