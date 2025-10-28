@@ -26,22 +26,22 @@ import GetHomePageApi from "@/Api/GetHomePageApi";
 //   ssr: false,
 // });
 
-export async function getServerSideProps() {
-  try {
-    // Fetch dynamic content from WordPress API (assuming you have an API endpoint)
-    const res = await fetch(`${app_url}/layout`);
-    const data = await res.json(); // Data contains content like meta titles, text, images
+// export async function getServerSideProps() {
+//   try {
+//     // Fetch dynamic content from WordPress API (assuming you have an API endpoint)
+//     const res = await fetch(`${app_url}/layout`);
+//     const data = await res.json(); // Data contains content like meta titles, text, images
 
-    return {
-      props: { data },
-    };
-  } catch (error) {
-    console.error("Error fetching data from WordPress API:", error);
-    return {
-      props: { data: null },
-    };
-  }
-}
+//     return {
+//       props: { data },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching data from WordPress API:", error);
+//     return {
+//       props: { data: null },
+//     };
+//   }
+// }
 
 export default function Index({ data }) {
   const [pageData, setPageData] = useState();
