@@ -46,6 +46,8 @@ export default function services({ layoutData }) {
   console.log(layoutData, "checking dataaa");
   const router = useRouter();
 
+
+  
   return (
     <>
       <MetaLayout
