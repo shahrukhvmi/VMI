@@ -1,19 +1,25 @@
 import ServiceRingSection from "@/components/services/ServiceRingSection";
 // import ServiceHorizontal from "@/components/services/ServiceHorizontal";
-import ServicesHero from "@/components/services/ServicesHero";
+// import ServicesHero from "@/components/services/ServicesHero";
+
 import Technologia from "@/components/Technologia";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import { meta_url, pages_api } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
+import dynamic from "next/dynamic";
+const ServicesHero = dynamic(
+  () => import("@/components/services/ServicesHero"),
+  { ssr: false }
+);
 import { useRouter } from "next/router";
 import React from "react";
-
-
 
 export async function getServerSideProps() {
   try {
     // Fetch dynamic content from WordPress API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=services`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=services`
+    );
     const data = await res.json();
     console.log(data, "services page data");
     return {
@@ -31,14 +37,13 @@ export async function getServerSideProps() {
   }
 }
 
-
 export default function services({ layoutData }) {
-
   // console.log(layoutData?.head?.json, "servi...............")
 
-  const data = layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
+  const data =
+    layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
   const serviceSlider = layoutData?.data?.page_data?.all_services;
-  console.log(layoutData, "checking dataaa")
+  console.log(layoutData, "checking dataaa");
   const router = useRouter();
 
   return (
@@ -50,7 +55,7 @@ export default function services({ layoutData }) {
         canonical={`${meta_url}services/`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
-        <ServicesHero data={data} slider={serviceSlider}/>
+        <ServicesHero data={data} slider={serviceSlider} />
 
         {/* <ServiceHorizontal /> */}
 
