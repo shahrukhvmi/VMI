@@ -18,7 +18,7 @@ export async function getServerSideProps() {
     // Fetch dynamic content from WordPress API
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main`);
     const data = await res.json(); // Assuming this gives you your layout data
-
+    console.log(data, "about us page data");
     return {
       props: {
         layoutData: data,
@@ -39,8 +39,7 @@ export async function getServerSideProps() {
 // });
 
 export default function AboutPage({ layoutData }) {
-  console.log(
-    layoutData?.data?.page_data?.sections[0]?.fields[0]?.value,
+  console.log(layoutData,
     "dattaaaaaaaa data tata data"
   );
 
@@ -57,7 +56,7 @@ export default function AboutPage({ layoutData }) {
       />
       <main className="relative text-white min-h-screen overflow-hidden">
         <AboutHero
-          pageData={layoutData?.data?.page_data?.sections[0]?.fields[0]?.value}
+          pageData={layoutData?.data?.page_data?.sections[0]?.fields[0]?.label}
         />
 
         <HorizontalScrollSection />
