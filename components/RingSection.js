@@ -1,7 +1,9 @@
 import Image from "next/image";
 import React, { useRef, useEffect } from "react";
 
-const RingSection = () => {
+const RingSection = ({ringSec}) => {
+
+  console.log(ringSec,"ringSec")
   const wrapperRef = useRef(null);
   const glowRef = useRef(null);
   const backgroundRef = useRef(null);

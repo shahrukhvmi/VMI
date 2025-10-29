@@ -43,7 +43,7 @@ export default function HeroSection({ hero }) {
     `,
             }}
           >
-            Discuss your project{" "}
+            {hero?.[0]?.value || "Discuss your project "}
             {/* <span>
                   <img src="/btn-icon.svg" />
                 </span> */}

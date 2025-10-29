@@ -54,7 +54,7 @@ export default function Index({ layoutData }) {
   const data = layoutData?.data?.page_data;
 
 
-  console.log(data,"datadatadatadatadata")
+  console.log(data, "datadatadatadatadata")
   const router = useRouter();
 
   return (
@@ -71,10 +71,10 @@ export default function Index({ layoutData }) {
           {/* <HeroTwo /> */}
           <HeroSection hero={data?.sections?.[0]?.fields[0]?.subfields} />
 
-          <RingSection />
+          <RingSection ringSec={data?.sections?.[1]?.fields[0]?.subfields} />
         </div>
         {/* <StatsSection /> */}
-        <Creative />
+        <Creative creativeData={data?.sections?.[4]?.fields} />
 
         {/* Mobile Section */}
 
