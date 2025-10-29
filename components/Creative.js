@@ -4,7 +4,7 @@ import RingSliderTwo from "./RingSliderTwo";
 import HomeRingSlider from "./HomeRingSlider";
 import Image from "next/image";
 
-function Creative() {
+function Creative({ creativeData }) {
   return (
     <>
       <section className="creative-main z-10 relative">
@@ -68,7 +68,7 @@ function Creative() {
         <div className="w-[90%] max-w-6xl creative-second-sec mx-auto"></div>
         {/* <RingSlider /> */}
         {/* <RingSliderTwo /> */}
-        <HomeRingSlider />
+        <HomeRingSlider creativeData={creativeData} />
       </section>
     </>
   );
