@@ -152,7 +152,8 @@ export default function Index({ layoutData }) {
           </div>
         </div>
 
-        <HomePortfolioSection />
+        <HomePortfolioSection portfolio={data?.featured_portfolios} />
+
 
         <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main md:pt-100 py-40 z-10 relative">
           <div className="brand-secton-wrap center-content middle-quote-font">

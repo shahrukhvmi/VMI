@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 export default function HeroSection({ hero }) {
 
-  console.log(hero, "dsflkdsfsdlfn")
+  console.log(hero, "hero section data");
   const router = useRouter();
   return (
     <>

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React, { useRef, useEffect } from "react";
 
-const RingSection = ({ringSec}) => {
+const RingSection = ({ ringSec }) => {
 
-  console.log(ringSec,"ringSec")
+  console.log(ringSec, "ringSec")
   const wrapperRef = useRef(null);
   const glowRef = useRef(null);
   const backgroundRef = useRef(null);
@@ -47,9 +47,8 @@ const RingSection = ({ringSec}) => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (backgroundRef.current) {
-        backgroundRef.current.style.transform = `translateY(${
-          scrollY * 0.3
-        }px)`;
+        backgroundRef.current.style.transform = `translateY(${scrollY * 0.3
+          }px)`;
       }
     };
 
@@ -135,6 +134,8 @@ const RingSection = ({ringSec}) => {
                   height={250}
                 />
               </div> */}
+
+              {/*               
               <p className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4">
                 At Vibrant Media, we design and deliver marketing, design, and
                 development solutions that put your business goals at the
@@ -153,14 +154,42 @@ const RingSection = ({ringSec}) => {
                 the trust of agencies and businesses worldwide. With us, you
                 gain more than a service provider, you gain a committed partner
                 dedicated to your success in every market you serve.
-              </p>
+              </p> */}
+
+
+              <div
+                className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    ringSec?.[0]?.value ||
+                    `
+        At Vibrant Media, we design and deliver marketing, design, and
+                development solutions that put your business goals at the
+                center. Every strategy we create is tailored to your unique
+                vision, ensuring your brand stands out, engages the right
+                audience, and drives measurable results.
+
+                rom building high-impact websites to crafting powerful SEO
+                strategies and memorable branding, our team works as an
+                extension of yours combining creativity, technology, and market
+                insight to help you achieve sustainable growth.
+
+                Our partnerships span across industries and borders, earning us
+                the trust of agencies and businesses worldwide. With us, you
+                gain more than a service provider, you gain a committed partner
+                dedicated to your success in every market you serve.
+      `,
+                }}
+              />
+
+
             </div>
 
             {/* Right Graphic */}
             <div className="relative flex justify-center items-center ring-left-width">
               <Image
-                src="/second-right.png"
-                alt="Decorative Graphic"
+                src={ringSec?.[1]?.value || "/second-right.png"}
+                alt={ringSec?.[1]?.label || "Decorative Graphic"}
                 width={500}
                 height={500}
               />

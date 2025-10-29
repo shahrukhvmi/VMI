@@ -5,6 +5,8 @@ import HomeRingSlider from "./HomeRingSlider";
 import Image from "next/image";
 
 function Creative({ creativeData }) {
+
+  console.log(creativeData,"creativeData")
   return (
     <>
       <section className="creative-main z-10 relative">
