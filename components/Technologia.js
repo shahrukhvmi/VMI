@@ -12,14 +12,14 @@ function Technologia({ techData }) {
         <div className="max-container-width w-6xl mx-auto">
           <div className="inner-heading text-center w-full">
             <h2 className="olivera-font">
-              <span className="inner-heading-top">{techData[3]?.value} </span>
+              <span className="inner-heading-top">{techData?.[3]?.value} </span>
               <br />
-              <span className="inner-heading-span">{techData[4]?.value}</span>
+              <span className="inner-heading-span">{techData?.[4]?.value}</span>
             </h2>
           </div>
 
           <div className="technologia-logos mt-30">
-            <img src={techData[2]?.value} />
+            <img src={techData?.[2]?.value} />
           </div>
         </div>
       </div>
