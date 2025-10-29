@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 
-export default function HeroSection() {
+export default function HeroSection({ hero }) {
+
+  console.log(hero, "dsflkdsfsdlfn")
   const router = useRouter();
   return (
     <>
@@ -13,14 +15,16 @@ export default function HeroSection() {
           <img src="/right.png" />
         </div>
         <span className="bg-white/10 text-sm available-text px-4 py-1 rounded-full border border-white/20 text-green-400 mb-4 z-10">
-          ● Available for New Projects
+          ● {hero?.[2]?.value || "Available for New Projects"}
         </span>
-        <h1 className="hero-text leading-tight z-10 olivera-font">
-          Purposeful Marketing <br /> Across Channels
+        <h1 className="hero-text leading-tight z-10 olivera-font max-w-2xl">
+
+
+          {hero?.[3]?.value || " Purposeful Marketing Across Channels"}
           {/* <span className="hero-span olivera-font">Development</span> Agency */}
         </h1>
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
-          Your digital partner for every marketing execution.
+          {hero?.[1]?.value || "Your digital partner for every marketing execution."}
         </p>
 
         {/* <GlowButton /> */}

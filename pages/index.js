@@ -51,6 +51,10 @@ export async function getServerSideProps() {
 export default function Index({ layoutData }) {
   console.log(layoutData, "Index Data");
 
+  const data = layoutData?.data?.page_data;
+
+
+  console.log(data,"datadatadatadatadata")
   const router = useRouter();
 
   return (
@@ -65,7 +69,7 @@ export default function Index({ layoutData }) {
 
         <div className="relative">
           {/* <HeroTwo /> */}
-          <HeroSection />
+          <HeroSection hero={data?.sections?.[0]?.fields[0]?.subfields} />
 
           <RingSection />
         </div>
