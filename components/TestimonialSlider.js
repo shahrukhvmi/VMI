@@ -6,36 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const testimonials = [
-  {
-    name: "Dr. Lee Hutchinson",
-    role: "Group Chief Executive Officer, Eaton SAKS International Group",
-    country: "United Arab Emirates",
-    image: "/testi-1.png", // replace with actual path
-    quote:
-      "Working with Vibrant Media Inc was transformative. They took my chaotic ideas and turned them into a powerful, cohesive brand and a world-class digital experience. From bold design to strategic execution, every detail was intentional. VMI isn't just creative, they’re commercially sharp and truly collaborative. Highly recommended.",
-  },
-  {
-    name: "Lisa Andria",
-    role: "Owner & Director, Ladies Who Leap",
-    country: "USA",
-    image: "/testi-2.png", // replace with actual path
-    quote:
-      "Vibrant Media delivered an exceptional experience from start to finish. The team is professional, approachable, and truly understands how to bring a vision to life. They created a visually stunning and strategically sound website, explaining every recommendation with clarity and purpose. I look forward to continuing our collaboration. Highly recommended.",
-  },
-  {
-    name: "Omar Locos",
-    role: "Owner and Director, Locos Customs",
-    country: "United Kingdom",
-    image: "/testi-3.png", // replace with actual path
-    quote:
-      "Vibrant Media has been a game-changer for my business. They created a bold and memorable logo, a brand identity that truly stands out, and a website that looks amazing and works flawlessly. They are now managing our SEO, and we’re already seeing great progress in online visibility and leads. The team is professional, creative, and easy to work with. Highly recommended for anyone serious about growing their brand.",
-  },
-
-  // Add more testimonials as needed
-];
-
-export default function TestimonialSlider() {
+export default function TestimonialSlider({ testimonialData }) {
   return (
     <div className="testimonial-main-wrap z-10 relative">
       <div className="relative w-6xl max-container-width mx-auto text-white">
@@ -57,22 +28,27 @@ export default function TestimonialSlider() {
           }}
           className="mx-auto"
         >
-          {testimonials.map((t, index) => (
+          {testimonialData?.map((testimonial, index) => (
             <SwiperSlide key={index}>
               <div className="flex flex-col md:flex-row gap-8 md:gap-12">
                 <div className="w-[30%] testimonial-img-width rounded-lg overflow-hidden">
                   <img
-                    src={t.image}
-                    alt={t.name}
+                    src={
+                      testimonial?.data?.person_image || "/default-image.png"
+                    } // Fallback image if person_image is missing
+                    alt={testimonial?.data?.person_name}
                     className="object-cover w-full"
                   />
                 </div>
                 <div className="w-[70%] text-[28px] flex flex-col justify-around home-testimonial-text">
-                  <h3 className="olivera-font">“{t.quote}”</h3>
+                  <h3 className="olivera-font">“{testimonial?.data?.quote}”</h3>
                   <p className="mt-6 font-normal poppins-font">
-                    <strong className="testi-name">{t.name}</strong> <br />
-                    {t.role} <br />
-                    {t.country}
+                    <strong className="testi-name">
+                      {testimonial?.data?.person_name}
+                    </strong>{" "}
+                    <br />
+                    {testimonial?.data?.person_role} <br />
+                    {testimonial?.data?.person_country}
                   </p>
                 </div>
               </div>
