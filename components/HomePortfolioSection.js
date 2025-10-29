@@ -2,7 +2,7 @@ import React from "react";
 import PortfolioSlider from "./PortfolioSlider";
 import { useRouter } from "next/router";
 
-function HomePortfolioSection() {
+function HomePortfolioSection({ portfolio }) {
   const router = useRouter();
 
   return (
@@ -15,7 +15,7 @@ function HomePortfolioSection() {
           </h2>
         </div>
       </div>
-      <PortfolioSlider />
+      <PortfolioSlider portfolio={portfolio} />
       {/* Desktop CTA Button */}
       <div className="flex justify-center mt-3">
         <div className="nav-btn example-2">

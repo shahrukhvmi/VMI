@@ -22,7 +22,9 @@ const portfolioImages = [
   { img: "/seo-2.png", url: "/seo-portfolio/suja-driving-school/" },
 ];
 
-export default function PortfolioSlider() {
+export default function PortfolioSlider({ portfolio }) {
+  console.log(portfolio, "porfolio");
+
   const swiperRef = useRef(null);
   const containerRef = useRef(null);
   const [swiperReady, setSwiperReady] = useState(false);
@@ -80,12 +82,12 @@ export default function PortfolioSlider() {
         }}
         className="portfolio-slider"
       >
-        {portfolioImages.concat(portfolioImages).map((item, i) => (
+        {portfolio.map((item, i) => (
           <SwiperSlide key={i} className="home-portfolio-slide">
-            <Link href={item?.url}>
+            <Link href={item.permalink}>
               <Image
-                src={item?.img}
-                alt={`Portfolio item ${i + 1}`}
+                src={item.image}
+                alt={item.title} // Use the title for alt text
                 className="rounded-2xl w-full h-auto max-h-[400px] object-cover object-center"
                 width={300}
                 height={300}

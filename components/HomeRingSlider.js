@@ -7,35 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HomeRingSlider({ creativeData }) {
-  console.log(creativeData, "creativeData");
-
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
   const [isDesktop, setIsDesktop] = useState(null); // prevent SSR mismatch
   const [sliderData, setSliderData] = useState([]); // State to store mapped data
-
-  const data = [
-    {
-      img: "/service-ring-1.png",
-      title: "1. Fill Out Our Online Form",
-      body: "Submit your queries, ideas, and requirements through our online form. You’ll be asked for a few necessary details. Ensure you provide only accurate information, so we can respond with clarity and precision.",
-    },
-    {
-      img: "/service-ring-2.png",
-      title: "2. Let’s Do Our Work",
-      body: "Our team will review your objectives, scope, and priorities in detail to prepare a quotation.",
-    },
-    {
-      img: "/service-ring-3.png",
-      title: "3. Receive Quotation",
-      body: "After we’ve thoroughly evaluated the provided information , we’ll deliver you the quotation, outlining the recommended services, timelines, and estimated investment.",
-    },
-    {
-      img: "/service-ring-4.png",
-      title: "4. Confirm and Get Started",
-      body: "As soon as you approve the quotation, we’ll start building, executing, and reporting on your first marketing strategy.",
-    },
-  ];
 
   // 🟡 Only run animations on desktop
   useEffect(() => {
@@ -99,7 +74,7 @@ export default function HomeRingSlider({ creativeData }) {
     ScrollTrigger.create({
       trigger: container,
       start: "top top",
-      end: `+=${(data.length - 1) * window.innerHeight}`,
+      end: `+=${(sliderData.length - 1) * window.innerHeight}`,
       pin: true,
       scrub: true,
     });
