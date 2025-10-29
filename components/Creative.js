@@ -1,8 +1,14 @@
 import React from "react";
 import RingSlider from "./RingSlider";
 import RingSliderTwo from "./RingSliderTwo";
-import HomeRingSlider from "./HomeRingSlider";
+// import HomeRingSlider from "./HomeRingSlider";
+
+const HomeRingSlider = dynamic(() => import("./HomeRingSlider"), {
+  ssr: false,
+});
+
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 function Creative() {
   return (
