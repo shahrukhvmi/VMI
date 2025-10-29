@@ -25,7 +25,30 @@ import { meta_url } from "@/config/constants";
 //   ssr: false,
 // });
 
-export default function Index() {
+export async function getServerSideProps() {
+  try {
+    // Fetch dynamic content from WordPress API
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main`);
+    const data = await res.json(); // Assuming this gives you your layout data
+    console.log(data, "about us page data");
+    return {
+      props: {
+        layoutData: data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data from WordPress API:", error);
+    return {
+      props: {
+        layoutData: null,
+      },
+    };
+  }
+}
+
+export default function Index({ layoutData }) {
+  console.log(layoutData, "Index Data");
+
   const router = useRouter();
 
   return (

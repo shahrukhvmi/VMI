@@ -17,7 +17,7 @@ export default function AboutHero({ pageData }) {
           We don’t just design
         </span>
         <h1 className="hero-text leading-tight z-10 olivera-font">
-          {pageData}
+          Building Brands that Sustain, <br /> Expand, and Outperform
           {/* <span className="hero-span olivera-font">Development</span> Agency */}
         </h1>
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
