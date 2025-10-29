@@ -1,16 +1,22 @@
-import ServiceRingSection from "@/components/services/ServiceRingSection";
+// import ServiceRingSection from "@/components/services/ServiceRingSection";
 // import ServiceHorizontal from "@/components/services/ServiceHorizontal";
-// import ServicesHero from "@/components/services/ServicesHero";
+import ServicesHero from "@/components/services/ServicesHero";
 
 import Technologia from "@/components/Technologia";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import { meta_url, pages_api } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import dynamic from "next/dynamic";
-const ServicesHero = dynamic(
-  () => import("@/components/services/ServicesHero"),
+// const ServicesHero = dynamic(
+//   () => import("@/components/services/ServicesHero"),
+//   { ssr: false }
+// );
+
+const ServiceRingSection = dynamic(
+  () => import("@/components/services/ServiceRingSection"),
   { ssr: false }
 );
+
 import { useRouter } from "next/router";
 import React from "react";
 
