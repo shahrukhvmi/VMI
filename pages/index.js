@@ -3,6 +3,8 @@ import HeroSection from "@/components/HeroSection";
 import dynamic from "next/dynamic";
 import StatsSection from "@/components/StatsSection";
 // import Creative from "@/components/Creative";
+const Creative = dynamic(() => import("@/components/Creative"), { ssr: false });
+
 import GiffSection from "@/components/GiffSection";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import Technologia from "@/components/Technologia";
@@ -68,7 +70,7 @@ export default function Index({ layoutData }) {
           <RingSection />
         </div>
         {/* <StatsSection /> */}
-        {/* <Creative /> */}
+        <Creative />
 
         {/* Mobile Section */}
 
