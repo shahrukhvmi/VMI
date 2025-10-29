@@ -11,11 +11,12 @@ const ServicesHero = dynamic(
   () => import("@/components/services/ServicesHero"),
   { ssr: false }
 );
+const Creative = dynamic(() => import("@/components/Creative"), { ssr: false });
 
-const ServiceRingSection = dynamic(
-  () => import("@/components/services/ServiceRingSection"),
-  { ssr: false }
-);
+// const ServiceRingSection = dynamic(
+//   () => import("@/components/services/ServiceRingSection"),
+//   { ssr: false }
+// );
 
 import { useRouter } from "next/router";
 import React from "react";
@@ -49,6 +50,7 @@ export default function services({ layoutData }) {
   const data =
     layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
   const serviceSlider = layoutData?.data?.page_data?.all_services;
+  const ringServiceSlider = layoutData?.data?.page_data?.services_ring_sliders;
   console.log(layoutData, "checking dataaa");
   const router = useRouter();
 
@@ -80,7 +82,7 @@ export default function services({ layoutData }) {
         </div>
 
         <div className="relative z-10 desktop-ring-slider">
-          <ServiceRingSection />
+          <Creative creativeData={ringServiceSlider} />
         </div>
 
         {/* Mobile Section */}

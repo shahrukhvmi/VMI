@@ -4,9 +4,7 @@ import RingSliderTwo from "./RingSliderTwo";
 import HomeRingSlider from "./HomeRingSlider";
 import Image from "next/image";
 
-function Creative({ creativeData, services, heading }) {
-
-  console.log(creativeData, "creativeData")
+function Creative({ creativeData, services, heading  }) {
   console.log(services, "services")
   console.log(heading, "heading")
   return (

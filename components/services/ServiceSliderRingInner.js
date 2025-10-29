@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function HomeRingSlider({ creativeData }) {
+export default function ServiceSliderRingInner({ creativeData }) {
 
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
