@@ -1,16 +1,16 @@
 // import ServiceRingSection from "@/components/services/ServiceRingSection";
 // import ServiceHorizontal from "@/components/services/ServiceHorizontal";
-import ServicesHero from "@/components/services/ServicesHero";
-
+// import ServicesHero from "@/components/services/ServicesHero";
+import dynamic from "next/dynamic";
 import Technologia from "@/components/Technologia";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import { meta_url, pages_api } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
-import dynamic from "next/dynamic";
-// const ServicesHero = dynamic(
-//   () => import("@/components/services/ServicesHero"),
-//   { ssr: false }
-// );
+
+const ServicesHero = dynamic(
+  () => import("@/components/services/ServicesHero"),
+  { ssr: false }
+);
 
 const ServiceRingSection = dynamic(
   () => import("@/components/services/ServiceRingSection"),
@@ -155,10 +155,10 @@ export default function services({ layoutData }) {
           </div>
         </div>
 
-        <div className="mt-70">
+        {/* <div className="mt-70">
           <Technologia />
         </div>
-        <TestimonialSlider />
+        <TestimonialSlider /> */}
 
         <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main pb-70 pt-50 z-10 relative service-brand-responsive">
           <div className="brand-secton-wrap center-content middle-quote-font">

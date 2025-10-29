@@ -1,24 +1,31 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ServiceHorizontal({silderData}) {
-
-  console.log(silderData,"silderData")
+export default function ServiceHorizontal({ silderData }) {
+  const [isLoaded, setIsLoaded] = useState(false); // Track if component is loaded
   const containerRef = useRef(null);
   const scrollContentRef = useRef(null);
-
   const wrapperRef = useRef(null);
   const glowRef = useRef(null);
   const backgroundRef = useRef(null);
   let rafId = null;
 
-  // Glow logic
+  // Track component load state
   useEffect(() => {
+    if (silderData) {
+      setIsLoaded(true);
+    }
+  }, [silderData]);
+
+  // Glow effect logic
+  useEffect(() => {
+    if (!isLoaded) return;
+
     const wrapper = wrapperRef.current;
     const glow = glowRef.current;
 
@@ -50,10 +57,12 @@ export default function ServiceHorizontal({silderData}) {
       wrapper.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isLoaded]);
 
   // GSAP scroll horizontal logic
   useEffect(() => {
+    if (!isLoaded) return;
+
     const container = containerRef.current;
     const content = scrollContentRef.current;
 
@@ -75,7 +84,10 @@ export default function ServiceHorizontal({silderData}) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isLoaded]);
+
+  // Prevent rendering of the content until it's fully loaded
+  if (!isLoaded) return null;
 
   return (
     <>
