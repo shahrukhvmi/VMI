@@ -39,9 +39,7 @@ export async function getServerSideProps() {
 // });
 
 export default function AboutPage({ layoutData }) {
-  console.log(layoutData,
-    "dattaaaaaaaa data tata data"
-  );
+  console.log(layoutData, "dattaaaaaaaa data tata data");
 
   const router = useRouter();
 
@@ -53,9 +51,7 @@ export default function AboutPage({ layoutData }) {
         canonical={`${meta_url}about/`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
-        <AboutHero
-          pageData={layoutData?.data?.page_data?.sections[0]?.fields[0]?.label}
-        />
+        <AboutHero />
 
         <HorizontalScrollSection />
 
