@@ -43,7 +43,7 @@ export default function MetaLayout({
         <meta property="og:title" content={og_title || metaTitle} />
         <meta property="og:description" content={metaDescription || description} />
         <meta property="og:image" content={metaData?.image || "/default-image.jpg"} />
-        <meta property="og:url" content={og_url || window.location.href} />
+        <meta property="og:url" content={og_url || "window.location.href"} />
         <meta property="og:locale" content={og_locale || "en_US"} />
         <meta property="og:type" content={og_type || "article"} />
         <meta property="og:site_name" content={og_site_name || "Vibrant Media Inc"} />
