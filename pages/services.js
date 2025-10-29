@@ -11,15 +11,13 @@ const ServicesHero = dynamic(
   () => import("@/components/services/ServicesHero"),
   { ssr: false }
 );
-const Creative = dynamic(() => import("@/components/Creative"), { ssr: false });
-
-// const ServiceRingSection = dynamic(
-//   () => import("@/components/services/ServiceRingSection"),
-//   { ssr: false }
-// );
+const ServiceRingSection = dynamic(
+  () => import("@/components/services/ServiceRingSection"),
+  { ssr: false }
+);
 
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export async function getServerSideProps() {
   try {
@@ -45,6 +43,13 @@ export async function getServerSideProps() {
 }
 
 export default function services({ layoutData }) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Track if components are mounted on the client-side
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // console.log(layoutData?.head?.json, "servi...............")
 
   const data =
@@ -54,8 +59,6 @@ export default function services({ layoutData }) {
   console.log(layoutData, "checking dataaa");
   const router = useRouter();
 
-
-  
   return (
     <>
       <MetaLayout
@@ -65,7 +68,11 @@ export default function services({ layoutData }) {
         canonical={`${meta_url}services/`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
-        <ServicesHero data={data} slider={serviceSlider} />
+        {isMounted && (
+          <>
+            <ServicesHero data={data} slider={serviceSlider} />
+          </>
+        )}
 
         {/* <ServiceHorizontal /> */}
 
@@ -81,9 +88,13 @@ export default function services({ layoutData }) {
           </div>
         </div>
 
-        <div className="relative z-10 desktop-ring-slider">
-          <Creative creativeData={ringServiceSlider} />
-        </div>
+        {isMounted && (
+          <>
+            <div className="relative z-10 desktop-ring-slider">
+              <ServiceRingSection creativeData={ringServiceSlider} />
+            </div>
+          </>
+        )}
 
         {/* Mobile Section */}
 

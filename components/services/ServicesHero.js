@@ -27,7 +27,7 @@ export default function ServicesHero({ data, slider }) {
         </p> */}
 
         <p
-          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-2xl"
+          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-3xl"
           dangerouslySetInnerHTML={{
             __html:
               data?.[1]?.value ||
