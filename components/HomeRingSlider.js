@@ -6,10 +6,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function HomeRingSlider() {
+export default function HomeRingSlider({ creativeData }) {
+  console.log(creativeData, "creativeData");
+
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
   const [isDesktop, setIsDesktop] = useState(null); // prevent SSR mismatch
+  const [sliderData, setSliderData] = useState([]); // State to store mapped data
 
   const data = [
     {
@@ -44,6 +47,25 @@ export default function HomeRingSlider() {
     window.addEventListener("resize", checkScreen);
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
+
+  // Map creativeData to sliderData format
+  useEffect(() => {
+    if (creativeData && creativeData.length) {
+      const mappedData = creativeData.map((item) => {
+        // Extract the subfields (item_p, item_heading_h3, item_image)
+        const itemData = item.subfields.reduce((acc, field) => {
+          if (field.key === "item_p") acc.body = field.value;
+          if (field.key === "item_heading_h3") acc.title = field.value;
+          if (field.key === "item_image") acc.img = field.value;
+          return acc;
+        }, {});
+
+        return itemData;
+      });
+
+      setSliderData(mappedData); // Set the mapped data for the slider
+    }
+  }, [creativeData]);
 
   useEffect(() => {
     if (!isDesktop) return;
@@ -102,14 +124,14 @@ export default function HomeRingSlider() {
           <div className="absolute w-[70vw] h-[70vw] animate-spin-slow z-0"></div>
 
           <div className="relative w-full h-full flex items-center justify-center">
-            {data.map((item, i) => (
+            {sliderData.map((item, i) => (
               <div
                 key={i}
                 ref={(el) => (cardsRef.current[i] = el)}
                 className="absolute service-ring-card backdrop-blur-[20px] opacity-0"
               >
                 <div className="flex justify-center">
-                  <img src={item.img} />
+                  <img src={item.img} alt={item.title} />
                 </div>
                 <h3 className="mb-4 olivera-font">{item.title}</h3>
                 <p className="poppins-font">{item.body}</p>
