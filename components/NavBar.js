@@ -5,6 +5,27 @@ import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function NavBar() {
+
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const fetchHeader = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/header`);
+        const layoutData = await res.json();
+        console.log("Header data:", layoutData); // or set it to state
+        setData(layoutData);
+      } catch (error) {
+        console.error("Error fetching header:", error);
+      }
+    };
+
+    fetchHeader();
+  }, []);
+
+
+  const { menu, site, header_cta, cta_link } = data || {};
+
+
   const router = useRouter();
 
   const navItems = [
@@ -19,8 +40,8 @@ export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const currentIdx = navItems.findIndex(
-      (item) => item.url === router.pathname
+    const currentIdx = menu?.findIndex(
+      (item) => item?.url === router.pathname
     );
     if (currentIdx !== -1) {
       setActiveIdx(currentIdx);
@@ -49,7 +70,7 @@ export default function NavBar() {
         >
           <Link href="/">
             <Image
-              src="/footer-logo.png"
+              src={site?.logo?.src || "/footer-logo.png"}
               alt="Vibrant Media Logo"
               width={230}
               height={150}
@@ -59,19 +80,18 @@ export default function NavBar() {
 
         {/* Desktop Nav - HIDDEN on mobile */}
         <ul className="hidden md:flex gap-6 text-sm text-white font-medium poppins-font">
-          {navItems.map((item, i) => (
+          {menu?.map((item, i) => (
             <li
               key={i}
-              className={`relative group nav-items${
-                activeIdx === i ? " active" : ""
-              }`}
+              className={`relative group nav-items${activeIdx === i ? " active" : ""
+                }`}
             >
               <Link
                 href={item.url}
                 className="hover:text-vibrant transition duration-300"
                 onClick={() => setActiveIdx(i)}
               >
-                {item.label}
+                {item.title}
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-vibrant group-hover:w-full transition-all duration-300"></span>
               </Link>
             </li>
@@ -81,7 +101,7 @@ export default function NavBar() {
         {/* Desktop CTA Button */}
         <div className="hidden md:block nav-btn example-2 desktop-nav-btn">
           <button
-            onClick={() => router.push("/contact-us")}
+            onClick={() => router.push(cta_link || "/contact-us")}
             className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
             style={{
               background:
@@ -94,7 +114,7 @@ export default function NavBar() {
     `,
             }}
           >
-            Let's Talk
+            {header_cta || "Let's Talk"}
           </button>
         </div>
 
@@ -108,9 +128,8 @@ export default function NavBar() {
 
       {/* Fullscreen Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${
-          mobileOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden`}
+        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${mobileOpen ? "translate-x-0" : "translate-x-full"
+          } md:hidden`}
       >
         <div className="p-6 h-full mobile-nav-wrapper">
           {/* Close button top-right */}
@@ -125,19 +144,18 @@ export default function NavBar() {
 
           {/* Nav links center */}
           <div className="flex flex-col items-center space-y-6 text-white">
-            {navItems.map((item, i) => (
+            {menu?.map((item, i) => (
               <Link
                 key={i}
                 href={item.url}
-                className={`text-2xl mobile-links poppins-font ${
-                  activeIdx === i ? "footer-active" : "text-white"
-                }`}
+                className={`text-2xl mobile-links poppins-font ${activeIdx === i ? "footer-active" : "text-white"
+                  }`}
                 onClick={() => {
                   setActiveIdx(i);
                   setMobileOpen(false);
                 }}
               >
-                {item.label}
+                {item.title}
               </Link>
             ))}
 

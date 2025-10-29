@@ -54,6 +54,7 @@ export default function Index({ layoutData }) {
   const data = layoutData?.data?.page_data;
 
 
+
   console.log(data, "datadatadatadatadata")
   const router = useRouter();
 
@@ -74,7 +75,7 @@ export default function Index({ layoutData }) {
           <RingSection ringSec={data?.sections?.[1]?.fields[0]?.subfields} />
         </div>
         {/* <StatsSection /> */}
-        <Creative creativeData={data?.sections?.[4]?.fields} />
+        <Creative creativeData={data?.sections?.[4]?.fields} services={data?.featured_services} heading={data?.sections?.[2]?.fields} />
 
         {/* Mobile Section */}
 
@@ -157,12 +158,12 @@ export default function Index({ layoutData }) {
 
         <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main md:pt-100 py-40 z-10 relative">
           <div className="brand-secton-wrap center-content middle-quote-font">
-            <h3 className="text-center olivera-font">
-              A brand’s success goes beyond the launch. It exists because <br />
-              of continuous efforts for growth, visibility, and conversions.
-              That’s <br />
-              precisely what Vibrant Media Inc. does!
-            </h3>
+            <h3
+              className="text-center olivera-font"
+              dangerouslySetInnerHTML={{
+                __html: data?.sections?.[6]?.fields[0]?.value || "", // Ensure the value is a string
+              }}
+            ></h3>
             {/* <div className="hero-btn example-2">
             <button
               onClick={() => router.push("/contact-us")}
@@ -184,15 +185,16 @@ export default function Index({ layoutData }) {
           </div>
         </div>
         {/* <GiffSection /> */}
-        <TestimonialSlider />
-        <Technologia />
-
+        <TestimonialSlider testimonialData={data?.featured_testimonials} />
+        <Technologia techData={data?.sections?.[9]?.fields} />
         <div className="max-container-width w-6xl mx-auto flex justify-center great-main items-center z-10 relative">
           <div className="great-design-wrap center-content middle-quote-font">
-            <h3 className="text-center olivera-font">
-              The best agency doesn’t deliver more.
-              <br /> It delivers what’s needed.
-            </h3>
+            <h3
+              className="text-center olivera-font"
+              dangerouslySetInnerHTML={{
+                __html: data?.sections?.[9]?.fields[1]?.value || "", // Ensure the value is a string
+              }}
+            ></h3>
             {/* Desktop CTA Button */}
             <div className="flex justify-center mt-3">
               <div className="hero-btn example-2">
@@ -210,7 +212,8 @@ export default function Index({ layoutData }) {
     `,
                   }}
                 >
-                  Let's Talk{" "}
+                  {data?.sections?.[9]?.fields[0]?.value || ""}
+
                 </button>
               </div>
             </div>
