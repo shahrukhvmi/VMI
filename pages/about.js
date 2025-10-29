@@ -43,8 +43,6 @@ export default function AboutPage({ layoutData }) {
     "dattaaaaaaaa data tata data"
   );
 
-  // const data = layoutData?.data?.page_data?.sections;
-
   const router = useRouter();
 
   return (
