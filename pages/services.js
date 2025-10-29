@@ -3,23 +3,54 @@ import ServiceRingSection from "@/components/services/ServiceRingSection";
 import ServicesHero from "@/components/services/ServicesHero";
 import Technologia from "@/components/Technologia";
 import TestimonialSlider from "@/components/TestimonialSlider";
-import { meta_url } from "@/config/constants";
+import { meta_url, pages_api } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import { useRouter } from "next/router";
 import React from "react";
 
-export default function services() {
+
+
+export async function getServerSideProps() {
+  try {
+    // Fetch dynamic content from WordPress API
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=services`);
+    const data = await res.json();
+    console.log(data, "services page data");
+    return {
+      props: {
+        layoutData: data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data from WordPress API:", error);
+    return {
+      props: {
+        layoutData: null,
+      },
+    };
+  }
+}
+
+
+export default function services({ layoutData }) {
+
+  // console.log(layoutData?.head?.json, "servi...............")
+
+  const data = layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
+  const serviceSlider = layoutData?.data?.page_data?.all_services;
+  console.log(layoutData, "checking dataaa")
   const router = useRouter();
 
   return (
     <>
       <MetaLayout
+        data={layoutData?.head?.json}
         title="Complete Marketing and Design Solutions"
         description="Vibrant Media Inc. covers all aspects of marketing and design, including UI/UX, SEO, branding, web, and app development, driving growth across industries."
         canonical={`${meta_url}services/`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
-        <ServicesHero />
+        <ServicesHero data={data} slider={serviceSlider}/>
 
         {/* <ServiceHorizontal /> */}
 

@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import ServiceHorizontal from "./ServiceHorizontal";
 
-export default function ServicesHero() {
+export default function ServicesHero({ data, slider }) {
+
+  console.log(slider, "slider")
   const router = useRouter();
 
   return (
@@ -10,18 +12,28 @@ export default function ServicesHero() {
         <div className="hero-section-shadow"></div>
         <div className="about-banner-shadow"></div>
         <span className="bg-white/10 text-sm available-text px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font">
-          We don’t just design
+          {data?.[3]?.value || "We don’t just design"}
         </span>
-        <h1 className="hero-text z-10 olivera-font">
-          Covering All Facets of
-          <br /> Marketing & Design
-          {/* <span className="hero-span olivera-font">Development</span> Agency */}
-        </h1>
+        <h1
+          className="hero-text z-10 olivera-font"
+          dangerouslySetInnerHTML={{
+            __html: data?.[2]?.value || "We don’t just design",
+          }}
+        ></h1>
+        {/* 
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
           Our scope of work encompasses design, development, and marketing
           modules,
           <br /> allowing us to meet strategic goals across industries.
-        </p>
+        </p> */}
+
+
+        <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-2xl"
+          dangerouslySetInnerHTML={{
+            __html:
+              data?.[1]?.value ||
+              "Our scope of work encompasses design, development, and marketing modules,<br /> allowing us to meet strategic goals across industries.",
+          }}></p>
 
         {/* <GlowButton /> */}
         <div className="example-2 footer-btn mt-6">
@@ -39,7 +51,7 @@ export default function ServicesHero() {
     `,
             }}
           >
-            Talk to Our Team{" "}
+            {data?.[0]?.value || " Talk to Our Team"}
             {/* <span>
                   <img src="/btn-icon.svg" />
                 </span> */}
@@ -47,7 +59,7 @@ export default function ServicesHero() {
         </div>
       </div>
 
-      <ServiceHorizontal />
+      <ServiceHorizontal silderData={slider} />
     </section>
   );
 }

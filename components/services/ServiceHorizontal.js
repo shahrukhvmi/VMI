@@ -6,7 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ServiceHorizontal() {
+export default function ServiceHorizontal({silderData}) {
+
+  console.log(silderData,"silderData")
   const containerRef = useRef(null);
   const scrollContentRef = useRef(null);
 

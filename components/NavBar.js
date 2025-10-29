@@ -12,7 +12,7 @@ export default function NavBar() {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/header`);
         const layoutData = await res.json();
-        console.log("Header data:", layoutData); // or set it to state
+        // console.log("Header data:", layoutData); // or set it to state
         setData(layoutData);
       } catch (error) {
         console.error("Error fetching header:", error);
@@ -41,7 +41,7 @@ export default function NavBar() {
 
   useEffect(() => {
     const currentIdx = menu?.findIndex(
-      (item) => item?.url === router.pathname
+      (item) => item?.slug === router.pathname
     );
     if (currentIdx !== -1) {
       setActiveIdx(currentIdx);
@@ -87,7 +87,7 @@ export default function NavBar() {
                 }`}
             >
               <Link
-                href={item.url}
+                href={item?.slug}
                 className="hover:text-vibrant transition duration-300"
                 onClick={() => setActiveIdx(i)}
               >
@@ -147,7 +147,7 @@ export default function NavBar() {
             {menu?.map((item, i) => (
               <Link
                 key={i}
-                href={item.url}
+                href={item?.slug}
                 className={`text-2xl mobile-links poppins-font ${activeIdx === i ? "footer-active" : "text-white"
                   }`}
                 onClick={() => {
