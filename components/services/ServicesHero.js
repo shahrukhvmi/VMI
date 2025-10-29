@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import ServiceHorizontal from "./ServiceHorizontal";
 
 export default function ServicesHero({ data, slider }) {
-
-  console.log(slider, "slider")
+  console.log(slider, "slider");
   const router = useRouter();
 
   return (
@@ -27,13 +26,14 @@ export default function ServicesHero({ data, slider }) {
           <br /> allowing us to meet strategic goals across industries.
         </p> */}
 
-
-        <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-2xl"
+        <p
+          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-2xl"
           dangerouslySetInnerHTML={{
             __html:
               data?.[1]?.value ||
               "Our scope of work encompasses design, development, and marketing modules,<br /> allowing us to meet strategic goals across industries.",
-          }}></p>
+          }}
+        ></p>
 
         {/* <GlowButton /> */}
         <div className="example-2 footer-btn mt-6">
