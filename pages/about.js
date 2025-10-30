@@ -16,7 +16,7 @@ import React, { useState } from "react";
 export async function getServerSideProps() {
   try {
     // Fetch dynamic content from WordPress API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=about`);
     const data = await res.json(); // Assuming this gives you your layout data
     console.log(data, "about us page data");
     return {
@@ -39,8 +39,17 @@ export async function getServerSideProps() {
 // });
 
 export default function AboutPage({ layoutData }) {
-  console.log(layoutData, "dattaaaaaaaa data tata data");
+  console.log(layoutData, "about page data here");
 
+  const about = layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
+  const ceoSection = layoutData?.data?.page_data?.sections?.[1]?.fields;
+  const videoSection = layoutData?.data?.page_data?.sections?.[2]?.fields;
+  const ourVision = layoutData?.data?.page_data?.sections?.[3]?.fields;
+  const brandSecton = layoutData?.data?.page_data?.about_featured_gallery;
+
+  const buttonText = ourVision?.[0]?.value;
+  const ourVisionText = ourVision?.[1]?.value;
+  console.log(brandSecton, "brandSecton")
   const router = useRouter();
 
   return (
@@ -51,22 +60,21 @@ export default function AboutPage({ layoutData }) {
         canonical={`${meta_url}about/`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
-        <AboutHero />
+        <AboutHero about={about} brandSecton={brandSecton} />
 
         <HorizontalScrollSection />
 
-        <CeoSection />
+        <CeoSection ceoSection={ceoSection} />
 
-        <AboutVideo />
+        <AboutVideo videoSection={videoSection} />
 
         <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main py-40 z-10 relative about-last-quote">
           <div className="brand-secton-wrap center-content middle-quote-font">
-            <h3 className="text-center olivera-font">
-              Our vision lies in our clients’ success and goal fulfillment.{" "}
-              <br /> We don’t just deliver on expectations; we deliver what
-              moves
-              <br /> your business forward.
-            </h3>
+            <h3
+              className="text-center olivera-font"
+              dangerouslySetInnerHTML={{ __html: ourVisionText || "Our Vision"}}
+            ></h3>
+
             <div className="hero-btn example-2">
               <button
                 onClick={() => router.push("/contact-us")}
@@ -82,7 +90,7 @@ export default function AboutPage({ layoutData }) {
     `,
                 }}
               >
-                Speak with Us
+                {buttonText || "Speak with Us"}
               </button>
             </div>
           </div>

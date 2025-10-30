@@ -2,8 +2,8 @@ import React from "react";
 import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
-export default function PortfolioDesignWrap({ creative, slider }) {
-  console.log(slider, "slider inner")
+export default function PortfolioDesignWrap({ creative, slider, viewAll }) {
+  console.log(slider, "slider inner1")
   const router = useRouter();
 
   const portfolioImages = [
@@ -53,7 +53,7 @@ export default function PortfolioDesignWrap({ creative, slider }) {
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">
           <button
-            onClick={() => router.push("/design-portfolio")}
+            onClick={() => router.push(viewAll)}
             className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
             style={{
               background:

@@ -2,7 +2,7 @@ import React from "react";
 import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
-export default function PortfolioSocialWrap({ Social, slider }) {
+export default function PortfolioSocialWrap({ Social, slider, viewAll }) {
   const router = useRouter();
 
   const portfolioImages = [
@@ -37,7 +37,7 @@ export default function PortfolioSocialWrap({ Social, slider }) {
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">
           <button
-            onClick={() => router.push("/social-media-portfolio")}
+            onClick={() => router.push(viewAll)}
             className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
             style={{
               background:

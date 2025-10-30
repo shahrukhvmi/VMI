@@ -3,8 +3,8 @@
 import { useRouter } from "next/router";
 import OfficeSlider from "./OfficeSlider";
 
-export default function AboutHero({ pageData }) {
-  console.log(pageData, "from component");
+export default function AboutHero({ about, brandSecton }) {
+  console.log(about, "about from component");
 
   const router = useRouter();
 
@@ -14,18 +14,19 @@ export default function AboutHero({ pageData }) {
         <div className="hero-section-shadow"></div>
         <div className="about-banner-shadow"></div>
         <span className="bg-white/10 text-sm available-text px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font">
-          We don’t just design
+          {about?.[3]?.value || "We don’t just design"}
         </span>
-        <h1 className="hero-text leading-tight z-10 olivera-font">
-          Building Brands that Sustain, <br /> Expand, and Outperform
-          {/* <span className="hero-span olivera-font">Development</span> Agency */}
-        </h1>
-        <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
-          We plan, execute, and refine strategies, empowering businesses with{" "}
-          <br />
-          our expertise and focus on long-term growth, performance, and
-          strategic clarity.
-        </p>
+        <h1
+          className="hero-text leading-tight z-10 olivera-font"
+          dangerouslySetInnerHTML={{
+            __html: about?.[2]?.value || "Building Brands that Sustain,Expand, and Outperform"
+          }}
+        ></h1>
+        <p
+          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-3xl"
+          dangerouslySetInnerHTML={{ __html: about?.[1]?.value || "" }}
+        ></p>
+
 
         {/* <GlowButton /> */}
         <div className="example-2 footer-btn mt-6">
@@ -43,15 +44,15 @@ export default function AboutHero({ pageData }) {
     `,
             }}
           >
-            Talk to Our Team{" "}
+            {about?.[0]?.value || "Talk to Our Team"}
             {/* <span>
                   <img src="/btn-icon.svg" />
                 </span> */}
           </button>
         </div>
 
-        <OfficeSlider />
-      </section>
+        <OfficeSlider brandSecton={brandSecton} />
+      </section >
     </>
   );
 }

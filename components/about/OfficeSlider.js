@@ -27,7 +27,9 @@ const images = [
   "/office5.png",
 ];
 
-export default function OfficeSlider() {
+export default function OfficeSlider({ brandSecton }) {
+
+  console.log(brandSecton,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   const settings = {
     centerMode: true,
     centerPadding: "60px",
@@ -53,7 +55,7 @@ export default function OfficeSlider() {
   return (
     <div className="office-slider">
       <Slider {...settings} className="mt-0">
-        {images.map((img, idx) => (
+        {brandSecton?.map((img, idx) => (
           <div key={idx}>
             <img
               src={img}

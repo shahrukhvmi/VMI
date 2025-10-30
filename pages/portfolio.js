@@ -32,12 +32,13 @@ export default function portfolio({ layoutData }) {
 
   console.log(layoutData?.data?.page_data?.sections, "portfolio data ")
   const sliderData = layoutData?.data?.portfolio_loop_data
-  console.log(sliderData, "portfolio slider ")
+  console.log(layoutData, "layoutData")
 
   const creative = layoutData?.data?.page_data?.sections?.[0]?.fields;
   const webDev = layoutData?.data?.page_data?.sections?.[1]?.fields;
   const Social = layoutData?.data?.page_data?.sections?.[2]?.fields;
   const SearchMap = layoutData?.data?.page_data?.sections?.[3]?.fields;
+
   return (
     <>
       <MetaLayout
@@ -91,13 +92,13 @@ export default function portfolio({ layoutData }) {
           </div>
         </section>
 
-        <PortfolioDesignWrap creative={creative} slider={sliderData?.[0]?.posts} />
+        <PortfolioDesignWrap creative={creative} slider={sliderData?.[0]?.posts} viewAll={`${sliderData?.[0]?.prefix}/${sliderData?.[0]?.slug}`}/>
 
-        <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} />
+        <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} viewAll={`${sliderData?.[1]?.prefix}/${sliderData?.[1]?.slug}`}/>
 
-        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts}/>
+        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts} viewAll={`${sliderData?.[2]?.prefix}/${sliderData?.[2]?.slug}`}/>
 
-        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts}/>
+        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts} viewAll={`${sliderData?.[3]?.prefix}/${sliderData?.[3]?.slug}`}/>
       </main>
     </>
   );

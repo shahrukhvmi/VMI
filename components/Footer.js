@@ -58,12 +58,12 @@ function Footer() {
 
             <div className="footer-navigation py-8 mt-20">
               <ul className="flex justify-between poppins-font footer-nav">
-                {menu?.map(({ title, url }) => {
-                  const isActive = currentPath === url;
+                {menu?.map(({ title, slug }) => {
+                  const isActive = currentPath === slug;
 
                   return (
                     <li key={title} className="cursor-pointer">
-                      <Link href={url}>
+                      <Link href={slug}>
                         <p
                           className={`px-4 py-2 transition-all duration-300 ${isActive ? "footer-active" : ""
                             }`}

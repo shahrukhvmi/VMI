@@ -2,8 +2,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-export default function AboutVideo() {
+export default function AboutVideo({ videoSection }) {
+
+  const videoLink = videoSection?.[0]?.value;
+  const heading1 = videoSection?.[2]?.value;
+  const heading2 = videoSection?.[1]?.value;
   const videoRef = useRef(null);
+
+
+
+
+
+
+
+
   const [scale, setScale] = useState(0.6);
   const [isMobile, setIsMobile] = useState(null); // null = prevent SSR mismatch
 
@@ -46,8 +58,8 @@ export default function AboutVideo() {
     <div className="w-[90%] mx-auto max-container-width relative z-10 my-50 about-video-wrap">
       <div className="about-video-heading mb-20">
         <h2 className="olivera-font text-center">
-          Aligned Vision <br />
-          Collective Growth
+          {heading1 || "Aligned Vision"}<br />
+          {heading2 || "Collective Growth"}
         </h2>
       </div>
 
@@ -58,7 +70,7 @@ export default function AboutVideo() {
       >
         {isMobile ? (
           <video
-            src="/vmi-video-mobile.mp4"
+            src={videoLink || "/vmi-video-mobile.mp4"}
             autoPlay
             loop
             muted
@@ -67,7 +79,7 @@ export default function AboutVideo() {
           />
         ) : (
           <video
-            src="/vmi-video.mp4"
+            src={videoLink || "/vmi-video.mp4"}
             autoPlay
             loop
             muted
