@@ -23,7 +23,7 @@ export default function NavBar() {
   }, []);
 
 
-  const { menu, site, header_cta, cta_link } = data || {};
+  const { menu, site, header_cta } = data || {};
 
 
   const router = useRouter();
@@ -108,7 +108,7 @@ export default function NavBar() {
         {/* Desktop CTA Button */}
         <div className="hidden md:block nav-btn example-2 desktop-nav-btn">
           <button
-            onClick={() => router.push(cta_link || "/contact-us")}
+            onClick={() => router.push("/contact-us")}
             className="inner flex justify-center gap-2 poppins-font text-2xl items-center"
             style={{
               background:

@@ -32,7 +32,8 @@ export default function portfolio({ layoutData }) {
 
   console.log(layoutData?.data?.page_data?.sections, "portfolio data ")
   const sliderData = layoutData?.data?.portfolio_loop_data
-  console.log(layoutData, "layoutData")
+  console.log(sliderData, "sliderData?.[3]?.slug")
+  console.log(sliderData?.[3]?.prefix, "sliderData?.[3]?.prefix")
 
   const creative = layoutData?.data?.page_data?.sections?.[0]?.fields;
   const webDev = layoutData?.data?.page_data?.sections?.[1]?.fields;
@@ -96,9 +97,9 @@ export default function portfolio({ layoutData }) {
 
         <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} viewAll={`${sliderData?.[1]?.prefix}/${sliderData?.[1]?.slug}`}/>
 
-        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts} viewAll={`${sliderData?.[2]?.prefix}/${sliderData?.[2]?.slug}`}/>
+        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts} viewAll={`${sliderData?.[2]?.prefix}/${sliderData?.[3]?.slug}`}/>
 
-        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts} viewAll={`${sliderData?.[3]?.prefix}/${sliderData?.[3]?.slug}`}/>
+        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts} viewAll={`${sliderData?.[3]?.prefix}/${sliderData?.[4]?.slug}`}/>
       </main>
     </>
   );
