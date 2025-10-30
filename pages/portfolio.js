@@ -1,4 +1,4 @@
-// import PortfolioDesignWrap from "@/components/portfolio/PortfolioDesignWrap";
+import PortfolioDesignWrap from "@/components/portfolio/PortfolioDesignWrap";
 import PortfolioDevelopmentWrap from "@/components/portfolio/PortfolioDevelopmentWrap";
 import PortfolioHero from "@/components/portfolio/PortfolioHero";
 import PortfolioSeoWrap from "@/components/portfolio/PortfolioSeoWrap";
@@ -7,10 +7,7 @@ import { meta_url } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import Link from "next/link";
 import React from "react";
-const PortfolioDesignWrap = dynamic(
-  () => import("@/components/portfolio/PortfolioDesignWrapn"),
-  { ssr: false }
-);
+
 export async function getServerSideProps() {
   try {
     // Fetch dynamic content from WordPress API
