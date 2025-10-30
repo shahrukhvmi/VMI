@@ -2,7 +2,7 @@ import React from "react";
 import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
-export default function PortfolioSocialWrap() {
+export default function PortfolioSocialWrap({ Social, slider }) {
   const router = useRouter();
 
   const portfolioImages = [
@@ -26,14 +26,14 @@ export default function PortfolioSocialWrap() {
         <div className="portfolio-inner-heading text-center w-full">
           <h2 className="olivera-font">
             <span className="portfolio-inner-heading-top">
-              It's Not Just Social
+              {Social?.[1]?.value || " It's Not Just Social"}
             </span>{" "}
             <br />
-            <span className="portfolio-inner-heading-span">It's Strategy</span>
+            <span className="portfolio-inner-heading-span">{Social?.[0]?.value || "It's Strategy"}</span>
           </h2>
         </div>
       </div>
-      <PortfolioPageSlider portfolioImages={portfolioImages} concated={false} />
+      <PortfolioPageSlider slider={slider} concated={false} />
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">
           <button

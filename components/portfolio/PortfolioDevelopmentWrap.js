@@ -2,7 +2,7 @@ import React from "react";
 import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
-export default function PortfolioDevelopmentWrap() {
+export default function PortfolioDevelopmentWrap({ webDev, slider }) {
   const router = useRouter();
 
   const portfolioImages = [
@@ -28,13 +28,13 @@ export default function PortfolioDevelopmentWrap() {
       <div className="w-6xl mx-auto max-container-width">
         <div className="portfolio-inner-heading text-center w-full">
           <h2 className="olivera-font">
-            <span className="portfolio-inner-heading-top">Web Development</span>{" "}
+            <span className="portfolio-inner-heading-top">{webDev?.[1]?.value || "Web Development"}</span>{" "}
             <br />
             <span className="portfolio-inner-heading-span">That Performs</span>
           </h2>
         </div>
       </div>
-      <PortfolioPageSlider portfolioImages={portfolioImages} concated={false} />
+      <PortfolioPageSlider slider={slider} concated={false} />
 
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">

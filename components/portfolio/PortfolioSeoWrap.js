@@ -2,7 +2,7 @@ import React from "react";
 import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
-export default function PortfolioSeoWrap() {
+export default function PortfolioSeoWrap({ SearchMap ,slider }) {
   const router = useRouter();
 
   const portfolioImages = [
@@ -21,16 +21,16 @@ export default function PortfolioSeoWrap() {
         <div className="portfolio-inner-heading text-center w-full">
           <h2 className="olivera-font">
             <span className="portfolio-inner-heading-top">
-              Search is the Map
+              {SearchMap?.[1]?.value || "Search is the Map"}
             </span>{" "}
             <br />
             <span className="portfolio-inner-heading-span">
-              We're the Compass.
+              {SearchMap?.[0]?.value || "We're the Compass."}
             </span>
           </h2>
         </div>
       </div>
-      <PortfolioPageSlider portfolioImages={portfolioImages} concated={true} />
+      <PortfolioPageSlider slider={slider} concated={true} />
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">
           <button

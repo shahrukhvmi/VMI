@@ -2,7 +2,8 @@ import React from "react";
 import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
-export default function PortfolioDesignWrap() {
+export default function PortfolioDesignWrap({ creative, slider }) {
+  console.log(slider, "slider inner")
   const router = useRouter();
 
   const portfolioImages = [
@@ -37,15 +38,17 @@ export default function PortfolioDesignWrap() {
       <div className="w-6xl mx-auto max-container-width">
         <div className="portfolio-inner-heading text-center w-full">
           <h2 className="olivera-font">
-            <span className="portfolio-inner-heading-top">Creative Design</span>{" "}
+            <span className="portfolio-inner-heading-top">{creative?.[1]?.value || "Creative Design"}</span>
             <br />
             <span className="portfolio-inner-heading-span">
-              From Idea to Impact
+
+
+              {creative?.[0]?.value || "From Idea to Impact"}
             </span>
           </h2>
         </div>
       </div>
-      <PortfolioPageSlider portfolioImages={portfolioImages} concated={false} />
+      <PortfolioPageSlider slider={slider || null} concated={false} />
 
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">

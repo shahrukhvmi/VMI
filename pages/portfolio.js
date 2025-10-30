@@ -8,10 +8,40 @@ import MetaLayout from "@/Meta/MetaLayout";
 import Link from "next/link";
 import React from "react";
 
-export default function portfolio() {
+export async function getServerSideProps() {
+  try {
+    // Fetch dynamic content from WordPress API
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=portfolio`);
+    const data = await res.json(); // Assuming this gives you your layout data
+    console.log(data, "portfolioo us page data");
+    return {
+      props: {
+        layoutData: data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data from WordPress API:", error);
+    return {
+      props: {
+        DataTextureLoader: null,
+      },
+    };
+  }
+}
+export default function portfolio({ layoutData }) {
+
+  console.log(layoutData?.data?.page_data?.sections, "portfolio data ")
+  const sliderData = layoutData?.data?.portfolio_loop_data
+  console.log(sliderData, "portfolio slider ")
+
+  const creative = layoutData?.data?.page_data?.sections?.[0]?.fields;
+  const webDev = layoutData?.data?.page_data?.sections?.[1]?.fields;
+  const Social = layoutData?.data?.page_data?.sections?.[2]?.fields;
+  const SearchMap = layoutData?.data?.page_data?.sections?.[3]?.fields;
   return (
     <>
       <MetaLayout
+        data={layoutData?.head?.json}
         title="Our Creative Work"
         description="Explore our portfolio showcasing UI/UX design, web development, branding, SEO, and digital marketing projects for clients across industries and markets."
         canonical={`${meta_url}portfolio/`}
@@ -61,13 +91,13 @@ export default function portfolio() {
           </div>
         </section>
 
-        <PortfolioDesignWrap />
+        <PortfolioDesignWrap creative={creative} slider={sliderData?.[0]?.posts} />
 
-        <PortfolioDevelopmentWrap />
+        <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} />
 
-        <PortfolioSocialWrap />
+        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts}/>
 
-        <PortfolioSeoWrap />
+        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts}/>
       </main>
     </>
   );

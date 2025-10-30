@@ -8,8 +8,7 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PortfolioPageSlider(props) {
-  const portfolioImages = props?.portfolioImages;
+export default function PortfolioPageSlider({ slider }) {
   const swiperRef = useRef(null);
   const containerRef = useRef(null);
   const [swiperReady, setSwiperReady] = useState(false);
@@ -46,9 +45,6 @@ export default function PortfolioPageSlider(props) {
     };
   }, [swiperReady]);
 
-  const imagesToRender = props?.concated
-    ? portfolioImages.concat(portfolioImages)
-    : portfolioImages;
 
   return (
     <div ref={containerRef} className="w-full overflow-hidden py-8 mt-16">
@@ -71,11 +67,11 @@ export default function PortfolioPageSlider(props) {
         }}
         className="portfolio-slider"
       >
-        {imagesToRender.map((item, i) => (
+        {slider?.map((item, i) => (
           <SwiperSlide key={i} className="home-portfolio-slide">
-            <Link href={item?.url}>
-              <img
-                src={item?.img}
+            <Link href={item?.slug}>
+              <Image
+                src={item?.featured_image}
                 alt={`Portfolio item ${i + 1}`}
                 className="rounded-2xl w-full h-auto max-h-[400px] object-cover object-center"
                 width={200}
