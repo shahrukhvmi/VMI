@@ -43,9 +43,9 @@ export async function getServerSideProps(context) {
 
 export default function SlugDesign({ layoutData }) {
 
-    console.log(layoutData?.data?.name, "layoutDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     console.log(layoutData?.data, "layoutDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
+    const heading1 = layoutData?.data?.data?.custom_detail?.[0]?.main_heading_h2?.value;
+    const heading2 = layoutData?.data?.data?.custom_detail?.[1]?.span_heading_h2?.value;
     const Data = layoutData?.data?.posts || [];
 
 
@@ -71,11 +71,11 @@ export default function SlugDesign({ layoutData }) {
                     <div className="portfolio-inner-heading text-center w-full">
                         <h2 className="olivera-font">
                             <span className="portfolio-inner-heading-top">
-                                Web Development
+                                {heading1}
                             </span>{" "}
                             <br />
                             <span className="portfolio-inner-heading-span">
-                                That Performs
+                                {heading2}
                             </span>
                         </h2>
                     </div>
