@@ -55,6 +55,7 @@ export default function AboutPage({ layoutData }) {
   return (
     <>
       <MetaLayout
+        data={layoutData?.head?.json}
         title="Our Legacy of Brand Success"
         description="Built on the mission to enable business growth, we blend strategy, creativity, and expertise to help brands thrive locally and globally for the long term."
         canonical={`${meta_url}about/`}
@@ -72,7 +73,7 @@ export default function AboutPage({ layoutData }) {
           <div className="brand-secton-wrap center-content middle-quote-font">
             <h3
               className="text-center olivera-font"
-              dangerouslySetInnerHTML={{ __html: ourVisionText || "Our Vision"}}
+              dangerouslySetInnerHTML={{ __html: ourVisionText || "Our Vision" }}
             ></h3>
 
             <div className="hero-btn example-2">

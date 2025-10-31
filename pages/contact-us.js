@@ -39,6 +39,7 @@ export default function ContactUs({ layoutData }) {
   return (
     <>
       <MetaLayout
+        data={layoutData?.head?.json}
         title="Get in Touch with Our Marketing Agency"
         description="Get in touch with Vibrant Media Inc. for tailored marketing solutions. Contact us via phone, email, or our online form to discuss your brand’s needs."
         canonical={`${meta_url}contact-us/`}

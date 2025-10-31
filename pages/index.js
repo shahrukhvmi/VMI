@@ -53,12 +53,13 @@ export default function Index({ layoutData }) {
 
   const data = layoutData?.data?.page_data;
 
-  console.log(data, "datadatadatadatadata");
+  console.log(layoutData?.head?.json, "layoutData?.head?.json?.head?.jsontadatadatadata");
   const router = useRouter();
 
   return (
     <>
       <MetaLayout
+        data={layoutData?.head?.json}
         title="Full-stack Marketing and Branding Agency"
         description="Vibrant Media Inc. delivers tailored digital marketing, web design, SEO, and branding services for businesses aiming for growth locally and globally."
         canonical={`${meta_url}`}
