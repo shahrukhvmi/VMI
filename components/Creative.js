@@ -78,7 +78,7 @@ function Creative({ creativeData, services, heading }) {
                   <span className="creative-menu-span">{service?.title}</span>
                   <span className="icon">
                     <Image
-                      src={service?.image || "/creative-icon-4.png"}
+                      src={service?.data?.card_thumbnail || "/creative-icon-4.png"}
                       width={150}
                       height={150}
                       alt={service?.title || "Creative Icon"}

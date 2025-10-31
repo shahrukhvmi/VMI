@@ -49,7 +49,7 @@ export async function getServerSideProps() {
 }
 
 export default function Index({ layoutData }) {
-  console.log(layoutData, "Index Data");
+  console.log(layoutData, "digital");
 
   const data = layoutData?.data?.page_data;
 
