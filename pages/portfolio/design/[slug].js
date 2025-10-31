@@ -37,14 +37,14 @@ export default function SlugPage({ layoutData, slug }) {
   const router = useRouter();
   if (!layoutData) return <p>Data not found for: {slug}</p>;
 
-  const mainHeading = layoutData?.data?.page_data?.title || "Default Title"
-  const describtion = layoutData?.data?.content || "Default Title"
-  const client = layoutData?.data?.page_data?.data?.client || "Default Title"
-  const country = layoutData?.data?.page_data?.data?.country || "Default Title"
-  const image = layoutData?.data?.page_data?.data || "Default Title"
+  const mainHeading = layoutData?.data?.page_data?.title;
+  const describtion = layoutData?.data?.content;
+  const client = layoutData?.data?.page_data?.data?.client;
+  const country = layoutData?.data?.page_data?.data?.country;
+  const image = layoutData?.data?.page_data?.data;
   const scope = layoutData?.data?.page_data?.data?.scope
   const tools = layoutData?.data?.page_data?.data?.tools
-  const label = layoutData?.data?.page_data?.data?.specific_category || "Default Title"
+  const label = layoutData?.data?.page_data?.data?.specific_category;
 
   console.log(layoutData, "slug base data")
 
@@ -79,16 +79,19 @@ export default function SlugPage({ layoutData, slug }) {
             </div>
 
             <div className="single-portfolio-wrapper flex mt-5 gap-6 mb-30">
-
-              <div className="single-portfolio-left">
-                {image?.featured_gallery?.map((img, key) => {
-
-                  return <img src={img || "/almas.png"} key={key} alt={`gallery-${key}`} />;
-                })}
-
-              </div>
+              {image && (
 
 
+
+                <div className="single-portfolio-left">
+                  {image?.featured_gallery?.map((img, key) => {
+
+                    return <img src={img || "/almas.png"} key={key} alt={`gallery-${key}`} />;
+                  })}
+
+                </div>
+
+              )}
               <div className="single-portfolio-right">
                 {label && (
 
