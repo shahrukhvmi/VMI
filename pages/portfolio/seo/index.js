@@ -1,6 +1,5 @@
 import { meta_url } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
-import { context } from "@react-three/fiber";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -9,21 +8,8 @@ import React from "react";
 
 
 
-export async function getServerSideProps(context) {
-
-    console.log(context, "context")
-    const slugArray = context.params || [];
-
-
-    console.log("slugArray", slugArray);
-
-
+export async function getServerSideProps() {
     const slugs = "seo-portfolio"
-    // if (typeof slug === "string") {
-    //     slug = slug?.replace(/^view\//, "");
-    // } else if (slug) {
-    //     slug = slug.filter((part) => part !== "view").join("/");
-    // }
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=${slugs}`);
 
@@ -50,12 +36,16 @@ export async function getServerSideProps(context) {
 export default function SlugDesign({ layoutData }) {
 
     console.log(layoutData?.data, "layoutDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    const heading1 = layoutData?.data?.custom_detail?.[0]?.main_heading_h2?.value;
+    const heading1 = layoutData?.data?.data?.custom_detail?.[0]?.main_heading_h2?.value;
     const heading2 = layoutData?.data?.data?.custom_detail?.[1]?.span_heading_h2?.value;
     const Data = layoutData?.data?.posts || [];
 
 
-
+    console.log(heading1, "heading1")
+    const chunkedData = [];
+    for (let i = 0; i < Data.length; i += 2) {
+        chunkedData.push(Data.slice(i, i + 2));
+    }
 
 
     return (<>
@@ -88,30 +78,41 @@ export default function SlugDesign({ layoutData }) {
 
                     {/* <div className="portfolio-single flex justify-center gap-30"> */}
 
-                    <div className="portfolio-single flex justify-center gap-30">
-                        {Data.map((item, index) => (
-                            <Link href={`/portfolio/seo-portfolio/${item?.slug}`} key={index}>
-                                <div className="detail-portfolio-image-wrapper relative">
-                                    <Image src={item?.image || "/web-1.png"} width={500} height={500} />
-                                    <div className="detail-portfolio-image-overlay">
-                                        <div className="detail-portfolio-banner-badge">
-                                            <div className="mb-2">
-                                                <span className="ms-2 poppins-font detail-portfolio-branding">
-                                                    {item?.title || "Web Design & Development"}
-                                                </span>
+                    {chunkedData.map((row, rowIndex) => (
+                        <div
+                            key={rowIndex}
+                            className={`portfolio-single flex justify-center gap-30 ${rowIndex === chunkedData.length - 1
+                                ? "mb-0 md:mb-40"
+                                : "mb-10"
+                                }`}
+                        >
+                            {row.map((item) => (
+                                <Link href={`/portfolio/seo/${item.slug}`} key={item.id}>
+                                    <div className="detail-portfolio-image-wrapper relative">
+                                        <Image
+                                            src={item.image || "/placeholder.png"}
+                                            width={500}
+                                            height={500}
+                                            alt={item.title}
+                                            className="object-cover"
+                                        />
+                                        <div className="detail-portfolio-image-overlay">
+                                            <div className="detail-portfolio-banner-badge">
+                                                <div className="mb-2">
+                                                    <span className="ms-2 poppins-font detail-portfolio-branding">
+                                                        Branding
+                                                    </span>
+                                                </div>
+                                                <p className="ms-2 poppins-font font-bold">
+                                                    {item.title}
+                                                </p>
                                             </div>
-                                            <p className="ms-2 poppins-font font-bold">
-                                                {item?.title || "Web Design & Development"}
-                                            </p>
                                         </div>
                                     </div>
-                                </div>
-                            </Link>
-
-
-
-                        ))}
-                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    ))}
 
                     {/* <Link href="/development-portfolio/earthane">
                             <div className="detail-portfolio-image-wrapper relative">

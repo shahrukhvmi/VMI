@@ -2,7 +2,7 @@ import { meta_url } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
 // get  all data by slug and render page accordingly 🤞🤞🤞🤞🤞🤞🤞🤞🤞
 export async function getServerSideProps(context) {
   const { slug } = context.params;
@@ -29,6 +29,8 @@ export async function getServerSideProps(context) {
 }
 
 export default function SlugPage({ layoutData, slug }) {
+
+  const router = useRouter();
   if (!layoutData) return <p>Data not found for: {slug}</p>;
 
   const mainHeading = layoutData?.data?.page_data?.title || "Default Title"
@@ -59,23 +61,21 @@ export default function SlugPage({ layoutData, slug }) {
           </div>
 
           <div className="w-6xl mx-auto max-container-width">
-            <div className="porfolio-back-icon">
-              <Link
-                href="/portfolio"
-                className="flex text-[18px] poppins-font items-center"
-              >
-                <span className="me-2">
-                  <Image src={"/back-icon.svg"} width={20} height={20} />
-                </span>
-                Back
-              </Link>
+            <div
+              onClick={() => router.back()}
+              className="flex text-[18px] poppins-font items-center cursor-pointer"
+            >
+              <span className="me-2">
+                <Image src={"/back-icon.svg"} width={20} height={20} />
+              </span>
+              Back
             </div>
 
             <div className="single-portfolio-wrapper flex mt-5 gap-6 mb-30">
 
               <div className="single-portfolio-left">
                 {image?.featured_gallery?.map((img, key) => {
-                 
+
                   return <img src={img || "/almas.png"} key={key} alt={`gallery-${key}`} />;
                 })}
 

@@ -33,8 +33,7 @@ export async function getServerSideProps() {
 export default function portfolio({ layoutData }) {
   console.log(layoutData?.data?.page_data?.sections, "portfolio data ");
   const sliderData = layoutData?.data?.portfolio_loop_data;
-  console.log(sliderData, "sliderData?.[3]?.slug");
-  console.log(sliderData?.[3]?.prefix, "sliderData?.[3]?.prefix");
+  console.log(layoutData, "layoutData");
 
   const creative = layoutData?.data?.page_data?.sections?.[0]?.fields;
   const webDev = layoutData?.data?.page_data?.sections?.[1]?.fields;
@@ -109,7 +108,7 @@ export default function portfolio({ layoutData }) {
         <PortfolioSocialWrap
           Social={Social}
           slider={sliderData?.[2]?.posts}
-          viewAll={`portfolio/social-media/`}
+          viewAll={`portfolio/social/`}
         />
 
         <PortfolioSeoWrap
