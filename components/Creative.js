@@ -4,23 +4,23 @@ import RingSliderTwo from "./RingSliderTwo";
 import HomeRingSlider from "./HomeRingSlider";
 import Image from "next/image";
 
-function Creative({ creativeData, services, heading  }) {
-  console.log(services, "services")
-  console.log(heading, "heading")
+function Creative({ creativeData, services, heading }) {
+  console.log(creativeData, "creativeData");
+
   return (
     <>
       <section className="creative-main z-10 relative">
         <div className="w-6xl mx-auto max-container-width">
           <div className="inner-heading text-center w-full">
             <h2 className="olivera-font ">
-
               <>
                 {heading?.[0]?.value || "Our Unrestricted"} <br />
-                <span className="inner-heading-span"> {heading?.[1]?.value || "Prowess!"} </span>
+                <span className="inner-heading-span">
+                  {" "}
+                  {heading?.[1]?.value || "Prowess!"}{" "}
+                </span>
               </>
-
             </h2>
-
           </div>
 
           {/* <div className="creative-menu olivera-font">
@@ -71,33 +71,24 @@ function Creative({ creativeData, services, heading  }) {
             </div>
           </div> */}
 
-
-
-
-
-
-
-
-
-
           <div className="creative-menu olivera-font">
             {services?.map((service, key) => (
-
-
               <>
                 <div className="creative-menu-item" key={key}>
                   <span className="creative-menu-span">{service?.title}</span>
                   <span className="icon">
-                    <Image src={service?.image || "/creative-icon-4.png"} width={150} height={150} alt={service?.title || "Creative Icon"} />
+                    <Image
+                      src={service?.image || "/creative-icon-4.png"}
+                      width={150}
+                      height={150}
+                      alt={service?.title || "Creative Icon"}
+                    />
                   </span>
                 </div>
                 <hr className="creative-hr" />
-
               </>
-
             ))}
           </div>
-
         </div>
 
         <div className="w-[90%] max-w-6xl creative-second-sec mx-auto"></div>

@@ -53,9 +53,7 @@ export default function Index({ layoutData }) {
 
   const data = layoutData?.data?.page_data;
 
-
-
-  console.log(data, "datadatadatadatadata")
+  console.log(data, "datadatadatadatadata");
   const router = useRouter();
 
   return (
@@ -75,7 +73,11 @@ export default function Index({ layoutData }) {
           <RingSection ringSec={data?.sections?.[1]?.fields[0]?.subfields} />
         </div>
         {/* <StatsSection /> */}
-        <Creative creativeData={data?.sections?.[4]?.fields} services={data?.featured_services} heading={data?.sections?.[2]?.fields} />
+        <Creative
+          creativeData={data?.featured_ring_sliders}
+          services={data?.featured_services}
+          heading={data?.sections?.[2]?.fields}
+        />
 
         {/* Mobile Section */}
 
@@ -155,7 +157,6 @@ export default function Index({ layoutData }) {
 
         <HomePortfolioSection portfolio={data?.featured_portfolios} />
 
-
         <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main md:pt-100 py-40 z-10 relative">
           <div className="brand-secton-wrap center-content middle-quote-font">
             <h3
@@ -213,7 +214,6 @@ export default function Index({ layoutData }) {
                   }}
                 >
                   {data?.sections?.[9]?.fields[0]?.value || ""}
-
                 </button>
               </div>
             </div>

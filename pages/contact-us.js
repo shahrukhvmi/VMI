@@ -7,9 +7,11 @@ import React from "react";
 export async function getServerSideProps() {
   try {
     // Fetch dynamic content from WordPress API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/layout`);
-    const data = await res.json(); // Assuming this gives you your layout data
-
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=contact-us`
+    );
+    const data = await res.json();
+    console.log(data, "services page data");
     return {
       props: {
         layoutData: data,
@@ -26,6 +28,12 @@ export async function getServerSideProps() {
 }
 
 export default function ContactUs({ layoutData }) {
+  const formData = layoutData?.data?.page_data?.sections[0]?.fields;
+  const contactUsReferral =
+    layoutData?.data?.page_data?.contact_us_referral_dropdown;
+
+  const contactUsServices =
+    layoutData?.data?.page_data?.contact_us_services_dropdown;
   console.log(layoutData, "From contact Page");
 
   return (
@@ -36,7 +44,11 @@ export default function ContactUs({ layoutData }) {
         canonical={`${meta_url}contact-us/`}
       />
       <main className="relative text-white overflow-hidden">
-        <ContactForm />
+        <ContactForm
+          form_Data={formData}
+          contactUsReferral={contactUsReferral}
+          contactUsServices={contactUsServices}
+        />
         {/* <Assistance /> */}
       </main>
     </>
