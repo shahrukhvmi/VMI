@@ -109,9 +109,9 @@ export default function ServiceRingSection({ creativeData }) {
                 </div>
                 <h3 className="mb-4 olivera-font">{item.title}</h3>
                 <p className="poppins-font">{item.body}</p>
-                <a href={item.link} className="btn">
+                {/* <a href={item.link} className="btn">
                   Learn More
-                </a>
+                </a> */}
               </div>
             ))}
           </div>

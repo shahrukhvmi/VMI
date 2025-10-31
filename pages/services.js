@@ -54,8 +54,12 @@ export default function services({ layoutData }) {
 
   const data =
     layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
+
   const serviceSlider = layoutData?.data?.page_data?.all_services;
   const ringServiceSlider = layoutData?.data?.page_data?.services_ring_sliders;
+  const technologyContent = layoutData?.data?.page_data?.sections?.[3]?.fields;
+  const testimonialData = layoutData?.data?.page_data?.featured_testimonials;
+  console.log(technologyContent, "Technology ");
   console.log(layoutData, "checking dataaa");
   const router = useRouter();
 
@@ -78,12 +82,19 @@ export default function services({ layoutData }) {
 
         <div className="max-container-width w-6xl mx-auto flex justify-center great-main items-center z-10 relative service-great-responsive">
           <div className="great-design-wrap center-content middle-quote-font">
-            <h3 className="text-center olivera-font">
-              Great design isn’t just visual — it’s functional,
-              <br /> intentional, and obsessively crafted to move people.
-            </h3>
+            <h3
+              className="text-center olivera-font"
+              dangerouslySetInnerHTML={{
+                __html:
+                  layoutData?.data?.page_data?.sections[1]?.fields[0]
+                    ?.subfields[0]?.value || "", // Ensure the value is a string
+              }}
+            ></h3>
             <div className="text-center py-6">
-              <p className="poppins-font">By Vibrant Media</p>
+              <p className="poppins-font">
+                {layoutData?.data?.page_data?.sections[1]?.fields[0]
+                  ?.subfields[1]?.value || "By Vibrant Media"}
+              </p>
             </div>
           </div>
         </div>
@@ -170,15 +181,17 @@ export default function services({ layoutData }) {
           </div>
         </div>
 
-        {/* <div className="mt-70">
-          <Technologia />
+        <div className="mt-70">
+          <Technologia techData={technologyContent} />
         </div>
-        <TestimonialSlider /> */}
+        <TestimonialSlider testimonialData={testimonialData} />
 
         <div className="max-container-width w-6xl mx-auto flex justify-center brand-secton-main pb-70 pt-50 z-10 relative service-brand-responsive">
           <div className="brand-secton-wrap center-content middle-quote-font">
             <h3 className="text-center olivera-font">
-              We build what your brand really needs <span>.</span>
+              {technologyContent[1]?.value ||
+                "We build what your brand really needs"}{" "}
+              <span>.</span>
             </h3>
             <div className="hero-btn example-2">
               <button
@@ -195,7 +208,7 @@ export default function services({ layoutData }) {
     `,
                 }}
               >
-                Get a Quote{" "}
+                {technologyContent[0]?.value || "Get a Quote"}
               </button>
             </div>
           </div>
