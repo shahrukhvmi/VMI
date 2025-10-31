@@ -11,7 +11,9 @@ import React from "react";
 export async function getServerSideProps() {
   try {
     // Fetch dynamic content from WordPress API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=portfolio`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=portfolio`
+    );
     const data = await res.json(); // Assuming this gives you your layout data
     console.log(data, "portfolioo us page data");
     return {
@@ -29,11 +31,10 @@ export async function getServerSideProps() {
   }
 }
 export default function portfolio({ layoutData }) {
-
-  console.log(layoutData?.data?.page_data?.sections, "portfolio data ")
-  const sliderData = layoutData?.data?.portfolio_loop_data
-  console.log(sliderData, "sliderData?.[3]?.slug")
-  console.log(sliderData?.[3]?.prefix, "sliderData?.[3]?.prefix")
+  console.log(layoutData?.data?.page_data?.sections, "portfolio data ");
+  const sliderData = layoutData?.data?.portfolio_loop_data;
+  console.log(sliderData, "sliderData?.[3]?.slug");
+  console.log(sliderData?.[3]?.prefix, "sliderData?.[3]?.prefix");
 
   const creative = layoutData?.data?.page_data?.sections?.[0]?.fields;
   const webDev = layoutData?.data?.page_data?.sections?.[1]?.fields;
@@ -93,13 +94,29 @@ export default function portfolio({ layoutData }) {
           </div>
         </section>
 
-        <PortfolioDesignWrap creative={creative} slider={sliderData?.[0]?.posts} viewAll={`portfolio/design/${sliderData?.[0]?.slug}`}/>
+        <PortfolioDesignWrap
+          creative={creative}
+          slider={sliderData?.[0]?.posts}
+          viewAll={`portfolio/design/`}
+        />
 
-        <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} viewAll={`portfolio/development/${sliderData?.[1]?.slug}`}/>
+        <PortfolioDevelopmentWrap
+          webDev={webDev}
+          slider={sliderData?.[1]?.posts}
+          viewAll={`portfolio/development/`}
+        />
 
-        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts} viewAll={`portfolio/social-media/${sliderData?.[3]?.slug}`}/>
+        <PortfolioSocialWrap
+          Social={Social}
+          slider={sliderData?.[2]?.posts}
+          viewAll={`portfolio/social-media/`}
+        />
 
-        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts} viewAll={`portfolio/seo-portfolio/${sliderData?.[4]?.slug}`}/>
+        <PortfolioSeoWrap
+          SearchMap={SearchMap}
+          slider={sliderData?.[3]?.posts}
+          viewAll={`portfolio/seo/`}
+        />
       </main>
     </>
   );
