@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HomeRingSlider({ creativeData }) {
+  console.log(creativeData, "creative");
 
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
@@ -109,7 +110,10 @@ export default function HomeRingSlider({ creativeData }) {
                 </div>
                 <h3 className="mb-4 olivera-font">{item.title}</h3>
                 <p className="poppins-font">{item.body}</p>
-                <a href={item.link} className="btn">Learn More</a> {/* Optional link to each item */}
+                {/* <a href={item.link} className="btn">
+                  Learn More
+                </a>{" "} */}
+                {/* Optional link to each item */}
               </div>
             ))}
           </div>

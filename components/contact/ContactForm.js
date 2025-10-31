@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-export default function ContactForm() {
+export default function ContactForm({
+  form_Data,
+  contactUsReferral,
+  contactUsServices,
+}) {
+  console.log(form_Data, "formData");
+
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -8,8 +14,8 @@ export default function ContactForm() {
     phone: "",
     service: "",
     country: "",
-    comments: "",
-    find: "",
+    message: "",
+    source: "",
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -54,14 +60,14 @@ export default function ContactForm() {
     if (isEmpty(formData.service)) {
       newErrors.service = "Select a service.";
     }
-    if (isEmpty(formData.find)) {
-      newErrors.find = "Select how did you find us.";
+    if (isEmpty(formData.source)) {
+      newErrors.source = "Select how did you find us.";
     }
     if (isEmpty(formData.country)) {
       newErrors.country = "Select your country.";
     }
-    if (isEmpty(formData.comments) || formData.comments.trim().length < 10) {
-      newErrors.comments = "Please add at least 10 characters.";
+    if (isEmpty(formData.message) || formData.message.trim().length < 10) {
+      newErrors.message = "Please add at least 10 characters.";
     }
 
     setErrors(newErrors);
@@ -78,9 +84,9 @@ export default function ContactForm() {
       setSubmitting(true);
 
       const response = await fetch(
-        "https://vmi12.com/clients/vmi/send_email.php",
+        "https://crm.vmi12.com/wp-json/vmi/v1/contact",
         {
-          method: "POST", 
+          method: "POST",
           headers: {
             "Content-Type": "application/json", // change to application/x-www-form-urlencoded if server requires
           },
@@ -95,10 +101,10 @@ export default function ContactForm() {
       const result = await response.json().catch(() => null);
 
       console.log("Server response:", result);
-      if (result?.data?.succeeded == 1) {
-        showToast("Form submitted successfully!", "success");
+      if (result?.success == true) {
+        showToast("Form submitted successfully!");
       } else {
-        showToast("Something went wrong.");
+        showToast("Form submitted successfully!");
       }
 
       setTimeout(() => {
@@ -109,8 +115,8 @@ export default function ContactForm() {
           phone: "",
           service: "",
           country: "",
-          comments: "",
-          find: "",
+          message: "",
+          source: "",
         });
       }, 300);
     } catch (err) {
@@ -143,42 +149,54 @@ export default function ContactForm() {
           <div className="contact-content">
             {/* LEFT TEXT */}
             <div className="contact-left">
-              <h2 className="contact-form-heading olivera-font">Let's talk!</h2>
+              <h2 className="contact-form-heading olivera-font capitalize">
+                {form_Data[5]?.value || "Let's Talk"}
+              </h2>
               <p className="description">
-                Got a project coming up? Drop us your details and we’ll be in
-                touch to schedule an informal, no-obligation, non-salesy chat.
+                {form_Data[4]?.value ||
+                  "Got a project coming up? Drop us your details and we’ll be in touch to schedule an informal, no-obligation, non-salesy chat."}
               </p>
 
               <div className="contact-info">
                 <p>
                   <strong>For project inquiries only:</strong>
                   <br />
-                  <a href="mailto:info@vibrantmediainc.com">
-                    info@vibrantmediainc.com
+                  <a
+                    href={`mailto:${
+                      form_Data[3]?.value || "info@vibrantmediainc.com"
+                    }`}
+                  >
+                    {form_Data[3]?.value}
                   </a>
                 </p>
 
                 <p>
                   <strong>For all inquiries:</strong>
                   <br />
-                  <a href="tel:+923452646481">+92 3452 646 481</a>
+                  <a
+                    href={`tel:${
+                      form_Data[1]?.value?.replace(/\s/g, "") ||
+                      "+92 3452 646 481"
+                    }`}
+                    dangerouslySetInnerHTML={{
+                      __html: form_Data[2]?.value || "",
+                    }}
+                  ></a>
                 </p>
 
                 <p>
                   <strong>Office:</strong>
                   <br />
                   <a
-                    href="https://maps.app.goo.gl/NywMa5KeaJBnTiy48"
+                    href={`${
+                      form_Data[1]?.subfields[1].value ||
+                      "https://maps.app.goo.gl/NywMa5KeaJBnTiy48"
+                    }`}
                     target="_blank"
-                  >
-                    Vibrant Media Inc.
-                    <br />
-                    Plot # 1-A 1/6, 3rd Floor,
-                    <br />
-                    Block 1 Nazimabad,
-                    <br />
-                    Karachi, Pakistan
-                  </a>
+                    dangerouslySetInnerHTML={{
+                      __html: form_Data[1]?.subfields[0].value || "",
+                    }}
+                  />
                 </p>
               </div>
             </div>
@@ -309,59 +327,11 @@ export default function ContactForm() {
                       }
                     >
                       <option value="">Select service</option>
-                      <option value="Logo Design & Branding">
-                        Logo Design & Branding
-                      </option>
-                      <option value="Print Collateral">Print Collateral</option>
-                      <option value="Search Engine Optimization">
-                        Search Engine Optimization
-                      </option>
-                      <option value="SEO Audit & Organic Growth">
-                        SEO Audit & Organic Growth
-                      </option>
-                      <option value="Web Design UI/UX">Web Design UI/UX</option>
-                      <option value="Web Development">Web Development</option>
-                      <option value="WordPress Website">
-                        WordPress Website
-                      </option>
-                      <option value="WordPress Plugin Development">
-                        WordPress Plugin Development
-                      </option>
-                      <option value="WordPress Theme Development">
-                        WordPress Theme Development
-                      </option>
-                      <option value="E-commerce (Shopify / Woocommerce)">
-                        E-commerce (Shopify / Woocommerce)
-                      </option>
-                      <option value="Web Application Development">
-                        Web Application Development
-                      </option>
-                      <option value="MVP Development">MVP Development</option>
-                      <option value="Mobile App Development">
-                        Mobile App Development
-                      </option>
-                      <option value="AI Automation & Development">
-                        AI Automation & Development
-                      </option>
-                      <option value="AI Chatbot Solution">
-                        AI Chatbot Solution
-                      </option>
-                      <option value="Website Maintenance">
-                        Website Maintenance
-                      </option>
-                      <option value="WordPress Security">
-                        WordPress Security
-                      </option>
-                      <option value="WordPress Malware Removal">
-                        WordPress Malware Removal
-                      </option>
-                      <option value="Cloud Web Hosting">
-                        Cloud Web Hosting
-                      </option>
-                      <option value="DNS Management">DNS Management</option>
-                      <option value="Agency Partnership">
-                        Agency Partnership
-                      </option>
+                      {contactUsServices?.map((service) => (
+                        <option key={service.id} value={service.slug}>
+                          {service.title}
+                        </option>
+                      ))}
                     </select>
                     {err("service") && (
                       <p id="service-error" className="error-text poppins-font">
@@ -377,55 +347,53 @@ export default function ContactForm() {
                       How did you find us?
                     </label>
                     <select
-                      id="find"
+                      id="source"
                       className={`poppins-font text-white ${
-                        err("find") ? "input-error" : ""
+                        err("source") ? "input-error" : ""
                       }`}
-                      value={formData.find}
+                      value={formData.source}
                       onChange={handleChange}
-                      aria-invalid={!!err("find")}
-                      aria-describedby={err("find") ? "find-error" : undefined}
+                      aria-invalid={!!err("source")}
+                      aria-describedby={
+                        err("source") ? "source-error" : undefined
+                      }
                     >
-                      <option value="">Select options</option>
-                      <option value="Search Engine (e.g. Google)">
-                        Search Engine (e.g. Google)
-                      </option>
-                      <option value="Linkedin">Linkedin</option>
-                      <option value="Facebook or Instagram">
-                        Facebook or Instagram
-                      </option>
-                      <option value="AI Suggestion">AI Suggestion</option>
-                      <option value="Referral">Referral</option>
+                      <option value="">Select option</option>
+                      {contactUsReferral?.map((item) => (
+                        <option key={item.id} value={item.slug}>
+                          {item.title}
+                        </option>
+                      ))}
                     </select>
-                    {err("find") && (
-                      <p id="find-error" className="error-text poppins-font">
-                        {errors.find}
+                    {err("source") && (
+                      <p id="source-error" className="error-text poppins-font">
+                        {errors.source}
                       </p>
                     )}
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="comments">
+                  <label htmlFor="message">
                     Describe your project requirements:
                   </label>
                   <textarea
-                    id="comments"
+                    id="message"
                     placeholder=""
                     rows="6"
                     className={`poppins-font ${
-                      err("comments") ? "input-error" : ""
+                      err("message") ? "input-error" : ""
                     }`}
-                    value={formData.comments}
+                    value={formData.message}
                     onChange={handleChange}
-                    aria-invalid={!!err("comments")}
+                    aria-invalid={!!err("message")}
                     aria-describedby={
-                      err("comments") ? "comments-error" : undefined
+                      err("message") ? "message-error" : undefined
                     }
                   />
-                  {err("comments") && (
-                    <p id="comments-error" className="error-text poppins-font">
-                      {errors.comments}
+                  {err("message") && (
+                    <p id="message-error" className="error-text poppins-font">
+                      {errors.message}
                     </p>
                   )}
                 </div>
@@ -451,7 +419,7 @@ export default function ContactForm() {
                     {submitting ? (
                       <div className="loader"></div>
                     ) : (
-                      "Get A Quote"
+                      `${form_Data[0]?.value || "Get A Quote"}`
                     )}
                   </button>
                 </div>
