@@ -69,7 +69,8 @@ export default function PortfolioPageSlider({ slider }) {
       >
         {slider?.map((item, i) => (
           <SwiperSlide key={i} className="home-portfolio-slide">
-            <Link href={item?.slug}>
+            <Link href={`/portfolio/design/${item?.slug}`}>
+
               <Image
                 src={item?.featured_image}
                 alt={`Portfolio item ${i + 1}`}

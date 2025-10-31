@@ -93,13 +93,13 @@ export default function portfolio({ layoutData }) {
           </div>
         </section>
 
-        <PortfolioDesignWrap creative={creative} slider={sliderData?.[0]?.posts} viewAll={`${sliderData?.[0]?.prefix}/${sliderData?.[0]?.slug}`}/>
+        <PortfolioDesignWrap creative={creative} slider={sliderData?.[0]?.posts} viewAll={`portfolio/design/${sliderData?.[0]?.slug}`}/>
 
-        <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} viewAll={`${sliderData?.[1]?.prefix}/${sliderData?.[1]?.slug}`}/>
+        <PortfolioDevelopmentWrap webDev={webDev} slider={sliderData?.[1]?.posts} viewAll={`portfolio/development/${sliderData?.[1]?.slug}`}/>
 
-        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts} viewAll={`${sliderData?.[2]?.prefix}/${sliderData?.[3]?.slug}`}/>
+        <PortfolioSocialWrap Social={Social}   slider={sliderData?.[2]?.posts} viewAll={`portfolio/social-media/${sliderData?.[3]?.slug}`}/>
 
-        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts} viewAll={`${sliderData?.[3]?.prefix}/${sliderData?.[4]?.slug}`}/>
+        <PortfolioSeoWrap SearchMap={SearchMap}  slider={sliderData?.[3]?.posts} viewAll={`portfolio/seo-portfolio/${sliderData?.[4]?.slug}`}/>
       </main>
     </>
   );
