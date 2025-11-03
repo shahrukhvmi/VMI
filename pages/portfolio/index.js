@@ -40,6 +40,7 @@ export default function portfolio({ layoutData }) {
   const Social = layoutData?.data?.page_data?.sections?.[2]?.fields;
   const SearchMap = layoutData?.data?.page_data?.sections?.[3]?.fields;
 
+  console.log(sliderData,"testtttttttttt")
   return (
     <>
       <MetaLayout
@@ -108,7 +109,7 @@ export default function portfolio({ layoutData }) {
 
         <PortfolioSocialWrap
           Social={Social}
-          slider={sliderData?.[2]?.posts}
+          slider={sliderData?.[4]?.posts}
           viewAll={`portfolio/social/`}
         />
 

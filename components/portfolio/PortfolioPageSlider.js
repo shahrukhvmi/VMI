@@ -9,6 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function PortfolioPageSlider({ slider, viewAll }) {
+
+  console.log(slider,"slidersocialaaaaa")
   const swiperRef = useRef(null);
   const containerRef = useRef(null);
   const [swiperReady, setSwiperReady] = useState(false);

@@ -134,8 +134,10 @@ export default function ServiceHorizontal({ silderData }) {
                   </p>
                   <p
                     className="services-horizontal-text poppins-font"
-                    dangerouslySetInnerHTML={{ __html: item?.excerpt }}
+                    dangerouslySetInnerHTML={{ __html: item?.data?.service_details }}
                   />
+
+                  {/* {console.log(item?.excerpt?.data?.service_details,"details")} */}
                 </div>
 
                 <div className="service-slider-img-wrapper">
