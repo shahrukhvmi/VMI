@@ -8,7 +8,7 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PortfolioPageSlider({ slider }) {
+export default function PortfolioPageSlider({ slider, viewAll }) {
   const swiperRef = useRef(null);
   const containerRef = useRef(null);
   const [swiperReady, setSwiperReady] = useState(false);
@@ -69,7 +69,7 @@ export default function PortfolioPageSlider({ slider }) {
       >
         {slider?.map((item, i) => (
           <SwiperSlide key={i} className="home-portfolio-slide">
-            <Link href={`/portfolio/design/${item?.slug}`}>
+            <Link href={`${viewAll}/${item?.slug}`}>
 
               <Image
                 src={item?.featured_image}

@@ -96,6 +96,7 @@ export default function portfolio({ layoutData }) {
         <PortfolioDesignWrap
           creative={creative}
           slider={sliderData?.[0]?.posts}
+          
           viewAll={`portfolio/design/`}
         />
 

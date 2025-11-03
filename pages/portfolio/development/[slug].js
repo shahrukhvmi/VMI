@@ -101,12 +101,14 @@ export default function SlugPage({ layoutData, slug }) {
                   </span>
                 )}
                 {mainHeading && (
-                  <div className="portfolio-single-title olivera-font mt-2 mb-5">
-                    <h1 className="text-[68px] leading-none single-portfolio-heading">
-                      {mainHeading}
-                    </h1>
-                  </div>
+                  <div
+                    className="portfolio-single-title olivera-font mt-2 mb-5"
+                    dangerouslySetInnerHTML={{
+                      __html: `<h1 class='text-[68px] leading-none single-portfolio-heading'>${mainHeading}</h1>`,
+                    }}
+                  />
                 )}
+
                 {client && (
 
 

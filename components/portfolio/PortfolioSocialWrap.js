@@ -33,7 +33,7 @@ export default function PortfolioSocialWrap({ Social, slider, viewAll }) {
           </h2>
         </div>
       </div>
-      <PortfolioPageSlider slider={slider} concated={false} />
+      <PortfolioPageSlider slider={slider} viewAll={viewAll} concated={false} />
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">
           <button
