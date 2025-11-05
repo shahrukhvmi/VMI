@@ -1,73 +1,111 @@
 import Head from "next/head";
+
 export default function MetaLayout({
   children,
-  data,
+  data = {},
   title = "Full-stack Marketing and Branding Agency",
   description = "Vibrant Media Inc. delivers tailored digital marketing, web design, SEO, and branding services for businesses aiming for growth locally and globally.",
   canonical,
-  metaData, // API data passed as prop (contains meta tags, schema, etc.)
 }) {
   const {
     title: metaTitle,
     description: metaDescription,
+    canonical: metaCanonical,
     robots,
     og_locale,
     og_type,
     og_title,
+    og_description,
     og_url,
     og_site_name,
+    og_image,
     article_modified_time,
     twitter_card,
+    twitter_title,
+    twitter_description,
+    twitter_image,
     schema,
-  } = data || {};
+  } = data;
 
+  // ✅ Handle robots properly
+  const robotsContent = robots
+    ? [
+        robots.noindex ? "noindex" : "index",
+        robots.nofollow ? "nofollow" : "follow",
+      ].join(", ")
+    : "index, follow";
 
-  console.log("Meta Layout data:", data);
+  // ✅ Handle OG/Twitter images
+  const ogImageUrl =
+    (Array.isArray(og_image) && og_image.length > 0 && og_image[0]?.url) ||
+    twitter_image ||
+    "https://crm.vmi12.com/wp-content/uploads/2025/10/site.png";
+
+  // ✅ Handle canonical (prefer metaCanonical, fallback to prop)
+  const canonicalUrl =
+    canonical || metaCanonical || og_url || "https://crm.vmi12.com/";
+
   return (
     <>
       <Head>
-        {/* Meta Title */}
+        {/* ✅ Basic Meta */}
         <title>{metaTitle || title}</title>
-        {/* Meta Description */}
-        <meta name="description" content={metaDescription || description} />
-        {/* Canonical URL */}
-        {canonical && <link rel="canonical" href={canonical} />}
-        {/* Meta Robots */}
-        {robots && (
-          <meta
-            name="robots"
-            content={`${robots.index || "index"} , ${robots.follow || "follow"}`}
-          />
-        )}
-        {/* Open Graph Meta Tags for Social Media */}
-        <meta property="og:title" content={og_title || metaTitle} />
-        <meta property="og:description" content={metaDescription || description} />
-        <meta property="og:image" content={metaData?.image || "/default-image.jpg"} />
-        <meta property="og:url" content={og_url || "window.location.href"} />
+        <meta
+          name="description"
+          content={metaDescription || description}
+        />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* ✅ Robots */}
+        <meta name="robots" content={robotsContent} />
+
+        {/* ✅ Open Graph */}
         <meta property="og:locale" content={og_locale || "en_US"} />
         <meta property="og:type" content={og_type || "article"} />
-        <meta property="og:site_name" content={og_site_name || "Vibrant Media Inc"} />
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content={twitter_card || "summary_large_image"} />
-        <meta name="twitter:title" content={og_title || metaTitle} />
-        <meta name="twitter:description" content={metaDescription || description} />
-        <meta name="twitter:image" content={metaData?.image || "/default-image.jpg"} />
-        {/* Article Modified Time (for SEO/structured data) */}
+        <meta property="og:title" content={og_title || metaTitle || title} />
+        <meta
+          property="og:description"
+          content={og_description || metaDescription || description}
+        />
+        <meta property="og:url" content={og_url || canonicalUrl} />
+        <meta
+          property="og:site_name"
+          content={og_site_name || "Vibrant Media Inc"}
+        />
+        <meta property="og:image" content={ogImageUrl} />
         {article_modified_time && (
           <meta
             property="article:modified_time"
             content={article_modified_time}
           />
         )}
-        {/* JSON-LD Schema Markup */}
+
+        {/* ✅ Twitter Card */}
+        <meta
+          name="twitter:card"
+          content={twitter_card || "summary_large_image"}
+        />
+        <meta
+          name="twitter:title"
+          content={twitter_title || metaTitle || title}
+        />
+        <meta
+          name="twitter:description"
+          content={twitter_description || metaDescription || description}
+        />
+        <meta name="twitter:image" content={twitter_image || ogImageUrl} />
+
+        {/* ✅ JSON-LD Structured Data */}
         {schema && (
           <script type="application/ld+json">
             {JSON.stringify(schema)}
           </script>
         )}
-        {/* Viewport Meta Tag for Mobile */}
+
+        {/* ✅ Mobile Viewport */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
       {children}
     </>
   );
