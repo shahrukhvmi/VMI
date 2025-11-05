@@ -11,7 +11,7 @@ export default function MetaLayout({
     title: metaTitle,
     description: metaDescription,
     canonical: metaCanonical,
-    robots,
+    robots = {},
     og_locale,
     og_type,
     og_title,
@@ -27,21 +27,28 @@ export default function MetaLayout({
     schema,
   } = data;
 
-  // ✅ Handle robots properly
-  const robotsContent = robots
-    ? [
-        robots.noindex ? "noindex" : "index",
-        robots.nofollow ? "nofollow" : "follow",
-      ].join(", ")
-    : "index, follow";
+  // ✅ Build robots meta dynamically (includes all possible directives)
+  const robotsDirectives = [];
 
-  // ✅ Handle OG/Twitter images
+  if (robots.noindex) robotsDirectives.push("noindex");
+  else robotsDirectives.push("index");
+
+  if (robots.nofollow) robotsDirectives.push("nofollow");
+  else robotsDirectives.push("follow");
+
+  if (robots.nosnippet) robotsDirectives.push("nosnippet");
+  if (robots.noarchive) robotsDirectives.push("noarchive");
+  if (robots.noimageindex) robotsDirectives.push("noimageindex");
+
+  const robotsContent = robotsDirectives.join(", ");
+
+  // ✅ Handle OG/Twitter image
   const ogImageUrl =
     (Array.isArray(og_image) && og_image.length > 0 && og_image[0]?.url) ||
     twitter_image ||
     "https://crm.vmi12.com/wp-content/uploads/2025/10/site.png";
 
-  // ✅ Handle canonical (prefer metaCanonical, fallback to prop)
+  // ✅ Handle canonical (prefer metaCanonical, fallback to prop or og_url)
   const canonicalUrl =
     canonical || metaCanonical || og_url || "https://crm.vmi12.com/";
 
@@ -50,10 +57,7 @@ export default function MetaLayout({
       <Head>
         {/* ✅ Basic Meta */}
         <title>{metaTitle || title}</title>
-        <meta
-          name="description"
-          content={metaDescription || description}
-        />
+        <meta name="description" content={metaDescription || description} />
         <link rel="canonical" href={canonicalUrl} />
 
         {/* ✅ Robots */}
