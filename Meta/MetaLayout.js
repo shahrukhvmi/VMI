@@ -49,7 +49,7 @@ export default function MetaLayout({
 
   // ✅ Handle canonical (prefer metaCanonical, fallback to prop or og_url)
   const canonicalUrl =
-    canonical ||  og_url || "";
+    canonical || og_url || "";
 
   return (
     <>
@@ -61,7 +61,28 @@ export default function MetaLayout({
 
         {/* ✅ Robots */}
         <meta name="robots" content={robotsContent} />
+        <meta
+          name="keywords"
+          content={
+            schema?.["@graph"]?.[0]?.["@graph"]
+              ?.find((i) => i["@type"] === "Article")
+              ?.keywords || ""
+          }
+        />
+        <meta
+          name="publisher"
+          content={
+            schema?.["@graph"]?.[0]?.["@graph"]
+              ?.find((i) => i["@type"] === "Article")
+              ?.publisher?.["@id"] || ""
+          }
+        />
 
+        {/* <meta
+          name="publisher"
+          content={schema?.["@graph"]?.[0]?.["@graph"]?.[6]?.publisher?.["@id"]
+            || ""}
+        /> */}
         {/* ✅ Open Graph */}
         <meta property="og:locale" content={og_locale || "en_US"} />
         <meta property="og:type" content={og_type || "article"} />
