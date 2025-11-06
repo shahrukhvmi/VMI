@@ -54,7 +54,7 @@ export default function SlugDesign({ layoutData }) {
             data={layoutData?.head?.json}
             title="Our Creative Work"
             description="Explore our portfolio showcasing UI/UX design, web development, branding, SEO, and digital marketing projects for clients across industries and markets."
-            canonical={`${meta_url}portfolio/`}
+            canonical={`${layoutData?.head?.json?.canonical}`}
         />
 
         <main className="relative text-white overflow-hidden z-10">
@@ -82,8 +82,8 @@ export default function SlugDesign({ layoutData }) {
                         <div
                             key={rowIndex}
                             className={`portfolio-single flex justify-center gap-30 ${rowIndex === chunkedData.length - 1
-                                    ? "mb-0 md:mb-40"
-                                    : "mb-10"
+                                ? "mb-0 md:mb-40"
+                                : "mb-10"
                                 }`}
                         >
                             {row.map((item) => (
@@ -99,13 +99,15 @@ export default function SlugDesign({ layoutData }) {
                                         <div className="detail-portfolio-image-overlay">
                                             <div className="detail-portfolio-banner-badge">
                                                 <div className="mb-2">
-                                                    <span className="ms-2 poppins-font detail-portfolio-branding">
-                                                        Branding
+                                                    <span className="ms-2 poppins-font detail-portfolio-branding capitalize">
+                                                        {item?.slug}
                                                     </span>
                                                 </div>
-                                                <p className="ms-2 poppins-font font-bold">
-                                                    {item.title}
-                                                </p>
+                                                <p
+                                                    className="ms-2 poppins-font font-bold"
+                                                    dangerouslySetInnerHTML={{ __html: item.title }}
+                                                ></p>
+
                                             </div>
                                         </div>
                                     </div>

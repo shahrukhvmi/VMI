@@ -49,7 +49,7 @@ export default function AboutPage({ layoutData }) {
 
   const buttonText = ourVision?.[0]?.value;
   const ourVisionText = ourVision?.[1]?.value;
-  console.log(brandSecton, "brandSecton")
+  console.log(layoutData?.head?.json, "layoutData?.head?.json")
   const router = useRouter();
 
   return (
@@ -58,7 +58,7 @@ export default function AboutPage({ layoutData }) {
         data={layoutData?.head?.json}
         title="Our Legacy of Brand Success"
         description="Built on the mission to enable business growth, we blend strategy, creativity, and expertise to help brands thrive locally and globally for the long term."
-        canonical={`${meta_url}about/`}
+        canonical={`${layoutData?.head?.json?.canonical}`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
         <AboutHero about={about} brandSecton={brandSecton} />

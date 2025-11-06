@@ -40,14 +40,14 @@ export default function portfolio({ layoutData }) {
   const Social = layoutData?.data?.page_data?.sections?.[2]?.fields;
   const SearchMap = layoutData?.data?.page_data?.sections?.[3]?.fields;
 
-  console.log(sliderData,"testtttttttttt")
+  console.log(sliderData, "testtttttttttt")
   return (
     <>
       <MetaLayout
         data={layoutData?.head?.json}
         title="Our Creative Work"
         description="Explore our portfolio showcasing UI/UX design, web development, branding, SEO, and digital marketing projects for clients across industries and markets."
-        canonical={`${meta_url}portfolio/`}
+        canonical={`${layoutData?.head?.json?.canonical}`}
       />
       <main className="relative text-white overflow-hidden">
         <section>
@@ -97,7 +97,7 @@ export default function portfolio({ layoutData }) {
         <PortfolioDesignWrap
           creative={creative}
           slider={sliderData?.[0]?.posts}
-          
+
           viewAll={`portfolio/design/`}
         />
 

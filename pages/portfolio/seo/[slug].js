@@ -55,7 +55,7 @@ export default function SlugPage({ layoutData, slug }) {
         data={layoutData?.head?.json}
         title="Our Creative Work"
         description="Explore our portfolio showcasing UI/UX design, web development, branding, SEO, and digital marketing projects for clients across industries and markets."
-        canonical={`${meta_url}portfolio/`}
+       canonical={`${layoutData?.head?.json?.canonical}`}
       />
 
       <main className="relative text-white  overflow-hidden z-10">

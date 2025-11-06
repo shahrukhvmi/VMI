@@ -69,7 +69,7 @@ export default function services({ layoutData }) {
         data={layoutData?.head?.json}
         title="Complete Marketing and Design Solutions"
         description="Vibrant Media Inc. covers all aspects of marketing and design, including UI/UX, SEO, branding, web, and app development, driving growth across industries."
-        canonical={`${meta_url}services/`}
+        canonical={`${layoutData?.head?.json?.canonical}`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
         {isMounted && (

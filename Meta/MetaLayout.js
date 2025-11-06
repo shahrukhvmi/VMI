@@ -10,7 +10,6 @@ export default function MetaLayout({
   const {
     title: metaTitle,
     description: metaDescription,
-    canonical: metaCanonical,
     robots = {},
     og_locale,
     og_type,
@@ -50,7 +49,7 @@ export default function MetaLayout({
 
   // ✅ Handle canonical (prefer metaCanonical, fallback to prop or og_url)
   const canonicalUrl =
-    canonical || metaCanonical || og_url || "https://crm.vmi12.com/";
+    canonical ||  og_url || "";
 
   return (
     <>

@@ -62,7 +62,7 @@ export default function Index({ layoutData }) {
         data={layoutData?.head?.json}
         title="Full-stack Marketing and Branding Agency"
         description="Vibrant Media Inc. delivers tailored digital marketing, web design, SEO, and branding services for businesses aiming for growth locally and globally."
-        canonical={`${meta_url}`}
+        canonical={`${layoutData?.head?.json?.canonical}`}
       />
       <main className="relative text-white min-h-screen overflow-hidden">
         {/* <LiquidCursor /> */}
