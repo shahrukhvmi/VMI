@@ -126,9 +126,11 @@ export default function ServiceHorizontal({ silderData }) {
                   <div className="horizontal-icon">
                     <img src={item?.data?.service_icon} />
                   </div>
-                  <h3 className="olivera-font service-horizontal-heading">
-                    {item.title}
-                  </h3>
+                  <h3
+                    className="olivera-font service-horizontal-heading"
+                    dangerouslySetInnerHTML={{ __html: item?.title }}
+                  ></h3>
+
                   <p className="service-horizontal-sub-heading poppins-font">
                     {item?.data?.sub_heading}
                   </p>

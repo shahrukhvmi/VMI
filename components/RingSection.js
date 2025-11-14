@@ -157,8 +157,8 @@ const RingSection = ({ ringSec }) => {
               </p> */}
 
 
-              <div
-                className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4"
+              <p
+                className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4 "
                 dangerouslySetInnerHTML={{
                   __html:
                     ringSec?.[0]?.value ||
