@@ -18,7 +18,7 @@ function Technologia({ techData }) {
             </h2>
           </div>
 
-          <div className="technologia-logos mt-30">
+          <div className="technologia-logos mt-30 flex justify-center">
             <img src={techData?.[2]?.value} />
           </div>
         </div>
