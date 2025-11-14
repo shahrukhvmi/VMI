@@ -157,7 +157,7 @@ const RingSection = ({ ringSec }) => {
               </p> */}
 
 
-              <div
+              <p
                 className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4"
                 dangerouslySetInnerHTML={{
                   __html:
