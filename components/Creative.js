@@ -75,7 +75,13 @@ function Creative({ creativeData, services, heading }) {
             {services?.map((service, key) => (
               <>
                 <div className="creative-menu-item" key={key}>
-                  <span className="creative-menu-span">{service?.title}</span>
+                  {service?.title && (
+                    <span
+                      className="creative-menu-span"
+                      dangerouslySetInnerHTML={{ __html: service.title }}
+                    ></span>
+                  )}
+
                   <span className="icon">
                     <Image
                       src={service?.data?.card_thumbnail || "/creative-icon-4.png"}
