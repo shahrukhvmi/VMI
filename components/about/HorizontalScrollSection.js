@@ -120,7 +120,7 @@ export default function HorizontalScrollSection() {
             <div className="olivera-font horizontal-text-1 horizontal-remaining-text">
               Marking
             </div>{" "}
-            <div className="olivera-font horizontal-text-2">9+</div>{" "}
+            <div className="olivera-font horizontal-text-2">  {new Date().getFullYear() - 2016}+</div>{" "}
             <div className="olivera-font horizontal-text-3 horizontal-remaining-text">
               years of continued{" "}
               <span className="horizontal-success">success</span> through
