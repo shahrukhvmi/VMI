@@ -20,13 +20,13 @@ export default function HeroSection({ hero }) {
         <h1 className="hero-text leading-tight z-10 olivera-font">
 
 
-          {hero?.[3]?.value || " Purposeful Marketing Across Channels"}
+          {hero?.[3]?.value || " Purposeful Marketing "}
         </h1>
 
         <h1 className="hero-text leading-tight z-10 olivera-font">
 
 
-          {hero?.[4]?.value || " Purposeful Marketing Across Channels"}
+          {hero?.[4]?.value || "Across Channels"}
         </h1>
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
           {hero?.[1]?.value || "Your digital partner for every marketing execution."}
