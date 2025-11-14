@@ -191,7 +191,7 @@ export default function services({ layoutData }) {
             <h3 className="text-center olivera-font">
               {technologyContent[1]?.value ||
                 "We build what your brand really needs"}{" "}
-              <span>.</span>
+              <span></span>
             </h3>
             <div className="hero-btn example-2">
               <button
