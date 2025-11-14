@@ -124,7 +124,7 @@ const RingSection = ({ ringSec }) => {
 
           <div className="w-6xl ring-section-max-width flex flex-col md:flex-row justify-between items-center gap-12 mx-auto py-40">
             {/* Left Content */}
-            <div className="text-center md:text-left ring-left-width">
+            <div className="text-center md:text-left ring-left-width rela">
               {/* <div className="ml-[0px] md:ml-[-60px] mb-4">
                 <Image
                   src="/second-logo.png"
@@ -155,7 +155,7 @@ const RingSection = ({ ringSec }) => {
                 gain more than a service provider, you gain a committed partner
                 dedicated to your success in every market you serve.
               </p> */}
-
+              <img src={"favicon2.png"}  className="w-[100px] mb-12"/>
 
               <p
                 className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4"
