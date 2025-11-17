@@ -17,11 +17,16 @@ export default function HeroSection({ hero }) {
         <span className="bg-white/10 text-sm available-text px-4 py-1 rounded-full border border-white/20 text-green-400 mb-4 z-10">
           ● {hero?.[2]?.value || "Available for New Projects"}
         </span>
-        <h1 className="hero-text leading-tight z-10 olivera-font max-w-[700px]">
+        <h1 className="hero-text leading-tight z-10 olivera-font">
 
 
-          {hero?.[3]?.value || " Purposeful Marketing Across Channels"}
-          {/* <span className="hero-span olivera-font">Development</span> Agency */}
+          {hero?.[3]?.value || " Purposeful Marketing "}
+        </h1>
+
+        <h1 className="hero-text leading-tight z-10 olivera-font">
+
+
+          {hero?.[4]?.value || "Across Channels"}
         </h1>
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
           {hero?.[1]?.value || "Your digital partner for every marketing execution."}

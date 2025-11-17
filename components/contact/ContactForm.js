@@ -149,7 +149,7 @@ export default function ContactForm({
           <div className="contact-content">
             {/* LEFT TEXT */}
             <div className="contact-left">
-              <h2 className="contact-form-heading olivera-font capitalize">
+              <h2 className="contact-form-heading olivera-font">
                 {form_Data[5]?.value || "Let's Talk"}
               </h2>
               <p className="description">

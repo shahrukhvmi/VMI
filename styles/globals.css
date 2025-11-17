@@ -489,7 +489,7 @@ span.inner-heading-span {
   position: absolute;
   right: 0;
   top: -10px;
-  opacity: 0;
+  opacity: 1;
   transition: .3s ease-out;
   width: 174px;
   /* transition: opacity 0.3s ease; */

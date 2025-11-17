@@ -76,6 +76,7 @@ export default function ServiceHorizontal({ silderData }) {
     return () => ctx.revert();
   }, []);
 
+
   return (
     <>
       <section
@@ -126,9 +127,19 @@ export default function ServiceHorizontal({ silderData }) {
                   <div className="horizontal-icon">
                     <img src={item?.data?.service_icon} />
                   </div>
-                  <h3 className="olivera-font service-horizontal-heading">
-                    {item.title}
-                  </h3>
+                  <h3
+                    className="olivera-font service-horizontal-heading"
+                    dangerouslySetInnerHTML={{
+                      __html: item?.title?.split(" ").length > 2
+                        ? item?.title.split(" ").slice(0, 2).join(" ") +
+                        "<br/>" +
+                        item?.title.split(" ").slice(2).join(" ")
+                        : item?.title,
+                    }}
+                  />
+
+
+
                   <p className="service-horizontal-sub-heading poppins-font">
                     {item?.data?.sub_heading}
                   </p>

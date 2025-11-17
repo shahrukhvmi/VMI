@@ -27,13 +27,13 @@ export default function ServicesHero({ data, slider }) {
         </p> */}
 
         <p
-          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-3xl"
+          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-4xl"
           dangerouslySetInnerHTML={{
             __html:
               data?.[1]?.value ||
               "Our scope of work encompasses design, development, and marketing modules,<br /> allowing us to meet strategic goals across industries.",
           }}
-        ></p>
+        />
 
         {/* <GlowButton /> */}
         <div className="example-2 footer-btn mt-6">
