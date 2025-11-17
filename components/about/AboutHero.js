@@ -1,13 +1,9 @@
 "use client";
-
 import { useRouter } from "next/router";
 import OfficeSlider from "./OfficeSlider";
-
 export default function AboutHero({ about, brandSecton }) {
   console.log(about, "about from component");
-
   const router = useRouter();
-
   return (
     <>
       <section className="relative pt-60 flex flex-col items-center justify-center text-white text-center px-4 z-10 pb-80 h-full about-hero-section">
@@ -23,11 +19,9 @@ export default function AboutHero({ about, brandSecton }) {
           }}
         ></h1>
         <p
-          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-3xl"
+          className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para max-w-4xl"
           dangerouslySetInnerHTML={{ __html: about?.[1]?.value || "" }}
         ></p>
-
-
         {/* <GlowButton /> */}
         <div className="example-2 footer-btn mt-6">
           <button
@@ -50,9 +44,12 @@ export default function AboutHero({ about, brandSecton }) {
                 </span> */}
           </button>
         </div>
-
         <OfficeSlider brandSecton={brandSecton} />
       </section >
     </>
   );
 }
+
+
+
+
