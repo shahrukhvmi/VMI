@@ -44,8 +44,7 @@ export default function MetaLayout({
   // ✅ Handle OG/Twitter image
   const ogImageUrl =
     (Array.isArray(og_image) && og_image.length > 0 && og_image[0]?.url) ||
-    twitter_image ||
-    "https://crm.vmi12.com/wp-content/uploads/2025/10/site.png";
+    twitter_image;
 
   // ✅ Handle canonical (prefer metaCanonical, fallback to prop or og_url)
   const canonicalUrl =
