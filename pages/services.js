@@ -4,7 +4,6 @@
 import dynamic from "next/dynamic";
 import Technologia from "@/components/Technologia";
 import TestimonialSlider from "@/components/TestimonialSlider";
-import { meta_url, pages_api } from "@/config/constants";
 import MetaLayout from "@/Meta/MetaLayout";
 
 const ServicesHero = dynamic(

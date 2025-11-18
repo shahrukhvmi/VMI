@@ -34,9 +34,14 @@ export default function CeoSection({ ceoSection }) {
 
   return (
     <section className="relative max-container-width w-6xl mx-auto z-10 ceo-main-wrap">
-      <h2 className="olivera-font text-center ceo-font-size mb-30">
-        {ceoSection?.[2]?.value || "With clear vision and decisive leadership from our CEO, and a focus on process and performance from our<br>COO, we’ve built a culture that values innovation, accountability, and measurable results. This balance of<br>strategic direction and operational strength drives our growth and the success of our clients worldwide."}
-      </h2>
+      <h2
+        className="olivera-font text-center ceo-font-size mb-30"
+        dangerouslySetInnerHTML={{
+          __html:
+            ceoSection?.[2]?.value ||
+            "With clear vision and decisive leadership from our CEO, and a focus on process and performance from our<br>COO, we’ve built a culture that values innovation, accountability, and measurable results. This balance of<br>strategic direction and operational strength drives our growth and the success of our clients worldwide.",
+        }}
+      ></h2>
 
       <div className="ceo-image-main">
         <div className="relative ceo-image-wrap mb-20 md:mb-0">
@@ -55,13 +60,13 @@ export default function CeoSection({ ceoSection }) {
                 dangerouslySetInnerHTML={{ __html: degisnation || " Cofounder & CEO – Vibrant Media Inc." }} >
 
               </p>
-          </div>
-          <div className="ceo-seperator"></div>
-          <div className="ceo-social-wrap">
-            <p className="ceo-follow poppins-font">Follow on</p>
-            <div className="ceo-social-icons">
-              <ul className="flex mt-4 gap-4">
-                {/* <li>
+            </div>
+            <div className="ceo-seperator"></div>
+            <div className="ceo-social-wrap">
+              <p className="ceo-follow poppins-font">Follow on</p>
+              <div className="ceo-social-icons">
+                <ul className="flex mt-4 gap-4">
+                  {/* <li>
                     <img src="/facebook.svg" />
                   </li>
                   <li>
@@ -70,45 +75,45 @@ export default function CeoSection({ ceoSection }) {
                   <li>
                     <img src="/x.svg" />
                   </li> */}
-                <li>
-                  <Link
-                    href={linkedin || "https://www.linkedin.com/in/alammansoor/"}
-                    target="_blank"
-                  >
-                    <img src={"/linkedin.svg"} />
-                  </Link>
-                </li>
-                {/* <li>
+                  <li>
+                    <Link
+                      href={linkedin || "https://www.linkedin.com/in/alammansoor/"}
+                      target="_blank"
+                    >
+                      <img src={"/linkedin.svg"} />
+                    </Link>
+                  </li>
+                  {/* <li>
                 <img src="/youtube.svg" />
               </li> */}
-              </ul>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="relative ceo-image-wrap">
-        <img src={timage || "/ceocard2.png"} />
+        <div className="relative ceo-image-wrap">
+          <img src={timage || "/ceocard2.png"} />
 
-        <div className="ceo-overlay-wrap">
-          <div className="ceo-overlay-heading">
-            <span
-              className="bg-white/10 text-sm ceo-overlay-top px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font"
-              dangerouslySetInnerHTML={{ __html: trole || "Head of Business & Finance" }}
-            ></span>
+          <div className="ceo-overlay-wrap">
+            <div className="ceo-overlay-heading">
+              <span
+                className="bg-white/10 text-sm ceo-overlay-top px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font"
+                dangerouslySetInnerHTML={{ __html: trole || "Head of Business & Finance" }}
+              ></span>
 
-            <h3 className="ceo-name olivera-font mt-3">{tname || "M. Abdul Tahseen"}</h3>
-            <p
-              className="ceo-designation poppins-font mt-[-5px]"
-              dangerouslySetInnerHTML={{ __html: tdegisnation || "Cofounder & COO – Vibrant Media Inc." }}
-            ></p>
+              <h3 className="ceo-name olivera-font mt-3">{tname || "M. Abdul Tahseen"}</h3>
+              <p
+                className="ceo-designation poppins-font mt-[-5px]"
+                dangerouslySetInnerHTML={{ __html: tdegisnation || "Cofounder & COO – Vibrant Media Inc." }}
+              ></p>
 
-          </div>
-          <div className="ceo-seperator"></div>
-          <div className="ceo-social-wrap">
-            <p className="ceo-follow poppins-font">Follow on</p>
-            <div className="ceo-social-icons">
-              <ul className="flex mt-4 gap-4">
-                {/* <li>
+            </div>
+            <div className="ceo-seperator"></div>
+            <div className="ceo-social-wrap">
+              <p className="ceo-follow poppins-font">Follow on</p>
+              <div className="ceo-social-icons">
+                <ul className="flex mt-4 gap-4">
+                  {/* <li>
                     <img src="/facebook.svg" />
                   </li>
                   <li>
@@ -117,23 +122,23 @@ export default function CeoSection({ ceoSection }) {
                   <li>
                     <img src="/x.svg" />
                   </li> */}
-                <li>
-                  <Link
-                    href={tlinkedin || "https://www.linkedin.com/in/tahseenb2b/"}
-                    target="_blank"
-                  >
-                    <img src="/linkedin.svg" />
-                  </Link>
-                </li>
-                {/* <li>
+                  <li>
+                    <Link
+                      href={tlinkedin || "https://www.linkedin.com/in/tahseenb2b/"}
+                      target="_blank"
+                    >
+                      <img src="/linkedin.svg" />
+                    </Link>
+                  </li>
+                  {/* <li>
                 <img src="/youtube.svg" />
               </li> */}
-              </ul>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </section >
   );
 }
