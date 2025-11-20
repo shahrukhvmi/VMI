@@ -1,187 +1,296 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { career_url } from "@/config/constants";
 
-const categories = [
-  "All",
-  "Development",
-  "Design",
-  "Marketing",
-  "Customer Service",
-  "Operations",
-  "Finance",
-  "Management",
-];
+export async function getServerSideProps() {
+  try {
+    const [catRes, jobsRes] = await Promise.all([
+      fetch(`${career_url}/categories/active`),
+      fetch(`${career_url}/jobs/active?page=1`),
+    ]);
 
-const careersList = [
-  {
-    id: 1,
-    title: "Product Designer",
-    desc: "We're looking for a mid-level product designer to join our team.",
-    category: "Design",
-    type: "Full-time",
-    remote: true,
-  },
-  {
-    id: 2,
-    title: "Engineering Manager",
-    desc: "We're looking for an experienced engineering manager to join our team.",
-    category: "Development",
-    type: "Full-time",
-    remote: true,
-  },
-  {
-    id: 3,
-    title: "Customer Success Manager",
-    desc: "We're looking for a customer success manager to join our team.",
-    category: "Customer Service",
-    type: "Full-time",
-    remote: true,
-  },
-  {
-    id: 4,
-    title: "Account Executive",
-    desc: "We're looking for an account executive to join our team.",
-    category: "Operations",
-    type: "Full-time",
-    remote: true,
-  },
-  {
-    id: 5,
-    title: "SEO Marketing Manager",
-    desc: "We're looking for an experienced SEO marketing manager to join our team.",
-    category: "Marketing",
-    type: "Full-time",
-    remote: true,
-  },
-];
+    const categoriesData = await catRes.json();
+    const jobsData = await jobsRes.json();
 
-export default function Careers() {
+    return {
+      props: {
+        categories: categoriesData?.data || [],
+        jobs: jobsData?.jobs || [],
+        totalPages: jobsData?.totalPages || 1, // Assuming the API returns total pages
+      },
+    };
+  } catch (error) {
+    console.error("SSR Careers Error:", error);
+
+    return {
+      props: {
+        categories: [],
+        jobs: [],
+        totalPages: 1,
+      },
+    };
+  }
+}
+
+export default function Careers({ categories, jobs, totalPages }) {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsList, setJobsList] = useState(jobs);
+  const [loading, setLoading] = useState(false);
+  const [totalPagesCount, setTotalPagesCount] = useState(totalPages);
 
-  const filteredCareers =
-    activeCategory === "All"
-      ? careersList
-      : careersList.filter((c) => c.category === activeCategory);
+  const fetchJobs = async (category_id = null) => {
+    setLoading(true);
+    let url;
+    let method = "GET";
+    let body = null;
+
+    if (category_id && category_id !== "All") {
+      // Fetch jobs for a specific category (no pagination)
+      url = `${career_url}/jobs/search`;
+      method = "POST";
+      body = JSON.stringify({ category_id: String(category_id) });
+    } else {
+      // Fetch all jobs with pagination (using jobs/active)
+      url = `${career_url}/jobs/active?page=${currentPage}`;
+    }
+
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+      const data = await res.json();
+
+      setJobsList(data.jobs || []);
+      setTotalPagesCount(data.totalPages || 1);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs(activeCategory === "All" ? null : activeCategory);
+  }, [currentPage, activeCategory]);
+
+  const handleCategoryChange = (category_id) => {
+    setActiveCategory(category_id);
+    setCurrentPage(1); // Reset to first page when category changes
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
-    <div className="relative min-h-screen bg-[#FBFBFB] text-gray-900 pb-20">
-      {/* Careers Page Header */}
+    <div className="relative min-h-screen bg-[#FBFBFB] text-gray-900 pb-20 career-page">
+      {/* Header */}
       <header className="w-full bg-white border-b">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Left: Logo */}
           <div className="flex items-center gap-2">
-            <img src="/logo.svg" alt="Logo" className="h-6 w-auto" />
+            <Link href="/">
+              <img
+                src="/logo-dark.svg"
+                alt="Vibrant Media Inc"
+                className="h-10 w-auto"
+              />
+            </Link>
           </div>
 
-          {/* Center Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-sm text-gray-700 !text-black">
-            <a href="#" className="!text-black">
-              Home
-            </a>
-            <a href="#" className="!text-black">
-              Pricing
-            </a>
-            <a href="#" className="!text-black">
-              How it works
-            </a>
-            <a href="#" className="!text-black">
-              Resources
-            </a>
-            <a href="#" className="!text-black">
-              Company
-            </a>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8 text-sm text-gray-700 poppins-font">
+            <a href="/">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/services">Services</a>
+            <a href="/portfolio">Portfolio</a>
+            <a href="/careers">Careers</a>
+            <a href="/contact-us">Contact Us</a>
           </nav>
         </div>
       </header>
 
-      {/* Gradient Patch */}
-      <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full blur-[120px] opacity-50 bg-gradient-to-br from-pink-300 via-purple-300 to-yellow-300 pointer-events-none" />
+      {/* Gradient */}
+      <div className="hidden sm:block absolute top-0 right-0 w-[450px] h-[450px] rounded-full blur-[120px] opacity-50 bg-gradient-to-br from-pink-300 via-purple-300 to-yellow-300 pointer-events-none" />
 
-      {/* Header Section */}
-      <div className="max-w-5xl mx-auto px-5 pt-20">
-        <span className="inline-block bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm">
+      {/* Header Text */}
+      <div className="max-w-6xl mx-auto px-5 pt-20 poppins-font">
+        <span className="inline-block bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm poppins-font">
           We're hiring!
         </span>
 
-        <h1 className="text-4xl md:text-5xl font-semibold mt-6 leading-tight !text-black">
+        <h1 className="text-4xl md:text-5xl font-semibold mt-6 leading-tight">
           Be part of our mission
         </h1>
 
-        <p className="text-gray-600 mt-4 max-w-2xl !text-black">
-          We’re looking for passionate people to join us on our mission. We
-          value flat hierarchies clear communication and full ownership.
+        <p className="text-gray-600 mt-4 max-w-2xl">
+          We’re looking for passionate people to join us. We value flat
+          hierarchies, clear communication, and full ownership.
         </p>
       </div>
 
-      {/* Filters */}
-      <div className="max-w-5xl mx-auto px-5 mt-10 flex flex-wrap gap-3">
-        {categories.map((cat) => (
+      {/* Category Filters */}
+      <div className="max-w-6xl mx-auto px-5 mt-10 flex flex-wrap gap-3 poppins-font">
+        <div className="sm:hidden w-full">
+          <label
+            htmlFor="category-dropdown"
+            className="block text-sm font-medium text-gray-700 mb-2 !text-[#080808] poppins-font"
+          >
+            Select Category
+          </label>
+          <div className="relative">
+            <select
+              id="category-dropdown"
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              className="px-4 py-2 rounded-full border border-[#080808] text-sm !text-gray-700 bg-white w-full pr-8 appearance-none"
+              value={activeCategory}
+            >
+              <option value="All">All</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            <div className="absolute top-1/2 right-3 transform -translate-y-1/2 pointer-events-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-4 h-4 text-gray-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden sm:flex flex-wrap gap-3">
           <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
+            onClick={() => handleCategoryChange("All")}
             className={`px-5 py-2 rounded-full border text-sm transition ${
-              activeCategory === cat
+              activeCategory === "All"
                 ? "bg-black text-white border-black"
                 : "border-gray-300 !text-gray-700 hover:bg-gray-100"
             }`}
           >
-            {cat}
+            All
           </button>
-        ))}
-      </div>
 
-      {/* List Divider */}
-      <div className="max-w-5xl mx-auto px-5 mt-10 border-t"></div>
-
-      {/* Jobs List */}
-      <div className="max-w-5xl mx-auto px-5 mt-8 space-y-12">
-        {filteredCareers.map((job) => (
-          <div
-            key={job.id}
-            className="flex items-start justify-between border-b pb-10"
-          >
-            <div>
-              <h3 className="text-xl font-semibold !text-black">{job.title}</h3>
-              <p className="text-gray-600 mt-2 !text-black">{job.desc}</p>
-
-              <div className="flex items-center gap-3 mt-4">
-                <span className="flex items-center gap-1 text-sm border px-3 py-1 rounded-full">
-                  <HiOutlineLocationMarker />{" "}
-                  {job.remote ? "100% remote" : "On-site"}
-                </span>
-
-                <span className="text-sm border px-3 py-1 rounded-full">
-                  {job.type}
-                </span>
-              </div>
-            </div>
-
-            <a className="flex items-center gap-1 text-sm font-medium text-gray-900 cursor-pointer hover:opacity-60 !text-black">
-              Apply <FiArrowUpRight />
-            </a>
-          </div>
-        ))}
-      </div>
-
-      {/* Testimonial Section */}
-      <div className="max-w-4xl mx-auto px-5 mt-20 text-center">
-        <p className="text-2xl md:text-3xl font-medium leading-relaxed !text-black">
-          Untitled truly values work-life balance. We work hard and deliver but
-          at the end of the day you can switch off.
-        </p>
-
-        <div className="mt-10">
-          <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
-            className="w-14 h-14 rounded-full mx-auto"
-          />
-          <p className="mt-3 font-semibold !text-black">Frankie Sullivan</p>
-          <p className="text-gray-500 text-sm !text-black">
-            Web Developer, Untitled
-          </p>
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryChange(cat.id)} // Pass category_id
+              className={`px-5 py-2 rounded-full border text-sm transition ${
+                activeCategory === cat.id
+                  ? "bg-black text-white border-black"
+                  : "border-gray-300 !text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
         </div>
       </div>
+
+      {/* Divider */}
+      <div className="max-w-6xl mx-auto px-5 mt-10 border-t"></div>
+
+      {/* Jobs List */}
+      <div className="max-w-6xl mx-auto px-5 mt-8 space-y-12 poppins-font">
+        {jobsList.length === 0 ? (
+          <div className="text-center text-lg text-gray-500">
+            No records found
+          </div>
+        ) : (
+          jobsList.map((job) => (
+            <div
+              key={job.id}
+              className="flex items-start justify-between border-b pb-10"
+            >
+              <div className="w-[80%]">
+                <h3 className="text-xl font-semibold">{job.title}</h3>
+
+                <div
+                  className="text-gray-600 mt-2 line-clamp-2"
+                  dangerouslySetInnerHTML={{ __html: job.description }}
+                />
+
+                <div className="flex items-center gap-3 mt-4 flex-wrap">
+                  <span className="flex items-center gap-1 text-sm border px-3 py-1 rounded-full">
+                    <HiOutlineLocationMarker /> {job.location}
+                  </span>
+
+                  {job.jobTags?.map((t) => (
+                    <span
+                      key={t.tag_id}
+                      className="text-sm border px-3 py-1 rounded-full"
+                    >
+                      {t.tag.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <Link
+                className="flex items-center gap-1 text-lg font-medium cursor-pointer hover:opacity-60"
+                href={`/careers/${job.id}`}
+              >
+                Apply <FiArrowUpRight />
+              </Link>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Pagination Controls */}
+      {activeCategory === "All" && (
+        <div className="flex justify-center mt-8">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="!text-gray-700 border py-2 px-6 rounded-full"
+            >
+              &lt;
+            </button>
+
+            {[...Array(totalPagesCount)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                className={`w-10 h-10 rounded-full text-sm transition duration-300 ${
+                  currentPage === index + 1
+                    ? "bg-black text-white"
+                    : "bg-white !text-black border"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPagesCount}
+              className="!text-gray-700 border py-2 px-6 rounded-full"
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
