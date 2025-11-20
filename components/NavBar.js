@@ -74,7 +74,7 @@ export default function NavBar() {
           <Link href="/">
             <Image
               src={site?.logo?.src || "/footer-logo.png"}
-              alt="Vibrant Media Logo"
+              alt="Full-stack Marketing And Branding Agency"
               width={230}
               height={150}
             />

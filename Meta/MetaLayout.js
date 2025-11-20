@@ -55,6 +55,9 @@ export default function MetaLayout({
       <Head>
         {/* ✅ Basic Meta */}
         <title>{metaTitle || title}</title>
+
+        <meta name="title" content={metaTitle || "Full-stack Marketing And Branding Agency"} />
+
         <meta name="description" content={metaDescription || description} />
         <link rel="canonical" href={canonicalUrl} />
 
