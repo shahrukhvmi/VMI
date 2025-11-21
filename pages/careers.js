@@ -262,41 +262,42 @@ export default function Careers({ categories, jobs, totalPages }) {
       </div>
 
       {/* Pagination Controls */}
-      {activeCategory === "All" && activeCategory.length < 10 && (
-        <div className="flex justify-center mt-8">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="!text-gray-700 border py-2 px-6 rounded-full"
-            >
-              &lt;
-            </button>
-
-            {[...Array(totalPagesCount)].map((_, index) => (
+      {activeCategory === "All" &&
+        (currentPage !== 1 || jobsList.length > 9) && (
+          <div className="flex justify-center mt-8">
+            <div className="flex items-center gap-2">
               <button
-                key={index}
-                onClick={() => handlePageChange(index + 1)}
-                className={`w-10 h-10 rounded-full text-sm transition duration-300 ${
-                  currentPage === index + 1
-                    ? "bg-black text-white"
-                    : "bg-white !text-black border"
-                }`}
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="!text-gray-700 border py-2 px-6 rounded-full"
               >
-                {index + 1}
+                &lt;
               </button>
-            ))}
 
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPagesCount}
-              className="!text-gray-700 border py-2 px-6 rounded-full"
-            >
-              &gt;
-            </button>
+              {[...Array(totalPagesCount)].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`w-10 h-10 rounded-full text-sm transition duration-300 ${
+                    currentPage === index + 1
+                      ? "bg-black text-white"
+                      : "bg-white !text-black border"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPagesCount}
+                className="!text-gray-700 border py-2 px-6 rounded-full"
+              >
+                &gt;
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }

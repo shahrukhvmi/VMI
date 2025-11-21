@@ -38,6 +38,8 @@ export async function getServerSideProps({ params }) {
 }
 
 export default function CareerDetail({ job }) {
+  const [fileError, setFileError] = useState("");
+
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
@@ -71,6 +73,13 @@ export default function CareerDetail({ job }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    if (!formData.file) {
+      setFileError("Please upload your CV before submitting.");
+      setIsSubmitting(false);
+      return;
+    }
+    setFileError("");
 
     try {
       // Convert file to base64 if there's a file
@@ -330,6 +339,11 @@ export default function CareerDetail({ job }) {
                 </div>
               )}
             </div>
+            {fileError && (
+              <p className="!text-red-500 text-sm mt-2 poppins-font">
+                {fileError}
+              </p>
+            )}
 
             {/* Hidden Input */}
             <input
@@ -337,7 +351,6 @@ export default function CareerDetail({ job }) {
               id="fileInput"
               accept=".pdf,.docx"
               onChange={handleFileChange}
-              required
               className="hidden"
             />
           </div>
