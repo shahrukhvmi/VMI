@@ -221,8 +221,14 @@ export default function Careers({ categories, jobs, totalPages }) {
               className="flex items-start justify-between border-b pb-10"
             >
               <div className="w-[80%]">
-                <h3 className="text-xl font-semibold">{job.title}</h3>
-
+                <h3 className="text-xl font-semibold">
+                  <Link
+                    className="text-lg font-medium cursor-pointer hover:opacity-60"
+                    href={`/careers/${job.id}`}
+                  >
+                    {job.title}
+                  </Link>
+                </h3>
                 <div
                   className="text-gray-600 mt-2 line-clamp-2"
                   dangerouslySetInnerHTML={{ __html: job.description }}
@@ -256,7 +262,7 @@ export default function Careers({ categories, jobs, totalPages }) {
       </div>
 
       {/* Pagination Controls */}
-      {activeCategory === "All" && (
+      {activeCategory === "All" && activeCategory.length > 10 && (
         <div className="flex justify-center mt-8">
           <div className="flex items-center gap-2">
             <button

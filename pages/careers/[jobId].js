@@ -284,20 +284,61 @@ export default function CareerDetail({ job }) {
 
           {/* CV Upload */}
           <div className="flex flex-col sm:col-span-2 mt-6">
+            {/* CV Upload */}
+
             <label
               htmlFor="file"
-              className="block text-sm font-medium text-gray-700 !text-[#080808] poppins-font"
+              className="block text-sm font-medium !text-[#080808] poppins-font"
             >
               Upload CV <span className="text-red-500">*</span>
             </label>
+
+            <div
+              className={`mt-2 border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition 
+                  ${
+                    formData.file
+                      ? "border-green-500 bg-green-50"
+                      : "border-gray-400 bg-gray-50 hover:bg-gray-100"
+                  }`}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                const file = e.dataTransfer.files[0];
+                handleFileChange({ target: { files: [file] } });
+              }}
+              onClick={() => document.getElementById("fileInput").click()}
+            >
+              {!formData.file && (
+                <div>
+                  <p className="poppins-font !text-gray-600">
+                    Drag & drop your CV here
+                  </p>
+                  <p className="text-sm mt-1 poppins-font !text-gray-500">
+                    or click to browse (PDF or DOCX)
+                  </p>
+                </div>
+              )}
+
+              {formData.file && (
+                <div className="flex flex-col items-center">
+                  <p className="font-semibold !text-green-700 poppins-font">
+                    {formData.file.name}
+                  </p>
+                  <p className="!text-gray-500 text-sm poppins-font mt-1">
+                    File selected successfully
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Hidden Input */}
             <input
               type="file"
-              id="file"
-              name="file"
+              id="fileInput"
               accept=".pdf,.docx"
               onChange={handleFileChange}
               required
-              className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font cursor-pointer"
+              className="hidden"
             />
           </div>
 
