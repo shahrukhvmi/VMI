@@ -262,7 +262,7 @@ export default function Careers({ categories, jobs, totalPages }) {
       </div>
 
       {/* Pagination Controls */}
-      {activeCategory === "All" && activeCategory.length > 10 && (
+      {activeCategory === "All" && activeCategory.length < 10 && (
         <div className="flex justify-center mt-8">
           <div className="flex items-center gap-2">
             <button
