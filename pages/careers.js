@@ -41,7 +41,9 @@ export default function Careers({ categories, jobs, totalPages }) {
   const [loading, setLoading] = useState(false);
   const [totalPagesCount, setTotalPagesCount] = useState(totalPages);
 
-  const fetchJobs = async (category_id = null) => {
+  console.log(jobs, "jobs");
+
+  const fetchJobs = async (category_id = null, append = false) => {
     setLoading(true);
     let url;
     let method = "GET";
@@ -67,7 +69,14 @@ export default function Careers({ categories, jobs, totalPages }) {
       });
       const data = await res.json();
 
-      setJobsList(data.jobs || []);
+      if (append) {
+        // 👇 Add new jobs below existing ones
+        setJobsList((prev) => [...prev, ...(data.jobs || [])]);
+      } else {
+        // 👇 Replace list (for first page or when category changes)
+        setJobsList(data.jobs || []);
+      }
+
       setTotalPagesCount(data.totalPages || 1);
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -77,7 +86,13 @@ export default function Careers({ categories, jobs, totalPages }) {
   };
 
   useEffect(() => {
-    fetchJobs(activeCategory === "All" ? null : activeCategory);
+    if (currentPage === 1) {
+      // First page → normal load
+      fetchJobs(activeCategory === "All" ? null : activeCategory, false);
+    } else {
+      // Page 2,3,4... → append
+      fetchJobs(activeCategory === "All" ? null : activeCategory, true);
+    }
   }, [currentPage, activeCategory]);
 
   const handleCategoryChange = (category_id) => {
@@ -85,15 +100,32 @@ export default function Careers({ categories, jobs, totalPages }) {
     setCurrentPage(1); // Reset to first page when category changes
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handleLoadMore = () => {
+    if (currentPage < totalPagesCount) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
+  const SkeletonJob = () => (
+    <div className="flex items-start justify-between border-b pb-10 animate-pulse">
+      <div className="w-[80%] space-y-3">
+        <div className="h-5 w-2/3 bg-gray-200 rounded"></div>
+        <div className="h-4 w-full bg-gray-200 rounded"></div>
+        <div className="h-4 w-5/6 bg-gray-200 rounded"></div>
+        <div className="flex gap-2 mt-4">
+          <div className="h-6 w-32 bg-gray-200 rounded-full"></div>
+          <div className="h-6 w-24 bg-gray-200 rounded-full"></div>
+        </div>
+      </div>
+      <div className="h-6 w-20 bg-gray-200 rounded-full"></div>
+    </div>
+  );
+
   return (
-    <div className="relative min-h-screen bg-[#FBFBFB] text-gray-900 pb-20 career-page">
+    <div className="relative min-h-screen bg-[#FBFBFB] !text-gray-900 career-page">
       {/* Header */}
       <header className="w-full bg-white border-b">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/">
               <img
@@ -105,12 +137,14 @@ export default function Careers({ categories, jobs, totalPages }) {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-sm text-gray-700 poppins-font">
+          <nav className="hidden md:flex items-center gap-8 text-sm !text-gray-700 poppins-font">
             <a href="/">Home</a>
             <a href="/about">About Us</a>
             <a href="/services">Services</a>
             <a href="/portfolio">Portfolio</a>
-            <a href="/careers">Careers</a>
+            <a href="/careers" className="!text-black">
+              <span className="border-b">Careers</span>
+            </a>
             <a href="/contact-us">Contact Us</a>
           </nav>
         </div>
@@ -121,26 +155,26 @@ export default function Careers({ categories, jobs, totalPages }) {
 
       {/* Header Text */}
       <div className="max-w-6xl mx-auto px-5 pt-20 poppins-font">
-        <span className="inline-block bg-gray-200 text-gray-700 px-4 py-1 rounded-full text-sm poppins-font">
+        <span className="inline-block text-black border-[2px] border-[#080808]] px-4 py-1 rounded-full text-md poppins-font-medium">
           We're hiring!
         </span>
 
-        <h1 className="text-4xl md:text-5xl font-semibold mt-6 leading-tight">
+        <h1 className="text-4xl md:text-5xl mt-6 leading-tight">
           Be part of our mission
         </h1>
 
-        <p className="text-gray-600 mt-4 max-w-2xl">
+        <p className="text-black mt-4 max-w-2xl">
           We’re looking for passionate people to join us. We value flat
           hierarchies, clear communication, and full ownership.
         </p>
       </div>
 
       {/* Category Filters */}
-      <div className="max-w-6xl mx-auto px-5 mt-10 flex flex-wrap gap-3 poppins-font">
+      <div className="max-w-6xl mx-auto px-5 mt-12 flex flex-wrap gap-3">
         <div className="sm:hidden w-full">
           <label
             htmlFor="category-dropdown"
-            className="block text-sm font-medium text-gray-700 mb-2 !text-[#080808] poppins-font"
+            className="block text-sm text-black mb-2 !text-black poppins-font-medium"
           >
             Select Category
           </label>
@@ -148,7 +182,7 @@ export default function Careers({ categories, jobs, totalPages }) {
             <select
               id="category-dropdown"
               onChange={(e) => handleCategoryChange(e.target.value)}
-              className="px-4 py-2 rounded-full border border-[#080808] text-sm !text-gray-700 bg-white w-full pr-8 appearance-none"
+              className="px-4 py-2 rounded-full border-2 border-[#000] text-md !text-black bg-white w-full pr-8 appearance-none poppins-font-medium relative"
               value={activeCategory}
             >
               <option value="All">All</option>
@@ -180,10 +214,10 @@ export default function Careers({ categories, jobs, totalPages }) {
         <div className="hidden sm:flex flex-wrap gap-3">
           <button
             onClick={() => handleCategoryChange("All")}
-            className={`px-5 py-2 rounded-full border text-sm transition ${
+            className={`px-5 py-2 rounded-full border-2 text-sm transition poppins-font-medium ${
               activeCategory === "All"
                 ? "bg-black text-white border-black"
-                : "border-gray-300 !text-gray-700 hover:bg-gray-100"
+                : "border-black !text-black hover:bg-gray-100"
             }`}
           >
             All
@@ -193,10 +227,10 @@ export default function Careers({ categories, jobs, totalPages }) {
             <button
               key={cat.id}
               onClick={() => handleCategoryChange(cat.id)} // Pass category_id
-              className={`px-5 py-2 rounded-full border text-sm transition ${
+              className={`px-5 py-2 rounded-full border-[2px] text-sm transition poppins-font-medium ${
                 activeCategory === cat.id
                   ? "bg-black text-white border-black"
-                  : "border-gray-300 !text-gray-700 hover:bg-gray-100"
+                  : "border-black !text-black hover:bg-gray-100"
               }`}
             >
               {cat.name}
@@ -206,98 +240,108 @@ export default function Careers({ categories, jobs, totalPages }) {
       </div>
 
       {/* Divider */}
-      <div className="max-w-6xl mx-auto px-5 mt-10 border-t"></div>
+      <div className="max-w-6xl mx-auto px-5 mt-10">
+        <div className="mx-auto mt-10 border-t"></div>
+      </div>
 
       {/* Jobs List */}
       <div className="max-w-6xl mx-auto px-5 mt-8 space-y-12 poppins-font">
-        {jobsList.length === 0 ? (
-          <div className="text-center text-lg text-gray-500">
+        {jobsList.length === 0 && !loading ? (
+          <div className="text-center text-lg !text-gray-500">
             No records found
           </div>
         ) : (
-          jobsList.map((job) => (
-            <div
-              key={job.id}
-              className="flex items-start justify-between border-b pb-10"
-            >
-              <div className="w-[80%]">
-                <h3 className="text-xl font-semibold">
-                  <Link
-                    className="text-lg font-medium cursor-pointer hover:opacity-60"
-                    href={`/careers/${job.id}`}
-                  >
-                    {job.title}
-                  </Link>
-                </h3>
-                <div
-                  className="text-gray-600 mt-2 line-clamp-2"
-                  dangerouslySetInnerHTML={{ __html: job.description }}
-                />
-
-                <div className="flex items-center gap-3 mt-4 flex-wrap">
-                  <span className="flex items-center gap-1 text-sm border px-3 py-1 rounded-full">
-                    <HiOutlineLocationMarker /> {job.location}
-                  </span>
-
-                  {job.jobTags?.map((t) => (
-                    <span
-                      key={t.tag_id}
-                      className="text-sm border px-3 py-1 rounded-full"
-                    >
-                      {t.tag.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <Link
-                className="flex items-center gap-1 text-lg font-medium cursor-pointer hover:opacity-60"
-                href={`/careers/${job.id}`}
+          <>
+            {jobsList.map((job, index) => (
+              <div
+                key={job.id}
+                className="flex items-start justify-between border-b pb-10"
+                style={{ animationDelay: `${index * 60}ms` }}
               >
-                Apply <FiArrowUpRight />
-              </Link>
-            </div>
-          ))
+                <div className="w-[80%]">
+                  <h3 className="poppins-font-medium capitalize">
+                    <Link
+                      className="text-xl cursor-pointer hover:opacity-60 text-black"
+                      href={`/careers/${job.id}`}
+                    >
+                      {job.title}
+                    </Link>
+                  </h3>
+                  <div
+                    className="text-black mt-2 line-clamp-2"
+                    dangerouslySetInnerHTML={{ __html: job.description }}
+                  />
+
+                  <div className="flex items-center gap-3 mt-4 flex-wrap">
+                    <span className="flex items-center gap-1 text-sm border-2 px-3 py-1 rounded-full poppins-font-medium">
+                      <HiOutlineLocationMarker /> {job.location}
+                    </span>
+
+                    {job.jobTags?.map((t) => (
+                      <span
+                        key={t?.id}
+                        className="text-sm border-2 px-3 py-1 rounded-full poppins-font-medium"
+                      >
+                        {t?.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <Link
+                  className="flex items-center gap-1 text-2xl poppins-font-medium cursor-pointer hover:opacity-60"
+                  href={`/careers/${job.id}`}
+                >
+                  Apply <FiArrowUpRight />
+                </Link>
+              </div>
+            ))}
+
+            {loading &&
+              [...Array(3)].map((_, i) => <SkeletonJob key={`sk-${i}`} />)}
+          </>
         )}
       </div>
 
       {/* Pagination Controls */}
-      {activeCategory === "All" &&
-        (currentPage !== 1 || jobsList.length > 9) && (
-          <div className="flex justify-center mt-8">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="!text-gray-700 border py-2 px-6 rounded-full"
-              >
-                &lt;
-              </button>
+      {activeCategory === "All" && currentPage < totalPagesCount && (
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={handleLoadMore}
+            disabled={loading}
+            className="bg-black text-white py-2 px-6 rounded-full poppins-font disabled:opacity-60"
+            style={{
+              background:
+                "linear-gradient(90deg,rgb(84, 47, 140),rgb(132, 72, 187))",
+            }}
+          >
+            {loading ? "Loading..." : "Load More"}
+          </button>
+        </div>
+      )}
 
-              {[...Array(totalPagesCount)].map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePageChange(index + 1)}
-                  className={`w-10 h-10 rounded-full text-sm transition duration-300 ${
-                    currentPage === index + 1
-                      ? "bg-black text-white"
-                      : "bg-white !text-black border"
-                  }`}
-                >
-                  {index + 1}
-                </button>
-              ))}
+      {/* Divider */}
+      {/* <div className="max-w-6xl mx-auto px-5 mt-10">
+        <div className="mx-auto mt-10 border-t"></div>
+      </div> */}
 
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPagesCount}
-                className="!text-gray-700 border py-2 px-6 rounded-full"
-              >
-                &gt;
-              </button>
-            </div>
-          </div>
-        )}
+      <div className="max-w-6xl mx-auto px-5 pt-4 pb-6 mt-20 flex flex-col md:flex-row items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Link href="/">
+            <img
+              src="/logo-dark.svg"
+              alt="Vibrant Media Inc"
+              className="h-10 w-auto"
+            />
+          </Link>
+        </div>
+
+        <div>
+          <p className="text-black poppins-font">
+            © Vibrant Media Inc. All rights reserved
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

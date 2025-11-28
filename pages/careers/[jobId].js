@@ -39,21 +39,42 @@ export async function getServerSideProps({ params }) {
 
 export default function CareerDetail({ job }) {
   const [fileError, setFileError] = useState("");
-
   const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
+    fullName: "",
     email: "",
     phone: "",
+    areaOfResidence: "",
+    fitReason: "",
+    currentSalary: "",
+    source: "",
     file: null,
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+
+  console.log(job, "JOB");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handlePhoneChange = (e) => {
+    let phone = e.target.value;
+
+    // Remove extra spaces
+    phone = phone.replace(/\s+/g, "");
+
+    // Convert +92 to 0
+    if (phone.startsWith("+92")) {
+      phone = "0" + phone.slice(3);
+    }
+
+    setFormData({
+      ...formData,
+      phone: phone,
+    });
   };
 
   const handleFileChange = (e) => {
@@ -73,9 +94,10 @@ export default function CareerDetail({ job }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
 
     if (!formData.file) {
-      setFileError("Please upload your CV before submitting.");
+      setFileError("Please upload your Resume before submitting.");
       setIsSubmitting(false);
       return;
     }
@@ -89,10 +111,13 @@ export default function CareerDetail({ job }) {
 
       // Prepare the payload to send
       const payload = {
-        fname: formData.fname,
-        lname: formData.lname,
+        fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
+        areaOfResidence: formData.areaOfResidence,
+        fitReason: formData.fitReason,
+        currentSalary: formData.currentSalary,
+        source: formData.source,
         file: base64File,
         job_id: job.id,
       };
@@ -103,28 +128,50 @@ export default function CareerDetail({ job }) {
       const response = await fetch(`${career_url}/applications/submit`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Set content type to JSON
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload), // Convert the payload to a JSON string
+        body: JSON.stringify(payload),
       });
 
-      // Check if the response is successful
+      // 🔥 Handle 409 Conflict (Duplicate Application)
+      if (response.status === 409) {
+        setSubmitError(true);
+        setIsSubmitting(false);
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          areaOfResidence: "",
+          fitReason: "",
+          currentSalary: "",
+          source: "",
+          file: null,
+        });
+        return;
+      }
+
       if (!response.ok) {
         throw new Error("Submission failed");
       }
 
-      const result = await response.json(); // Parse the response
-
-      console.log("API Response:", result); // Log the response for debugging
-      setModalVisible(true); // Show success modal
-
-      // Optionally reset the form or redirect the user
-      setFormData({ fname: "", lname: "", email: "", phone: "", file: null });
+      const result = await response.json();
+      console.log("API Response:", result);
+      setModalVisible(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        areaOfResidence: "",
+        fitReason: "",
+        currentSalary: "",
+        source: "",
+        file: null,
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("There was an error submitting the form. Please try again.");
     } finally {
-      setIsSubmitting(false); // Re-enable the submit button
+      setIsSubmitting(false);
     }
   };
 
@@ -132,12 +179,23 @@ export default function CareerDetail({ job }) {
     setModalVisible(false);
   };
 
+  const handleKeyPress = (e) => {
+    // Allow only numeric characters, backspace (key code 8), and delete (key code 46)
+    if (
+      !/[0-9]/.test(e.key) &&
+      e.key !== "Backspace" &&
+      e.key !== "Delete" &&
+      e.key !== "+"
+    ) {
+      e.preventDefault();
+    }
+  };
+
   if (!job) return <p>Job not found</p>;
 
   return (
     <div className="px-5 py-12 bg-[#fff] text-gray-900 career-page">
-      <div className="max-w-6xl mx-auto text-white">
-        {/* Back to Jobs Link */}
+      <div className="max-w-4xl mx-auto text-white">
         <div className="mb-6">
           <Link
             href="/careers"
@@ -147,118 +205,95 @@ export default function CareerDetail({ job }) {
           </Link>
         </div>
 
-        {/* Job Title and Apply Button */}
         <div className="flex items-center justify-between">
-          <h1 className="text-4xl font-semibold !text-[#080808] poppins-font">
+          <h1 className="text-4xl poppins-font-medium !text-[#080808] capitalize">
             {job.title}
           </h1>
-          {/* Apply Button */}
           <a
             className="flex items-center gap-1 bg-black text-white py-2 px-3 text-sm sm:text-lg sm:py-2 sm:px-6 rounded-full hover:bg-gray-800 cursor-pointer poppins-font"
-            href="#apply-form" // Scroll to the form when clicked
+            href="#apply-form"
+            style={{
+              background:
+                "linear-gradient(90deg,rgb(84, 47, 140),rgb(132, 72, 187))",
+            }}
           >
             Apply <FiArrowUpRight />
           </a>
         </div>
 
-        {/* Tags, Category, Location, Salary */}
-        <div className="flex items-center gap-4 mt-4 text-sm text-gray-300 flex-wrap">
-          {/* Tags */}
-          <div className="flex gap-2 poppins-font">
-            {job.jobTags?.map((t) => (
+        <div className="flex items-center gap-4 mt-4 text-sm text-black flex-wrap">
+          <div className="flex gap-2">
+            {job?.jobTags?.map((t) => (
               <span
-                key={t.tag_id}
-                className="border px-3 py-1 rounded-full bg-gray-700"
+                key={t?.tag_id}
+                className="border-2 poppins-font-medium px-3 py-1 rounded-full"
               >
-                {t.tag.name}
+                {t.tag?.name}
               </span>
             ))}
+            <span className="border-2 px-3 py-1 rounded-full poppins-font-medium">
+              {job.category?.name}
+            </span>
           </div>
-          {/* Category */}
-          <span className="border px-3 py-1 rounded-full bg-gray-700 poppins-font">
-            {job.category?.name}
-          </span>
 
-          {/* Location */}
-          <div className="flex items-center gap-1 !text-[#080808] poppins-font">
+          <div className="flex items-center gap-1 !text-[#080808] poppins-font-medium">
             <HiOutlineLocationMarker />
             <span>{job.location}</span>
           </div>
 
-          {/* Salary */}
-          <span className="font-semibold !text-[#080808] poppins-font">
-            PKR: {job.salary}
+          <span className="font-semibold !text-[#080808] poppins-font-medium">
+            Salary:{" "}
+            {job.minSalary === 0
+              ? `PKR ${Number(job.maxSalary).toLocaleString("en-US")}`
+              : `PKR ${Number(job.minSalary).toLocaleString(
+                  "en-US"
+                )} - PKR ${Number(job.maxSalary).toLocaleString("en-US")}`}
           </span>
         </div>
 
-        {/* Job Description */}
         <div
-          className="mt-6 !text-[#080808] poppins-font"
+          className="mt-6 text-black poppins-font"
           dangerouslySetInnerHTML={{ __html: job.description }}
         />
 
-        {/* Separator */}
         <div className="my-10 border-t border-gray-300"></div>
 
-        {/* Apply Form */}
         <h2
-          className="text-2xl font-semibold !text-[#080808] poppins-font"
+          className="text-2xl font-semibold !text-[#080808] poppins-font mb-2"
           id="apply-form"
         >
           Apply for this job
         </h2>
         <p className="text-sm text-gray-500 mb-6 !text-[#080808] poppins-font">
-          * indicates a required field
+          <span className="text-red-500">*</span> indicates a required field
         </p>
+
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col sm:flex-row sm:gap-6">
-            {/* First Name */}
             <div className="flex flex-col flex-1">
               <label
-                htmlFor="fname"
+                htmlFor="fullName"
                 className="block text-sm font-medium !text-[#080808] poppins-font"
               >
-                First Name <span className="text-red-500">*</span>
+                Full Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                id="fname"
-                name="fname"
-                value={formData.fname}
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
                 required
                 className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font"
               />
             </div>
 
-            {/* Last Name */}
-            <div className="flex flex-col flex-1">
-              <label
-                htmlFor="lname"
-                className="block text-sm font-medium !text-[#080808] poppins-font"
-              >
-                Last Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="lname"
-                name="lname"
-                value={formData.lname}
-                onChange={handleChange}
-                required
-                className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font"
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:gap-6 mt-6">
-            {/* Email */}
             <div className="flex flex-col flex-1">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium !text-[#080808] poppins-font"
               >
-                Email <span className="text-red-500">*</span>
+                Email Address <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -270,20 +305,46 @@ export default function CareerDetail({ job }) {
                 className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font"
               />
             </div>
+          </div>
 
-            {/* Phone */}
+          <div className="flex flex-col sm:flex-row sm:gap-6 mt-6">
             <div className="flex flex-col flex-1">
               <label
                 htmlFor="phone"
                 className="block text-sm font-medium !text-[#080808] poppins-font"
               >
-                Phone <span className="text-red-500">*</span>
+                Mobile Number <span className="text-red-500">*</span>
+              </label>
+              <div className="flex items-center mt-2 w-full border border-gray-300 rounded-lg">
+                {/* Pakistan Flag */}
+                <span className="mr-2 text-xl career-country">🇵🇰</span>
+
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handlePhoneChange}
+                  onKeyDown={handleKeyPress} // Restrict alphabets
+                  required
+                  placeholder="03xxxxxxxxxx" // Placeholder text
+                  autoComplete="tel"
+                  className="flex-1 outline-none !text-[#080808] poppins-font career-phone"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col flex-1">
+              <label
+                htmlFor="areaOfResidence"
+                className="block text-sm font-medium !text-[#080808] poppins-font"
+              >
+                Area of Residence <span className="text-red-500">*</span>
               </label>
               <input
-                type="number"
-                id="phone"
-                name="phone"
-                value={formData.phone}
+                type="text"
+                id="areaOfResidence"
+                name="areaOfResidence"
+                value={formData.areaOfResidence}
                 onChange={handleChange}
                 required
                 className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font"
@@ -291,15 +352,79 @@ export default function CareerDetail({ job }) {
             </div>
           </div>
 
-          {/* CV Upload */}
-          <div className="flex flex-col sm:col-span-2 mt-6">
-            {/* CV Upload */}
+          <div className="flex flex-col mt-6">
+            <div className="flex flex-col sm:col-span-2">
+              <label
+                htmlFor="fitReason"
+                className="block text-sm font-medium !text-[#080808] poppins-font"
+              >
+                Why are you the best fit for this role?{" "}
+                <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="fitReason"
+                name="fitReason"
+                value={formData.fitReason}
+                onChange={handleChange}
+                required
+                className="mt-2 p-3 w-full border !border-gray-300 !rounded-lg !text-[#080808] poppins-font !shadow-none"
+                maxLength="300"
+                rows="5"
+              />
+            </div>
+          </div>
 
+          <div className="flex flex-col sm:flex-row sm:gap-6 mt-6">
+            <div className="flex flex-col flex-1">
+              <label
+                htmlFor="currentSalary"
+                className="block text-sm font-medium !text-[#080808] poppins-font"
+              >
+                Current / Last Salary <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="currentSalary"
+                name="currentSalary"
+                value={formData.currentSalary}
+                onChange={handleChange}
+                required
+                className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font"
+              />
+            </div>
+
+            <div className="flex flex-col flex-1">
+              <label
+                htmlFor="source"
+                className="block text-sm font-medium !text-[#080808] poppins-font"
+              >
+                How did you find us? <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="source"
+                name="source"
+                value={formData.source}
+                onChange={handleChange}
+                required
+                className="mt-2 p-3 w-full border border-gray-300 rounded-lg !text-[#080808] poppins-font"
+              >
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Google">Google</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Indeed">Indeed</option>
+                <option value="Friend told me">Friend told me</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Resume Upload */}
+          <div className="flex flex-col sm:col-span-2 mt-6">
             <label
               htmlFor="file"
               className="block text-sm font-medium !text-[#080808] poppins-font"
             >
-              Upload CV <span className="text-red-500">*</span>
+              Upload Resume <span className="text-red-500">*</span>
             </label>
 
             <div
@@ -320,7 +445,7 @@ export default function CareerDetail({ job }) {
               {!formData.file && (
                 <div>
                   <p className="poppins-font !text-gray-600">
-                    Drag & drop your CV here
+                    Drag & drop your Resume here
                   </p>
                   <p className="text-sm mt-1 poppins-font !text-gray-500">
                     or click to browse (PDF or DOCX)
@@ -330,7 +455,7 @@ export default function CareerDetail({ job }) {
 
               {formData.file && (
                 <div className="flex flex-col items-center">
-                  <p className="font-semibold !text-green-700 poppins-font">
+                  <p className="poppins-font-medium !text-green-700 poppins-font">
                     {formData.file.name}
                   </p>
                   <p className="!text-gray-500 text-sm poppins-font mt-1">
@@ -345,7 +470,6 @@ export default function CareerDetail({ job }) {
               </p>
             )}
 
-            {/* Hidden Input */}
             <input
               type="file"
               id="fileInput"
@@ -355,13 +479,26 @@ export default function CareerDetail({ job }) {
             />
           </div>
 
+          {submitError && (
+            <div>
+              <p className="!text-red-500 poppins-font mt-2">
+                * Seems like you already submitted your application to this job.
+                If not the case then contact us at careers@vibrantmediainc.com
+              </p>
+            </div>
+          )}
+
           <div className="mt-6 flex justify-end">
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`bg-black text-white py-2 px-6 rounded-full poppins-font ${
+              className={`bg-black text-white py-3 px-6 rounded-full poppins-font ${
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
+              style={{
+                background:
+                  "linear-gradient(90deg,rgb(84, 47, 140),rgb(132, 72, 187))",
+              }}
             >
               {isSubmitting ? "Submitting..." : "Submit Application"}
             </button>
@@ -379,7 +516,7 @@ export default function CareerDetail({ job }) {
               opacity: modalVisible ? 1 : 0,
             }}
           >
-            <h2 className="text-2xl font-semibold text-center mb-4">
+            <h2 className="text-2xl poppins-font-medium text-center mb-4">
               Your application has been submitted successfully!
             </h2>
             <div className="flex justify-end">

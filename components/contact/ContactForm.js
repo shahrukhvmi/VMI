@@ -84,16 +84,13 @@ export default function ContactForm({
     try {
       setSubmitting(true);
 
-      const response = await fetch(
-        `${app_url}/contact`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // change to application/x-www-form-urlencoded if server requires
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${app_url}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // change to application/x-www-form-urlencoded if server requires
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -163,8 +160,9 @@ export default function ContactForm({
                   <strong>For project inquiries only:</strong>
                   <br />
                   <a
-                    href={`mailto:${form_Data[3]?.value || "info@vibrantmediainc.com"
-                      }`}
+                    href={`mailto:${
+                      form_Data[3]?.value || "info@vibrantmediainc.com"
+                    }`}
                   >
                     {form_Data[3]?.value}
                   </a>
@@ -174,9 +172,10 @@ export default function ContactForm({
                   <strong>For all inquiries:</strong>
                   <br />
                   <a
-                    href={`tel:${form_Data[1]?.value?.replace(/\s/g, "") ||
+                    href={`tel:${
+                      form_Data[1]?.value?.replace(/\s/g, "") ||
                       "+92 3452 646 481"
-                      }`}
+                    }`}
                     dangerouslySetInnerHTML={{
                       __html: form_Data[2]?.value || "",
                     }}
@@ -187,9 +186,10 @@ export default function ContactForm({
                   <strong>Office:</strong>
                   <br />
                   <a
-                    href={`${form_Data[1]?.subfields[1].value ||
+                    href={`${
+                      form_Data[1]?.subfields[1].value ||
                       "https://maps.app.goo.gl/NywMa5KeaJBnTiy48"
-                      }`}
+                    }`}
                     target="_blank"
                     dangerouslySetInnerHTML={{
                       __html: form_Data[1]?.subfields[0].value || "",
@@ -209,8 +209,9 @@ export default function ContactForm({
                       id="name"
                       type="text"
                       placeholder=""
-                      className={`poppins-font ${err("name") ? "input-error" : ""
-                        }`}
+                      className={`poppins-font ${
+                        err("name") ? "input-error" : ""
+                      }`}
                       value={formData.name}
                       onChange={handleChange}
                       aria-invalid={!!err("name")}
@@ -245,8 +246,9 @@ export default function ContactForm({
                       id="email"
                       type="email"
                       placeholder=""
-                      className={`poppins-font ${err("email") ? "input-error" : ""
-                        }`}
+                      className={`poppins-font ${
+                        err("email") ? "input-error" : ""
+                      }`}
                       value={formData.email}
                       onChange={handleChange}
                       aria-invalid={!!err("email")}
@@ -266,8 +268,9 @@ export default function ContactForm({
                       id="phone"
                       type="tel"
                       placeholder=""
-                      className={`poppins-font ${err("phone") ? "input-error" : ""
-                        }`}
+                      className={`poppins-font ${
+                        err("phone") ? "input-error" : ""
+                      }`}
                       value={formData.phone}
                       onChange={handleChange}
                       aria-invalid={!!err("phone")}
@@ -290,8 +293,9 @@ export default function ContactForm({
                       id="country"
                       type="text"
                       placeholder=""
-                      className={`poppins-font ${err("country") ? "input-error" : ""
-                        }`}
+                      className={`poppins-font ${
+                        err("country") ? "input-error" : ""
+                      }`}
                       value={formData.country}
                       onChange={handleChange}
                       aria-invalid={!!err("country")}
@@ -310,8 +314,9 @@ export default function ContactForm({
                     <label htmlFor="service">Services</label>
                     <select
                       id="service"
-                      className={`poppins-font text-white ${err("service") ? "input-error" : ""
-                        }`}
+                      className={`poppins-font text-white ${
+                        err("service") ? "input-error" : ""
+                      }`}
                       value={formData.service}
                       onChange={handleChange}
                       aria-invalid={!!err("service")}
@@ -341,8 +346,9 @@ export default function ContactForm({
                     </label>
                     <select
                       id="source"
-                      className={`poppins-font text-white ${err("source") ? "input-error" : ""
-                        }`}
+                      className={`poppins-font text-white ${
+                        err("source") ? "input-error" : ""
+                      }`}
                       value={formData.source}
                       onChange={handleChange}
                       aria-invalid={!!err("source")}
@@ -365,7 +371,7 @@ export default function ContactForm({
                   </div>
                 </div>
 
-                <div className="form-group">
+                <div className="form-group contact-textarea">
                   <label htmlFor="message">
                     Describe your project requirements:
                   </label>
@@ -373,8 +379,9 @@ export default function ContactForm({
                     id="message"
                     placeholder=""
                     rows="6"
-                    className={`poppins-font ${err("message") ? "input-error" : ""
-                      }`}
+                    className={`poppins-font ${
+                      err("message") ? "input-error" : ""
+                    }`}
                     value={formData.message}
                     onChange={handleChange}
                     aria-invalid={!!err("message")}

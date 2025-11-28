@@ -31,10 +31,10 @@
   font-display: swap;
 }
 
-
 @font-face {
   font-family: "AtlasGrotesk-Regular";
-  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Regular.otf") format("opentype");
+  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Regular.otf")
+    format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -42,7 +42,8 @@
 
 @font-face {
   font-family: "AtlasGrotesk-Thin";
-  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Thin.otf") format("opentype");
+  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Thin.otf")
+    format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -50,7 +51,8 @@
 
 @font-face {
   font-family: "AtlasGrotesk-Bold";
-  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Bold.otf") format("opentype");
+  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Bold.otf")
+    format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -58,7 +60,8 @@
 
 @font-face {
   font-family: "AtlasGrotesk-Black";
-  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Black.otf") format("opentype");
+  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Black.otf")
+    format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -66,7 +69,8 @@
 
 @font-face {
   font-family: "AtlasGrotesk-Medium";
-  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Medium.otf") format("opentype");
+  src: url("../public/fonts/AtlasGrotesk/AtlasGrotesk-Medium.otf")
+    format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -87,6 +91,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "poppins-bold";
+  src: url("../public/fonts/Poppins/Poppins-Bold.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "poppins-medium";
+  src: url("../public/fonts/Poppins/Poppins-Medium.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Define a CSS variable for the font */
 :root {
   --reg-font: "NibPro-Regular";
@@ -100,6 +120,8 @@
   --font-medium: "AtlasGrotesk-Medium";
   --olivera-font: "olivera";
   --poppins-font: "poppins";
+  --poppins-font-bold: "poppins-bold";
+  --poppins-font-medium: "poppins-medium";
 }
 
 /* Global class */
@@ -109,29 +131,24 @@
 
 .thin-font {
   font-family: var(--font-thin) !important;
-
 }
-.reg-font{
-  font-family: var( --font-reg) !important;
+.reg-font {
+  font-family: var(--font-reg) !important;
 }
 .bold-font {
   font-family: var(--font-bold) !important;
-
 }
 
 .black-font {
   font-family: var(--font-black) !important;
-
 }
 .medium-font {
   font-family: var(--font-medium) !important;
-
 }
 
 .niba-bold-font {
   font-family: var(--bold-font) !important;
 }
-
 
 .niba-light-font {
   font-family: var(--light-font) !important;
@@ -147,6 +164,14 @@
 
 .poppins-font {
   font-family: var(--poppins-font);
+}
+
+.poppins-font-bold {
+  font-family: var(--poppins-font-bold) !important;
+}
+
+.poppins-font-medium {
+  font-family: var(--poppins-font-medium) !important;
 }
 
 body {
