@@ -163,7 +163,7 @@
 }
 
 .poppins-font {
-  font-family: var(--poppins-font);
+  font-family: var(--poppins-font) !important;
 }
 
 .poppins-font-bold {
