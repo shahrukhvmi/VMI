@@ -348,7 +348,7 @@ export default function Careers({ categories, jobs, totalPages }) {
                   <h3 className="poppins-font-medium capitalize">
                     <Link
                       className="text-xl cursor-pointer hover:opacity-60 text-black capitalize"
-                      href={`/careers/${job.id}`}
+                      href={`/careers/${job.slug}`}
                     >
                       {job.title}
                     </Link>
@@ -376,7 +376,7 @@ export default function Careers({ categories, jobs, totalPages }) {
 
                 <Link
                   className="flex items-center gap-1 text-2xl poppins-font-medium cursor-pointer hover:opacity-60"
-                  href={`/careers/${job.id}`}
+                  href={`/careers/${job.slug}`}
                 >
                   Apply <FiArrowUpRight />
                 </Link>

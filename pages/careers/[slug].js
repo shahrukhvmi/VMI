@@ -17,9 +17,9 @@ const convertToBase64 = (file) => {
 
 export async function getServerSideProps({ params }) {
   try {
-    const jobId = params.jobId;
+    const slug = params.slug;
 
-    const res = await fetch(`${career_url}/jobs/web/${jobId}`);
+    const res = await fetch(`${career_url}/jobs/web/${slug}`);
     const jobData = await res.json();
 
     return {
