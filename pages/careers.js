@@ -122,6 +122,8 @@ export default function Careers({ categories, jobs, totalPages }) {
   const handleCategoryChange = (category_id) => {
     setActiveCategory(category_id);
     setCurrentPage(1); // Reset to first page when category changes
+    setJobsList([]);
+    setLoading(true);
   };
 
   const handleLoadMore = () => {
