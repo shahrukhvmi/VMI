@@ -110,12 +110,10 @@ export default function CareerDetail({ job }) {
     setFileError("");
 
     try {
-      // Convert file to base64 if there's a file
       const base64File = formData.file
         ? await convertToBase64(formData.file)
         : null;
 
-      // Prepare the payload to send
       const payload = {
         fullName: formData.fullName,
         email: formData.email,
@@ -129,21 +127,21 @@ export default function CareerDetail({ job }) {
         job_id: job.id,
       };
 
-      console.log("Payload:", payload); // Log payload for debugging
-
-      // Send the POST request with the payload
       const response = await fetch(`${career_url}/applications/submit`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      // 🔥 Handle 409 Conflict (Duplicate Application)
+      // ⭐ Handle 409 gracefully (duplicate application)
       if (response.status === 409) {
+        const data = await response.json(); // <- read message safely
+        console.log("Duplicate Response:", data);
+
         setSubmitError(true);
         setIsSubmitting(false);
+
+        // Optional: clear form
         setFormData({
           fullName: "",
           email: "",
@@ -154,15 +152,23 @@ export default function CareerDetail({ job }) {
           source: "",
           file: null,
         });
-        return;
+
+        return; // IMPORTANT: stop here
       }
 
+      // ⭐ Handle non-OK responses (400, 500, etc.)
       if (!response.ok) {
-        throw new Error("Submission failed");
+        const data = await response.json();
+        console.error("API Error:", data);
+        setSubmitError(true);
+        setIsSubmitting(false);
+        return; // Do not go to catch()
       }
 
+      // ⭐ Success
       const result = await response.json();
-      console.log("API Response:", result);
+      console.log("API Success:", result);
+
       setModalVisible(true);
       setFormData({
         fullName: "",
@@ -175,8 +181,9 @@ export default function CareerDetail({ job }) {
         file: null,
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("There was an error submitting the form. Please try again.");
+      console.error("Unexpected Error:", error);
+      // DO NOT treat backend issues as error here
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }
