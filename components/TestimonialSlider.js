@@ -42,14 +42,26 @@ export default function TestimonialSlider({ testimonialData }) {
                 </div>
                 <div className="w-[70%] text-[28px] flex flex-col justify-around home-testimonial-text">
                   <h3 className="olivera-font">“{testimonial?.data?.quote}”</h3>
-                  <p className="mt-6 font-normal poppins-font">
+                  {/* <p className="mt-6 font-normal poppins-font">
                     <strong className="testi-name">
                       {testimonial?.data?.person_name}
                     </strong>{" "}
                     <br />
                     {testimonial?.data?.person_role} <br />
                     {testimonial?.data?.person_country}
-                  </p>
+                  </p> */}
+
+                  <p
+                    className="mt-6 font-normal poppins-font"
+                    dangerouslySetInnerHTML={{
+                      __html: `
+      <strong class="testi-name">${testimonial?.data?.person_name}</strong><br />
+      ${testimonial?.data?.person_role}<br />
+      ${testimonial?.data?.person_country}
+    `,
+                    }}
+                  />
+
                 </div>
               </div>
             </SwiperSlide>
