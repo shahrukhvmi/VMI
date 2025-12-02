@@ -266,7 +266,7 @@ export default function Careers({ categories, jobs, totalPages }) {
             <select
               id="category-dropdown"
               onChange={(e) => handleCategoryChange(e.target.value)}
-              className="px-4 py-2 rounded-full border-2 border-[#000] text-md !text-black bg-white w-full pr-8 appearance-none poppins-font-medium relative"
+              className="px-4 py-2 rounded-full border-2 border-[#000] text-md !text-black bg-white w-full pr-8 appearance-none poppins-font-medium relative capitalize"
               value={activeCategory}
             >
               <option value="All">All</option>
@@ -298,7 +298,7 @@ export default function Careers({ categories, jobs, totalPages }) {
         <div className="hidden sm:flex flex-wrap gap-3">
           <button
             onClick={() => handleCategoryChange("All")}
-            className={`px-5 py-2 rounded-full border-2 text-sm transition poppins-font-medium ${
+            className={`px-5 py-2 rounded-full border-2 text-sm transition poppins-font-medium capitalize ${
               activeCategory === "All"
                 ? "bg-black text-white border-black"
                 : "border-black !text-black hover:bg-gray-100"
@@ -311,7 +311,7 @@ export default function Careers({ categories, jobs, totalPages }) {
             <button
               key={cat.id}
               onClick={() => handleCategoryChange(cat.id)} // Pass category_id
-              className={`px-5 py-2 rounded-full border-[2px] text-sm transition poppins-font-medium ${
+              className={`px-5 py-2 rounded-full border-[2px] text-sm transition poppins-font-medium capitalize ${
                 activeCategory === cat.id
                   ? "bg-black text-white border-black"
                   : "border-black !text-black hover:bg-gray-100"
@@ -331,7 +331,7 @@ export default function Careers({ categories, jobs, totalPages }) {
       {/* Jobs List */}
       <div className="max-w-6xl mx-auto px-5 mt-8 space-y-12 poppins-font">
         {jobsList.length === 0 && !loading ? (
-          <div className="text-center text-lg !text-gray-500">
+          <div className="text-center text-lg !text-gray-500 capitalize">
             No records found
           </div>
         ) : (
@@ -345,7 +345,7 @@ export default function Careers({ categories, jobs, totalPages }) {
                 <div className="w-[80%]">
                   <h3 className="poppins-font-medium capitalize">
                     <Link
-                      className="text-xl cursor-pointer hover:opacity-60 text-black"
+                      className="text-xl cursor-pointer hover:opacity-60 text-black capitalize"
                       href={`/careers/${job.id}`}
                     >
                       {job.title}
@@ -357,14 +357,14 @@ export default function Careers({ categories, jobs, totalPages }) {
                   />
 
                   <div className="flex items-center gap-3 mt-4 flex-wrap">
-                    <span className="flex items-center gap-1 text-sm border-2 px-3 py-1 rounded-full poppins-font-medium">
+                    <span className="flex items-center gap-1 text-sm border-2 px-3 py-1 rounded-full poppins-font-medium capitalize">
                       <HiOutlineLocationMarker /> {job.location}
                     </span>
 
                     {job.jobTags?.map((t) => (
                       <span
                         key={t?.tag?.id}
-                        className="text-sm border-2 px-3 py-1 rounded-full poppins-font-medium"
+                        className="text-sm border-2 px-3 py-1 rounded-full poppins-font-medium capitalize"
                       >
                         {t?.tag?.name}
                       </span>

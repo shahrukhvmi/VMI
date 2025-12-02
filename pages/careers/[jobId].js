@@ -3,6 +3,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FiArrowUpRight } from "react-icons/fi";
 import Link from "next/link";
 import { career_url } from "@/config/constants";
+import PhoneInput from "react-phone-input-2";
 
 // Function to handle file conversion to base64
 const convertToBase64 = (file) => {
@@ -315,17 +316,17 @@ export default function CareerDetail({ job }) {
               {job?.jobTags?.map((t) => (
                 <span
                   key={t?.tag_id}
-                  className="border-2 poppins-font-medium px-3 py-1 rounded-full"
+                  className="border-2 poppins-font-medium px-3 py-1 rounded-full capitalize"
                 >
                   {t.tag?.name}
                 </span>
               ))}
-              <span className="border-2 px-3 py-1 rounded-full poppins-font-medium">
+              <span className="border-2 px-3 py-1 rounded-full poppins-font-medium capitalize">
                 {job.category?.name}
               </span>
             </div>
 
-            <div className="flex items-center gap-1 !text-[#080808] poppins-font-medium">
+            <div className="flex items-center gap-1 !text-[#080808] poppins-font-medium capitalize">
               <HiOutlineLocationMarker />
               <span>{job.location}</span>
             </div>
@@ -404,20 +405,19 @@ export default function CareerDetail({ job }) {
                 >
                   Mobile Number <span className="text-red-500">*</span>
                 </label>
-                <div className="flex items-center mt-2 w-full border border-gray-300 rounded-lg">
-                  {/* Pakistan Flag */}
-                  <span className="mr-2 text-xl career-country">🇵🇰</span>
 
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    onKeyDown={handleKeyPress} // Restrict alphabets
-                    required
-                    placeholder="03xxxxxxxxxx" // Placeholder text
-                    autoComplete="tel"
-                    className="flex-1 outline-none !text-[#080808] poppins-font career-phone"
+                <div className="mt-2 w-full">
+                  <PhoneInput
+                    country={"pk"} // 🇵🇰 Fixed to Pakistan
+                    value={formData.phone} // controlled value
+                    onChange={(value) =>
+                      setFormData({ ...formData, phone: value })
+                    }
+                    disableDropdown={true} // ❗ prevents changing country
+                    enableSearch={false}
+                    masks={{ pk: "................" }} // keep formatting simple
+                    inputClass="!w-full !h-12 !text-[#080808] poppins-font"
+                    containerClass="!w-full border border-gray-300 rounded-lg overflow-hidden"
                   />
                 </div>
               </div>

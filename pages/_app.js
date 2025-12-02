@@ -4,6 +4,7 @@ import "@/styles/style.css";
 import "@/styles/fonts.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "react-phone-input-2/lib/style.css";
 
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";

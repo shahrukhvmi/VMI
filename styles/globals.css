@@ -1142,6 +1142,10 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
+.react-tel-input .form-control,
+.react-tel-input .flag-dropdown {
+  border: unset !important;
+}
 
 /* ================================About page css start============================= */
 .office-slider {
