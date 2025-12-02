@@ -1125,6 +1125,23 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   border-radius: 50px;
   font-size: 16px;
 }
+.no-content-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fbfbfb;
+}
+.career-salary {
+  padding-right: 13px;
+  padding-left: 13px;
+  padding-top: 13px;
+  padding-bottom: 12px;
+  background: #80808026;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
 
 /* ================================About page css start============================= */
 .office-slider {
@@ -1641,6 +1658,8 @@ select {
   padding-top: 10px;
   padding-bottom: 10px;
   background: #80808026;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 .submit-btn {
   background: linear-gradient(90deg, rgb(84, 47, 140), rgb(132, 72, 187));

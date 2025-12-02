@@ -40,6 +40,8 @@ export default function Careers({ categories, jobs, totalPages }) {
   const [jobsList, setJobsList] = useState(jobs);
   const [loading, setLoading] = useState(false);
   const [totalPagesCount, setTotalPagesCount] = useState(totalPages);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [noContentFooter, setNoContentFooter] = useState(false);
 
   console.log(jobs, "jobs");
 
@@ -84,6 +86,28 @@ export default function Careers({ categories, jobs, totalPages }) {
       setLoading(false);
     }
   };
+
+  const checkScroll = () => {
+    const pageHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+
+    if (pageHeight <= viewportHeight) {
+      setNoContentFooter(true); // No scroll → add class
+    } else {
+      setNoContentFooter(false); // Scroll exists → remove class
+    }
+  };
+
+  useEffect(() => {
+    checkScroll(); // run on mount
+    window.addEventListener("resize", checkScroll);
+
+    return () => window.removeEventListener("resize", checkScroll);
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+  }, [jobsList]);
 
   useEffect(() => {
     if (currentPage === 1) {
@@ -138,15 +162,23 @@ export default function Careers({ categories, jobs, totalPages }) {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8 text-sm !text-gray-700 poppins-font">
-            <a href="/">Home</a>
-            <a href="/about">About Us</a>
-            <a href="/services">Services</a>
-            <a href="/portfolio">Portfolio</a>
-            <a href="/careers" className="!text-black">
+            <Link href="/">Home</Link>
+            <Link href="/about">About Us</Link>
+            <Link href="/services">Services</Link>
+            <Link href="/portfolio">Portfolio</Link>
+            <Link href="/careers" className="!text-black">
               <span className="border-b">Careers</span>
-            </a>
-            <a href="/contact-us">Contact Us</a>
+            </Link>
+            <Link href="/contact-us">Contact Us</Link>
           </nav>
+
+          {/* Mobile Burger Icon */}
+          <button
+            className="md:hidden text-3xl !text-black focus:outline-none"
+            onClick={() => setMobileNavOpen(true)}
+          >
+            ☰
+          </button>
         </div>
       </header>
 
@@ -167,6 +199,58 @@ export default function Careers({ categories, jobs, totalPages }) {
           We’re looking for passionate people to join us. We value flat
           hierarchies, clear communication, and full ownership.
         </p>
+      </div>
+
+      {/* MOBILE FULLSCREEN NAV */}
+      <div
+        className={`
+          fixed inset-0 z-50
+          transform transition-transform duration-300 ease-in-out
+          ${
+            mobileNavOpen
+              ? "translate-x-0"
+              : "translate-x-full pointer-events-none"
+          }
+        `}
+      >
+        {/* Dark overlay (click to close) */}
+        <div
+          className="absolute inset-0 bg-black/40"
+          onClick={() => setMobileNavOpen(false)}
+        />
+
+        {/* Fullscreen white panel */}
+        <div className="absolute inset-0 bg-white p-6 pt-4 flex flex-col">
+          {/* Top row: logo + close */}
+          <div className="flex items-center justify-between mb-8">
+            <Link href="/">
+              <img
+                src="/logo-dark.svg"
+                alt="Vibrant Media Inc"
+                className="h-10 w-auto"
+              />
+            </Link>
+
+            <button
+              className="text-3xl !text-black focus:outline-none"
+              onClick={() => setMobileNavOpen(false)}
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Nav links */}
+          <nav className="flex flex-col gap-10 text-xl text-black poppins-font items-center mt-14">
+            <Link href="/">Home</Link>
+            <Link href="/about">About Us</Link>
+            <Link href="/services">Services</Link>
+            <Link href="/portfolio">Portfolio</Link>
+            <Link href="/careers" className="font-semibold">
+              <span className="border-b">Careers</span>
+            </Link>
+            <Link href="/contact-us">Contact Us</Link>
+          </nav>
+        </div>
       </div>
 
       {/* Category Filters */}
@@ -279,10 +363,10 @@ export default function Careers({ categories, jobs, totalPages }) {
 
                     {job.jobTags?.map((t) => (
                       <span
-                        key={t?.id}
+                        key={t?.tag?.id}
                         className="text-sm border-2 px-3 py-1 rounded-full poppins-font-medium"
                       >
-                        {t?.name}
+                        {t?.tag?.name}
                       </span>
                     ))}
                   </div>
@@ -325,7 +409,11 @@ export default function Careers({ categories, jobs, totalPages }) {
         <div className="mx-auto mt-10 border-t"></div>
       </div> */}
 
-      <div className="max-w-6xl mx-auto px-5 pt-4 pb-6 mt-20 flex flex-col md:flex-row items-center justify-between">
+      <div
+        className={`max-w-6xl mx-auto px-5 pt-4 pb-6 mt-20 flex flex-col md:flex-row items-center justify-between ${
+          noContentFooter ? "no-content-footer" : ""
+        }`}
+      >
         <div className="flex items-center gap-2">
           <Link href="/">
             <img

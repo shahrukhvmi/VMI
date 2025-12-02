@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function NavBar() {
-
   const [data, setData] = useState(null);
   useEffect(() => {
     const fetchHeader = async () => {
@@ -22,14 +21,11 @@ export default function NavBar() {
     fetchHeader();
   }, []);
 
-
   const { menu, site, header_cta } = data || {};
-
 
   const router = useRouter();
 
   const currentPath = router.pathname;
-
 
   const navItems = [
     { label: "Home", url: "/" },
@@ -89,7 +85,9 @@ export default function NavBar() {
             return (
               <li
                 key={i}
-                className={`relative group nav-items ${isActive ? "active" : ""}`}
+                className={`relative group nav-items ${
+                  isActive ? "active" : ""
+                }`}
               >
                 <Link
                   href={`${slug}`}
@@ -103,7 +101,6 @@ export default function NavBar() {
             );
           })}
         </ul>
-
 
         {/* Desktop CTA Button */}
         <div className="hidden md:block nav-btn example-2 desktop-nav-btn">
@@ -131,13 +128,13 @@ export default function NavBar() {
             {mobileOpen ? <FiX /> : <FiMenu />}
           </button>
         </div>
-      </nav >
+      </nav>
 
       {/* Fullscreen Mobile Menu */}
-      < div
-        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${mobileOpen ? "translate-x-0" : "translate-x-full"
-          } md:hidden`
-        }
+      <div
+        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
+        } md:hidden`}
       >
         <div className="p-6 h-full mobile-nav-wrapper">
           {/* Close button top-right */}
@@ -156,8 +153,9 @@ export default function NavBar() {
               <Link
                 key={i}
                 href={item?.slug}
-                className={`text-2xl mobile-links poppins-font ${activeIdx === i ? "footer-active" : "text-white"
-                  }`}
+                className={`text-2xl mobile-links poppins-font ${
+                  activeIdx === i ? "footer-active" : "text-white"
+                }`}
                 onClick={() => {
                   setActiveIdx(i);
                   setMobileOpen(false);
@@ -189,7 +187,7 @@ export default function NavBar() {
             </div>
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 }
