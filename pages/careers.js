@@ -53,7 +53,7 @@ export default function Careers({ categories, jobs, totalPages }) {
 
     if (category_id && category_id !== "All") {
       // Fetch jobs for a specific category (no pagination)
-      url = `${career_url}/jobs/search`;
+      url = `${career_url}/jobs/search/published`;
       method = "POST";
       body = JSON.stringify({ category_id: String(category_id) });
     } else {
