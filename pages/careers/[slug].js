@@ -81,6 +81,10 @@ export default function CareerDetail({ job }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+
+    // Reset input so selecting the same file again will still trigger onChange
+    e.target.value = null;
+
     if (
       file &&
       (file.type === "application/pdf" ||
@@ -408,14 +412,14 @@ export default function CareerDetail({ job }) {
 
                 <div className="mt-2 w-full">
                   <PhoneInput
-                    country={"pk"} // 🇵🇰 Fixed to Pakistan
-                    value={formData.phone} // controlled value
-                    onChange={(value) =>
-                      setFormData({ ...formData, phone: value })
-                    }
-                    disableDropdown={true} // ❗ prevents changing country
+                    country="pk"
+                    value={formData.phone}
+                    onChange={(value) => {
+                      setFormData({ ...formData, phone: value });
+                    }}
+                    disableDropdown
                     enableSearch={false}
-                    masks={{ pk: "................" }} // keep formatting simple
+                    masks={{ pk: "................" }}
                     inputClass="!w-full !h-12 !text-[#080808] poppins-font"
                     containerClass="!w-full border border-gray-300 rounded-lg overflow-hidden"
                   />
@@ -483,7 +487,16 @@ export default function CareerDetail({ job }) {
                     id="currentSalary"
                     name="currentSalary"
                     value={formData.currentSalary}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      let value = e.target.value;
+
+                      // Limit the number of digits to 6
+                      if (value.length > 6) {
+                        value = value.slice(0, 7);
+                      }
+
+                      setFormData({ ...formData, currentSalary: value });
+                    }}
                     required
                     className="flex-1 outline-none !text-[#080808] poppins-font career-phone"
                   />
@@ -535,7 +548,12 @@ export default function CareerDetail({ job }) {
                 onDrop={(e) => {
                   e.preventDefault();
                   const file = e.dataTransfer.files[0];
-                  handleFileChange({ target: { files: [file] } });
+                  const fileInput = document.getElementById("fileInput");
+
+                  // Force reset for same-file uploads
+                  if (fileInput) fileInput.value = null;
+
+                  handleFileChange({ target: { files: [file], value: null } });
                 }}
                 onClick={() => document.getElementById("fileInput").click()}
               >
