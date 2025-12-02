@@ -1,3 +1,4 @@
+import { app_url } from "@/config/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,20 +7,10 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 export default function NavBar() {
   const [data, setData] = useState(null);
-  useEffect(() => {
-    const fetchHeader = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/header`);
-        const layoutData = await res.json();
-        // console.log("Header data:", layoutData); // or set it to state
-        setData(layoutData);
-      } catch (error) {
-        console.error("Error fetching header:", error);
-      }
-    };
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    fetchHeader();
-  }, []);
 
   const { menu, site, header_cta } = data || {};
 
@@ -35,8 +26,21 @@ export default function NavBar() {
     { label: "Contact Us", url: "/contact-us" },
   ];
 
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  useEffect(() => {
+    const fetchHeader = async () => {
+      try {
+        const res = await fetch(`${app_url}/header`);
+        const layoutData = await res.json();
+        setData(layoutData);
+      } catch (error) {
+        console.error("Error fetching header:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHeader();
+  }, []);
 
   useEffect(() => {
     const currentIdx = menu?.findIndex(
@@ -46,7 +50,37 @@ export default function NavBar() {
       setActiveIdx(currentIdx);
     }
   }, [router.pathname, menu]);
+  // ===============================
+  // 🦴 Skeleton Loader for Navbar
+  // ===============================
+  if (loading) {
+    return (
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-11/12 md:w-4/5 bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-full z-50 flex items-center justify-between px-6 py-3 animate-pulse">
+        {/* Logo skeleton */}
+        <div className="w-32 h-6 bg-white/20 rounded"></div>
 
+        {/* Links skeleton */}
+        <div className="hidden md:flex gap-6">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className="w-14 h-4 bg-white/20 rounded"
+            ></div>
+          ))}
+        </div>
+
+        {/* CTA Button skeleton */}
+        <div className="hidden md:block w-28 h-8 bg-white/20 rounded-full"></div>
+
+        {/* Mobile menu icon skeleton */}
+        <div className="md:hidden w-6 h-6 bg-white/30 rounded"></div>
+      </nav>
+    );
+  }
+
+  // ===============================
+  // 🌈 Actual Navbar (after load)
+  // ===============================
   return (
     <>
       <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-md border border-white/20 shadow-glow rounded-full z-50 flex justify-between items-center w-6xl ring-cursor max-container-width overflow-hidden">
@@ -85,9 +119,8 @@ export default function NavBar() {
             return (
               <li
                 key={i}
-                className={`relative group nav-items ${
-                  isActive ? "active" : ""
-                }`}
+                className={`relative group nav-items ${isActive ? "active" : ""
+                  }`}
               >
                 <Link
                   href={`${slug}`}
@@ -132,9 +165,8 @@ export default function NavBar() {
 
       {/* Fullscreen Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${
-          mobileOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden`}
+        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${mobileOpen ? "translate-x-0" : "translate-x-full"
+          } md:hidden`}
       >
         <div className="p-6 h-full mobile-nav-wrapper">
           {/* Close button top-right */}
@@ -153,9 +185,8 @@ export default function NavBar() {
               <Link
                 key={i}
                 href={item?.slug}
-                className={`text-2xl mobile-links poppins-font ${
-                  activeIdx === i ? "footer-active" : "text-white"
-                }`}
+                className={`text-2xl mobile-links poppins-font ${activeIdx === i ? "footer-active" : "text-white"
+                  }`}
                 onClick={() => {
                   setActiveIdx(i);
                   setMobileOpen(false);

@@ -1,3 +1,4 @@
+import { app_url } from "@/config/constants";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ function Footer() {
   useEffect(() => {
     const fetchHeader = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/footer`);
+        const res = await fetch(`${app_url}/footer`);
         const layoutData = await res.json();
         console.log("footer data:", layoutData); // or set it to state
         setData(layoutData);
