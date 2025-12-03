@@ -54,8 +54,20 @@ export default function CareerDetail({ job }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
 
-  console.log(job, "JOB");
+  const showToast = (message, type = "success") => {
+    setToast({ show: true, message, type });
+    // auto-hide after 3s
+    window.clearTimeout(showToast._t);
+    showToast._t = window.setTimeout(() => {
+      setToast((t) => ({ ...t, show: false }));
+    }, 3000);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -137,21 +149,20 @@ export default function CareerDetail({ job }) {
       if (response.status === 409) {
         const data = await response.json(); // <- read message safely
         console.log("Duplicate Response:", data);
-
         setSubmitError(true);
         setIsSubmitting(false);
 
         // Optional: clear form
-        setFormData({
-          fullName: "",
-          email: "",
-          phone: "",
-          areaOfResidence: "",
-          fitReason: "",
-          currentSalary: "",
-          source: "",
-          file: null,
-        });
+        // setFormData({
+        //   fullName: "",
+        //   email: "",
+        //   phone: "",
+        //   areaOfResidence: "",
+        //   fitReason: "",
+        //   currentSalary: "",
+        //   source: "",
+        //   file: null,
+        // });
 
         return; // IMPORTANT: stop here
       }
@@ -159,8 +170,8 @@ export default function CareerDetail({ job }) {
       // ⭐ Handle non-OK responses (400, 500, etc.)
       if (!response.ok) {
         const data = await response.json();
-        console.error("API Error:", data);
-        setSubmitError(true);
+        console.error("This is api error from not Ok:", data.message);
+        showToast(data?.message, "error");
         setIsSubmitting(false);
         return; // Do not go to catch()
       }
@@ -181,7 +192,11 @@ export default function CareerDetail({ job }) {
         file: null,
       });
     } catch (error) {
-      console.error("Unexpected Error:", error);
+      console.error(
+        "errrrrrrroorororoorororororororororororororororoer",
+        error
+      );
+      showToast("Something went wrong.", "error");
       // DO NOT treat backend issues as error here
       setSubmitError(true);
     } finally {
@@ -209,6 +224,17 @@ export default function CareerDetail({ job }) {
 
   return (
     <>
+      {toast.show && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={`fixed top-10 right-6 z-[9999] max-w-sm w-auto px-5 py-3 rounded-lg shadow-xl text-white flex items-start gap-3 transition-all duration-300
+      ${toast.type === "success" ? "bg-green-600" : "bg-red-600"}`}
+          style={{ animation: "toast-slide-in 200ms ease-out" }}
+        >
+          <div className="text-sm leading-5 poppins-font">{toast.message}</div>
+        </div>
+      )}
       <header className="w-full bg-white border-b">
         <div className="max-w-4xl mx-auto py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
