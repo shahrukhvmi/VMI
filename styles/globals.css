@@ -29,6 +29,11 @@ body {
 .detail p {
   margin-bottom: 12px;
 }
+.careers-job-description ol,
+ul,
+menu {
+  list-style: unset;
+}
 
 /* Hero shadow animation start */
 

@@ -379,7 +379,7 @@ export default function CareerDetail({ job }) {
           </div>
 
           <div
-            className="mt-6 text-black poppins-font"
+            className="mt-6 text-black poppins-font careers-job-description"
             dangerouslySetInnerHTML={{ __html: job.description }}
           />
 
