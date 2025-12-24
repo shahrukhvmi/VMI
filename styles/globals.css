@@ -425,6 +425,7 @@ a {
 
 .nav-items {
   padding: 30px 4px;
+  list-style: none;
 }
 
 li.relative.group.nav-items.active {
