@@ -11,7 +11,6 @@ export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-
   const { menu, site, header_cta } = data || {};
 
   const router = useRouter();
@@ -62,10 +61,7 @@ export default function NavBar() {
         {/* Links skeleton */}
         <div className="hidden md:flex gap-6">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div
-              key={i}
-              className="w-14 h-4 bg-white/20 rounded"
-            ></div>
+            <div key={i} className="w-14 h-4 bg-white/20 rounded"></div>
           ))}
         </div>
 
@@ -119,8 +115,9 @@ export default function NavBar() {
             return (
               <li
                 key={i}
-                className={`relative group nav-items ${isActive ? "active" : ""
-                  }`}
+                className={`relative group nav-items ${
+                  isActive ? "active" : ""
+                }`}
               >
                 <Link
                   href={`${slug}`}
@@ -165,8 +162,9 @@ export default function NavBar() {
 
       {/* Fullscreen Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${mobileOpen ? "translate-x-0" : "translate-x-full"
-          } md:hidden`}
+        className={`fixed top-0 left-0 w-full h-screen bg-[#1b1b2f] z-40 transition-transform duration-300 ease-in-out flex items-center justify-center ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
+        } md:hidden`}
       >
         <div className="p-6 h-full mobile-nav-wrapper">
           {/* Close button top-right */}
@@ -185,8 +183,9 @@ export default function NavBar() {
               <Link
                 key={i}
                 href={item?.slug}
-                className={`text-2xl mobile-links poppins-font ${activeIdx === i ? "footer-active" : "text-white"
-                  }`}
+                className={`text-2xl mobile-links poppins-font ${
+                  activeIdx === i ? "footer-active" : "text-white"
+                }`}
                 onClick={() => {
                   setActiveIdx(i);
                   setMobileOpen(false);
