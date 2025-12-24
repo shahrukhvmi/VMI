@@ -1,6 +1,7 @@
 // pages/_app.js
 import "@/styles/globals.css";
 import "@/styles/style.css";
+import "@/styles/landing.css";
 import "@/styles/fonts.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,6 +15,7 @@ const StarsCanvas = dynamic(() => import("@/components/StarsCanvas"), {
 });
 import WhatsAppButton from "@/components/WhatsappBtn";
 import Head from "next/head";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }) {
   const Favicons = () => (
@@ -45,6 +47,12 @@ export default function App({ Component, pageProps }) {
       <>
         <Favicons />
         <Component {...pageProps} />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: { zIndex: 999999, fontFamily: "var(--gilroy-font-medium)" },
+          }}
+        />
       </>
     );
   }

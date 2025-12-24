@@ -90,7 +90,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "poppins-bold";
   src: url("../public/fonts/Poppins/Poppins-Bold.ttf") format("opentype");
@@ -102,6 +101,46 @@
 @font-face {
   font-family: "poppins-medium";
   src: url("../public/fonts/Poppins/Poppins-Medium.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gilroy";
+  src: url("../public/fonts/gilroy/Gilroy-Regular.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gilroy-bold";
+  src: url("../public/fonts/gilroy/Gilroy-Bold.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gilroy-semibold";
+  src: url("../public/fonts/gilroy/Gilroy-SemiBold.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gilroy-medium";
+  src: url("../public/fonts/gilroy/Gilroy-Medium.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gilroy-thin";
+  src: url("../public/fonts/gilroy/Gilroy-Thin.ttf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -122,6 +161,12 @@
   --poppins-font: "poppins";
   --poppins-font-bold: "poppins-bold";
   --poppins-font-medium: "poppins-medium";
+
+  --gilroy-font: "gilroy";
+  --gilroy-font-bold: "gilroy-bold";
+  --gilroy-font-semibold: "gilroy-semibold";
+  --gilroy-font-medium: "gilroy-medium";
+  --gilroy-font-thin: "gilroy-thin";
 }
 
 /* Global class */
@@ -163,7 +208,7 @@
 }
 
 .poppins-font {
-  font-family: var(--poppins-font) !important;
+  font-family: var(--poppins-font);
 }
 
 .poppins-font-bold {
@@ -172,6 +217,26 @@
 
 .poppins-font-medium {
   font-family: var(--poppins-font-medium) !important;
+}
+
+.gilory-font {
+  font-family: var(--gilroy-font) !important;
+}
+
+.gilory-font-bold {
+  font-family: var(--gilroy-font-bold) !important;
+}
+
+.gilory-font-semibold {
+  font-family: var(--gilroy-font-semibold) !important;
+}
+
+.gilory-font-medium {
+  font-family: var(--gilroy-font-medium) !important;
+}
+
+.gilory-font-thin {
+  font-family: var(--gilroy-font-thin) !important;
 }
 
 body {
