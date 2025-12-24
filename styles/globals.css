@@ -1980,6 +1980,7 @@ label {
 
   .nav-items {
     font-size: 18px;
+    list-style: none;
   }
 
   .ring-left-width p {
