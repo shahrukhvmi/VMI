@@ -30,8 +30,7 @@ body {
   margin-bottom: 12px;
 }
 .careers-job-description ol,
-ul,
-menu {
+.careers-job-description ul {
   list-style: unset;
 }
 

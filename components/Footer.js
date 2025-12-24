@@ -22,7 +22,6 @@ function Footer() {
     fetchHeader();
   }, []);
 
-
   const { menu, site, footer, social } = data || {};
   return (
     <div className="footer-wrapper pt-20 z-10 relative">
@@ -30,10 +29,14 @@ function Footer() {
         <div className="footer-wrap">
           <div className="footer-left footer-col w-[50%]">
             <div className="footer-logo-img">
-              <img src={site?.logo?.src || "/footer-logo.png"} alt={site?.name || "Vibrant Media Inc"} />
+              <img
+                src={site?.logo?.src || "/footer-logo.png"}
+                alt={site?.name || "Vibrant Media Inc"}
+              />
             </div>
             <p className="mt-6 poppins-font">
-              {footer?.sub_heading || "Let’s collaborate for purpose-driven strategies and output! We offer everything your business needs."}
+              {footer?.sub_heading ||
+                "Let’s collaborate for purpose-driven strategies and output! We offer everything your business needs."}
             </p>
             <div className="example-2 footer-btn mt-6">
               <button
@@ -66,8 +69,9 @@ function Footer() {
                     <li key={title} className="cursor-pointer">
                       <Link href={slug}>
                         <p
-                          className={`px-4 py-2 transition-all duration-300 ${isActive ? "footer-active" : ""
-                            }`}
+                          className={`px-4 py-2 transition-all duration-300 ${
+                            isActive ? "footer-active" : ""
+                          }`}
                         >
                           {title}
                         </p>
@@ -80,7 +84,9 @@ function Footer() {
 
             <div className="footer-email pt-10 md:pt-20 poppins-font">
               <p className="email-text1">Email</p>
-              <p className="email-text2">{footer?.email || "info@vibrantmediainc.com"}</p>
+              <p className="email-text2">
+                {footer?.email || "info@vibrantmediainc.com"}
+              </p>
             </div>
 
             <div className="footer-email pt-10 pb-20 poppins-font">
@@ -88,7 +94,10 @@ function Footer() {
               <ul className="flex mt-4 gap-4 footer-icons">
                 <li>
                   <Link
-                    href={social?.facebook || "https://www.facebook.com/vibrantmediainc"}
+                    href={
+                      social?.facebook ||
+                      "https://www.facebook.com/vibrantmediainc"
+                    }
                     target="_blank"
                   >
                     <img src="/facebook.svg" />
@@ -96,7 +105,10 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href={social?.instagram || "https://www.instagram.com/vibrantmediainc/"}
+                    href={
+                      social?.instagram ||
+                      "https://www.instagram.com/vibrantmediainc/"
+                    }
                     target="_blank"
                   >
                     <img src="/insta.svg" />
@@ -104,7 +116,10 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href={ social?.linkedin || "https://www.linkedin.com/company/vibrantmedia-inc/"}
+                    href={
+                      social?.linkedin ||
+                      "https://www.linkedin.com/company/vibrantmedia-inc/"
+                    }
                     target="_blank"
                   >
                     <img src="/linkedin.svg" />
@@ -122,10 +137,12 @@ function Footer() {
         </div>
         <div className="rights-wrap flex justify-between pb-10 poppins-font">
           <p className="text-[#E9E9E9]">
-            © {footer?.copyright || "2025 Vibrant Media Inc. All rights reserved"}
+            ©{" "}
+            {footer?.copyright || "2025 Vibrant Media Inc. All rights reserved"}
           </p>
           <p className="text-[#E9E9E9]">
-            Privacy & Cookie Policy | Terms of Service
+            <Link href="/privacy-policy">Privacy & Cookie Policy</Link> |{" "}
+            <Link href="/terms-conditions">Terms of Service</Link>
           </p>
         </div>
       </div>
