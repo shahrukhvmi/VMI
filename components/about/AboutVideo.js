@@ -3,18 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 export default function AboutVideo({ videoSection }) {
-
   const videoLink = videoSection?.[0]?.value;
   const heading1 = videoSection?.[2]?.value;
   const heading2 = videoSection?.[1]?.value;
   const videoRef = useRef(null);
-
-
-
-
-
-
-
 
   const [scale, setScale] = useState(0.6);
   const [isMobile, setIsMobile] = useState(null); // null = prevent SSR mismatch
@@ -58,7 +50,8 @@ export default function AboutVideo({ videoSection }) {
     <div className="w-[90%] mx-auto max-container-width relative z-10 my-50 about-video-wrap">
       <div className="about-video-heading mb-20">
         <h2 className="olivera-font text-center">
-          {heading1 || "Aligned Vision"}<br />
+          {heading1 || "Aligned Vision"}
+          <br />
           {heading2 || "Collective Growth"}
         </h2>
       </div>
@@ -84,7 +77,6 @@ export default function AboutVideo({ videoSection }) {
             loop
             muted
             playsInline
-            controls
             className="w-full h-auto grayscale transition-all duration-500 group-hover:grayscale-0"
           />
         )}
