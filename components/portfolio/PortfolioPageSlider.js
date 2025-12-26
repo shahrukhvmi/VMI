@@ -9,8 +9,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function PortfolioPageSlider({ slider, viewAll }) {
-
-  console.log(slider,"slidersocialaaaaa")
   const swiperRef = useRef(null);
   const containerRef = useRef(null);
   const [swiperReady, setSwiperReady] = useState(false);
@@ -47,7 +45,6 @@ export default function PortfolioPageSlider({ slider, viewAll }) {
     };
   }, [swiperReady]);
 
-
   return (
     <div ref={containerRef} className="w-full overflow-hidden py-8 mt-16">
       <Swiper
@@ -71,8 +68,7 @@ export default function PortfolioPageSlider({ slider, viewAll }) {
       >
         {slider?.map((item, i) => (
           <SwiperSlide key={i} className="home-portfolio-slide">
-            <Link href={`${viewAll}/${item?.slug}`}>
-
+            <Link href={`${viewAll}${item?.slug}`}>
               <Image
                 src={item?.featured_image}
                 alt={`Portfolio item ${i + 1}`}

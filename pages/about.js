@@ -16,9 +16,10 @@ import React, { useState } from "react";
 export async function getServerSideProps() {
   try {
     // Fetch dynamic content from WordPress API
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=about`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=about`
+    );
     const data = await res.json(); // Assuming this gives you your layout data
-    console.log(data, "about us page data");
     return {
       props: {
         layoutData: data,
@@ -39,9 +40,8 @@ export async function getServerSideProps() {
 // });
 
 export default function AboutPage({ layoutData }) {
-  console.log(layoutData, "about page data here");
-
-  const about = layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
+  const about =
+    layoutData?.data?.page_data?.sections?.[0]?.fields?.[0]?.subfields;
   const ceoSection = layoutData?.data?.page_data?.sections?.[1]?.fields;
   const videoSection = layoutData?.data?.page_data?.sections?.[2]?.fields;
   const ourVision = layoutData?.data?.page_data?.sections?.[3]?.fields;
@@ -49,7 +49,6 @@ export default function AboutPage({ layoutData }) {
 
   const buttonText = ourVision?.[0]?.value;
   const ourVisionText = ourVision?.[1]?.value;
-  console.log(layoutData?.head?.json, "layoutData?.head?.json")
   const router = useRouter();
 
   return (
@@ -73,7 +72,9 @@ export default function AboutPage({ layoutData }) {
           <div className="brand-secton-wrap center-content middle-quote-font">
             <h3
               className="text-center olivera-font"
-              dangerouslySetInnerHTML={{ __html: ourVisionText || "Our Vision" }}
+              dangerouslySetInnerHTML={{
+                __html: ourVisionText || "Our Vision",
+              }}
             ></h3>
 
             <div className="hero-btn example-2">

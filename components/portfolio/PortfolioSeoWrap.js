@@ -5,13 +5,6 @@ import { useRouter } from "next/router";
 export default function PortfolioSeoWrap({ SearchMap, slider, viewAll }) {
   const router = useRouter();
 
-  const portfolioImages = [
-    { img: "/seo-1.png", url: "/seo-portfolio/loco-customs/" },
-    { img: "/seo-2.png", url: "/seo-portfolio/suja-driving-school/" },
-    { img: "/seo-3.png", url: "/seo-portfolio/floor-express/" },
-    { img: "/seo-4.png", url: "/seo-portfolio/franc-laurent/" },
-  ];
-
   return (
     <section
       className="portfolio-main-wrapper relative z-10 scroll-mt-40"
@@ -30,7 +23,7 @@ export default function PortfolioSeoWrap({ SearchMap, slider, viewAll }) {
           </h2>
         </div>
       </div>
-       <PortfolioPageSlider slider={slider} viewAll={viewAll} concated={false} />
+      <PortfolioPageSlider slider={slider} viewAll={viewAll} concated={false} />
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">
           <button

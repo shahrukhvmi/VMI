@@ -5,8 +5,6 @@ import HomeRingSlider from "./HomeRingSlider";
 import Image from "next/image";
 
 function Creative({ creativeData, services, heading }) {
-  console.log(creativeData, "creativeData");
-
   return (
     <>
       <section className="creative-main z-10 relative">
@@ -72,9 +70,9 @@ function Creative({ creativeData, services, heading }) {
           </div> */}
 
           <div className="creative-menu olivera-font">
-            {services?.map((service, key) => (
-              <>
-                <div className="creative-menu-item" key={key}>
+            {services?.map((service, index) => (
+              <div key={index}>
+                <div className="creative-menu-item">
                   {service?.title && (
                     <span
                       className="creative-menu-span"
@@ -84,15 +82,17 @@ function Creative({ creativeData, services, heading }) {
 
                   <span className="icon">
                     <Image
-                      src={service?.data?.card_thumbnail || "/creative-icon-4.png"}
+                      src={
+                        service?.data?.card_thumbnail || "/creative-icon-4.png"
+                      }
                       width={150}
                       height={150}
                       alt={service?.title || "Creative Icon"}
                     />
                   </span>
                 </div>
-                <hr className="creative-hr" />
-              </>
+                <hr className="creative-hr mt-12" />
+              </div>
             ))}
           </div>
         </div>

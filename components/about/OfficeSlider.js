@@ -28,8 +28,6 @@ const images = [
 ];
 
 export default function OfficeSlider({ brandSecton }) {
-
-  console.log(brandSecton,"aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   const settings = {
     centerMode: true,
     centerPadding: "60px",

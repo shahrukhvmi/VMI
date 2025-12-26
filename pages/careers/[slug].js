@@ -148,7 +148,6 @@ export default function CareerDetail({ job }) {
       // ⭐ Handle 409 gracefully (duplicate application)
       if (response.status === 409) {
         const data = await response.json(); // <- read message safely
-        console.log("Duplicate Response:", data);
         setSubmitError(true);
         setIsSubmitting(false);
 
@@ -178,7 +177,6 @@ export default function CareerDetail({ job }) {
 
       // ⭐ Success
       const result = await response.json();
-      console.log("API Success:", result);
 
       setModalVisible(true);
       setFormData({

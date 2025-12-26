@@ -3,8 +3,6 @@ import LandingModal from "../LandingModal/LandingModal";
 import StartProjectForm from "./StartProjectForm";
 
 export default function LandingPackages({ isLogoValue }) {
-  console.log(isLogoValue, "isWebsite");
-
   const [isLogo, setIsLogo] = useState(isLogoValue); // switch state
   const [open, setOpen] = useState(false);
 
@@ -19,8 +17,9 @@ export default function LandingPackages({ isLogoValue }) {
         <div className="landing-section-heading gilory-font-bold pt-6 pb-8">
           <div className="crossfade-wrapper mt-4">
             <h2
-              className={`text-center crossfade-item ${!isLogo ? "active" : ""
-                }`}
+              className={`text-center crossfade-item ${
+                !isLogo ? "active" : ""
+              }`}
             >
               Choose Your Website Design
               <span className="landing-heading-purple"> Bundle </span>
@@ -55,8 +54,9 @@ export default function LandingPackages({ isLogoValue }) {
         <div className="crossfade-wrapper mt-4">
           <div
             key="web-packages"
-            className={`landing-package-wrap flex gap-4  crossfade-item ${!isLogo ? "active" : ""
-              }`}
+            className={`landing-package-wrap flex gap-4  crossfade-item ${
+              !isLogo ? "active" : ""
+            }`}
           >
             <div className="deal-card deal-card-starter pb-10 w-full">
               {/* Title */}
@@ -292,8 +292,9 @@ export default function LandingPackages({ isLogoValue }) {
 
           <div
             key="logo-packages"
-            className={`crossfade-item landing-package-wrap flex gap-4  ${isLogo ? "active" : ""
-              }`}
+            className={`crossfade-item landing-package-wrap flex gap-4  ${
+              isLogo ? "active" : ""
+            }`}
           >
             <div className="deal-card deal-card-starter pb-10 w-full">
               {/* Title */}
@@ -423,9 +424,7 @@ export default function LandingPackages({ isLogoValue }) {
               <div className="deal-buttons mt-20 px-8">
                 <button
                   className="deal-btn-primary gilory-font-semibold"
-                  onClick={() =>
-                    openModalHandler("Business Logo Bundle - $74")
-                  }
+                  onClick={() => openModalHandler("Business Logo Bundle - $74")}
                 >
                   Avail Offer Now!
                 </button>
@@ -496,7 +495,9 @@ export default function LandingPackages({ isLogoValue }) {
               <div className="deal-buttons mt-20 px-8">
                 <button
                   className="deal-btn-primary gilory-font-semibold"
-                  onClick={() => openModalHandler("Elite Logo Identity Bundle - $167")}
+                  onClick={() =>
+                    openModalHandler("Elite Logo Identity Bundle - $167")
+                  }
                 >
                   Avail Offer Now!
                 </button>

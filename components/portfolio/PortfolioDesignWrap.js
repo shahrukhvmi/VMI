@@ -3,32 +3,7 @@ import PortfolioPageSlider from "./PortfolioPageSlider";
 import { useRouter } from "next/router";
 
 export default function PortfolioDesignWrap({ creative, slider, viewAll }) {
-  console.log(slider, "slider inner1")
   const router = useRouter();
-
-  const portfolioImages = [
-    { img: "/design-1.webp", url: "/design-portfolio/shawarma-lite/" },
-    {
-      img: "/design-2.webp",
-      url: "/design-portfolio/almas-real-estate-services/",
-    },
-    { img: "/design-3.webp", url: "/design-portfolio/wefix/" },
-    { img: "/design-4.webp", url: "/design-portfolio/top-grease/" },
-    { img: "/design-5.webp", url: "/design-portfolio/level-orthodontics/" },
-    { img: "/design-6.webp", url: "/design-portfolio/marca-beauty-supplies/" },
-    { img: "/design-7.webp", url: "/design-portfolio/the-shiny-surface/" },
-    { img: "/design-8.webp", url: "/design-portfolio/no-code-low-code/" },
-    { img: "/design-9.webp", url: "/design-portfolio/aj-cleaning-london/" },
-    { img: "/design-10.webp", url: "/design-portfolio/joe-sells-miami/" },
-    {
-      img: "/design-11.webp",
-      url: "/design-portfolio/lbs-lacrete-backhoe-services/",
-    },
-    { img: "/design-12.webp", url: "/design-porfolio/jana" },
-    { img: "/design-13.png", url: "/design-portfolio/bull-supps/" },
-    { img: "/design-14.webp", url: "/design-portfolio/mlaween/" },
-    { img: "/design-15.webp", url: "/design-portfolio/alaa-alafaq/" },
-  ];
 
   return (
     <section
@@ -38,17 +13,17 @@ export default function PortfolioDesignWrap({ creative, slider, viewAll }) {
       <div className="w-6xl mx-auto max-container-width">
         <div className="portfolio-inner-heading text-center w-full">
           <h2 className="olivera-font">
-            <span className="portfolio-inner-heading-top">{creative?.[1]?.value || "Creative Design"}</span>
+            <span className="portfolio-inner-heading-top">
+              {creative?.[1]?.value || "Creative Design"}
+            </span>
             <br />
             <span className="portfolio-inner-heading-span">
-
-
               {creative?.[0]?.value || "From Idea to Impact"}
             </span>
           </h2>
         </div>
       </div>
-     <PortfolioPageSlider slider={slider} viewAll={viewAll} concated={false} />
+      <PortfolioPageSlider slider={slider} viewAll={viewAll} concated={false} />
 
       <div className="w-full flex justify-center mt-8">
         <div className="nav-btn example-2">

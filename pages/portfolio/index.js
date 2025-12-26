@@ -15,7 +15,6 @@ export async function getServerSideProps() {
       `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=portfolio`
     );
     const data = await res.json(); // Assuming this gives you your layout data
-    console.log(data, "portfolioo us page data");
     return {
       props: {
         layoutData: data,
@@ -31,9 +30,7 @@ export async function getServerSideProps() {
   }
 }
 export default function portfolio({ layoutData }) {
-  console.log(layoutData?.data?.page_data?.sections, "portfolio data ");
   const sliderData = layoutData?.data?.portfolio_loop_data;
-  console.log(layoutData, "layoutData");
 
   const creative = layoutData?.data?.page_data?.sections?.[0]?.fields;
   const webDev = layoutData?.data?.page_data?.sections?.[1]?.fields;
@@ -96,7 +93,6 @@ export default function portfolio({ layoutData }) {
         <PortfolioDesignWrap
           creative={creative}
           slider={sliderData?.[0]?.posts}
-
           viewAll={`portfolio/design/`}
         />
 

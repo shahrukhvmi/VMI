@@ -25,7 +25,6 @@ export async function getServerSideProps() {
       `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=services`
     );
     const data = await res.json();
-    console.log(data, "services page data");
     return {
       props: {
         layoutData: data,
@@ -58,8 +57,6 @@ export default function services({ layoutData }) {
   const ringServiceSlider = layoutData?.data?.page_data?.services_ring_sliders;
   const technologyContent = layoutData?.data?.page_data?.sections?.[3]?.fields;
   const testimonialData = layoutData?.data?.page_data?.featured_testimonials;
-  console.log(technologyContent, "Technology ");
-  console.log(layoutData, "checking dataaa");
   const router = useRouter();
 
   return (

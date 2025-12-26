@@ -5,21 +5,6 @@ import { useRouter } from "next/router";
 export default function PortfolioDevelopmentWrap({ webDev, slider, viewAll }) {
   const router = useRouter();
 
-  const portfolioImages = [
-    { img: "/web-1.webp", url: "/development-portfolio/media-co-uk/" },
-    { img: "/web-2.webp", url: "/development-portfolio/earthane/" },
-    { img: "/web-3.webp", url: "/development-portfolio/rhv-media/" },
-    { img: "/floor-port.png", url: "/development-portfolio/floor-express/" },
-    { img: "/web-5.webp", url: "/development-portfolio/360-products/" },
-    { img: "/web-6.webp", url: "/development-portfolio/loco-customs/" },
-    { img: "/web-7.webp", url: "/development-portfolio/fulfill-panda/" },
-    { img: "/web-8.webp", url: "/development-portfolio/relish-restaurant/" },
-    { img: "/web-9.webp", url: "/development-portfolio/etizan/" },
-    { img: "/web-10.webp", url: "/development-portfolio/ferrara/" },
-    { img: "/web-11.webp", url: "/development-portfolio/karwan-rent-a-car/" },
-    { img: "/web-12.webp", url: "/development-portfolio/taiia-jewellery/" },
-  ];
-
   return (
     <section
       className="portfolio-main-wrapper relative z-10 scroll-mt-40"
@@ -28,7 +13,9 @@ export default function PortfolioDevelopmentWrap({ webDev, slider, viewAll }) {
       <div className="w-6xl mx-auto max-container-width">
         <div className="portfolio-inner-heading text-center w-full">
           <h2 className="olivera-font">
-            <span className="portfolio-inner-heading-top">{webDev?.[1]?.value || "Web Development"}</span>{" "}
+            <span className="portfolio-inner-heading-top">
+              {webDev?.[1]?.value || "Web Development"}
+            </span>{" "}
             <br />
             <span className="portfolio-inner-heading-span">That Performs</span>
           </h2>

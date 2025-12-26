@@ -12,7 +12,6 @@ function Footer() {
       try {
         const res = await fetch(`${app_url}/footer`);
         const layoutData = await res.json();
-        console.log("footer data:", layoutData); // or set it to state
         setData(layoutData);
       } catch (error) {
         console.error("Error fetching header:", error);

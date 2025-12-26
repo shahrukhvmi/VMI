@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 
 export default function HeroSection({ hero }) {
-
-  console.log(hero, "hero section data");
   const router = useRouter();
   return (
     <>
@@ -18,18 +16,15 @@ export default function HeroSection({ hero }) {
           ● {hero?.[2]?.value || "Available for New Projects"}
         </span>
         <h1 className="hero-text leading-tight z-10 olivera-font">
-
-
           {hero?.[3]?.value || " Purposeful Marketing "}
         </h1>
 
         <h1 className="hero-text leading-tight z-10 olivera-font">
-
-
           {hero?.[4]?.value || "Across Channels"}
         </h1>
         <p className="mt-4 text-gray-300 text-xl z-10 poppins-font main-banner-para">
-          {hero?.[1]?.value || "Your digital partner for every marketing execution."}
+          {hero?.[1]?.value ||
+            "Your digital partner for every marketing execution."}
         </p>
 
         {/* <GlowButton /> */}

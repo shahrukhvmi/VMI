@@ -1,8 +1,6 @@
 import React from "react";
 
 function Technologia({ techData }) {
-  console.log(techData, "techData");
-
   return (
     <div className="tech-main-shadow relative overflow-x-hidden mt-30 z-10">
       <div className="tech-main-shadow-wrap">

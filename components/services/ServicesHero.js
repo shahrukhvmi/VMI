@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import ServiceHorizontal from "./ServiceHorizontal";
 
 export default function ServicesHero({ data, slider }) {
-  console.log(slider, "slider");
   const router = useRouter();
 
   return (

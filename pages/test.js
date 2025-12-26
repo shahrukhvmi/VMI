@@ -23,6 +23,5 @@ export async function getServerSideProps() {
 }
 
 export default function test({ layoutData }) {
-  console.log(layoutData, "layoutData");
   return <div>This is test page</div>;
 }

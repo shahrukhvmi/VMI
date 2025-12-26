@@ -11,7 +11,6 @@ export async function getServerSideProps() {
       `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=contact-us`
     );
     const data = await res.json();
-    console.log(data, "services page data");
     return {
       props: {
         layoutData: data,
@@ -34,7 +33,6 @@ export default function ContactUs({ layoutData }) {
 
   const contactUsServices =
     layoutData?.data?.page_data?.contact_us_services_dropdown;
-  console.log(layoutData, "From contact Page");
 
   return (
     <>

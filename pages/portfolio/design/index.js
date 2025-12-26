@@ -4,119 +4,110 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-
-
-
-
-
 export async function getServerSideProps() {
-    let slug = "design-portfolio";
+  let slug = "design-portfolio";
 
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main?slug=${slug}`);
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/main?slug=${slug}`
+    );
 
-        const data = await res.json();
+    const data = await res.json();
 
-        return {
-            props: {
-                layoutData: data,
-                slug,
-            },
-        };
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        return {
-            props: {
-                layoutData: null,
-                slug,
-            },
-        };
-    }
+    return {
+      props: {
+        layoutData: data,
+        slug,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        layoutData: null,
+        slug,
+      },
+    };
+  }
 }
 
-
 export default function SlugDesign({ layoutData }) {
+  const heading1 =
+    layoutData?.data?.data?.custom_detail?.[0]?.main_heading_h2?.value;
+  const heading2 =
+    layoutData?.data?.data?.custom_detail?.[1]?.span_heading_h2?.value;
+  const Data = layoutData?.data?.posts || [];
 
-    console.log(layoutData?.data, "layoutDataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    const heading1 = layoutData?.data?.data?.custom_detail?.[0]?.main_heading_h2?.value;
-    const heading2 = layoutData?.data?.data?.custom_detail?.[1]?.span_heading_h2?.value;
-    const Data = layoutData?.data?.posts || [];
+  const chunkedData = [];
+  for (let i = 0; i < Data.length; i += 2) {
+    chunkedData.push(Data.slice(i, i + 2));
+  }
 
+  return (
+    <>
+      <MetaLayout
+        data={layoutData?.head?.json}
+        title="Our Creative Work"
+        description="Explore our portfolio showcasing UI/UX design, web development, branding, SEO, and digital marketing projects for clients across industries and markets."
+        canonical={`${layoutData?.head?.json?.canonical}`}
+      />
 
-    const chunkedData = [];
-    for (let i = 0; i < Data.length; i += 2) {
-        chunkedData.push(Data.slice(i, i + 2));
-    }
+      <main className="relative text-white overflow-hidden z-10">
+        <section>
+          <div className="relative pt-60 flex flex-col items-center justify-center text-white text-center px-4 z-10 single-portfolio-responsive-spacing">
+            <div className="portfolio-banner-shadow"></div>
+            <div className="portfolio-banner-shadow-right"></div>
+          </div>
 
-    console.log(Data, "DataDataDataDataDataData")
-    return (<>
-        <MetaLayout
-            data={layoutData?.head?.json}
-            title="Our Creative Work"
-            description="Explore our portfolio showcasing UI/UX design, web development, branding, SEO, and digital marketing projects for clients across industries and markets."
-            canonical={`${layoutData?.head?.json?.canonical}`}
-        />
+          <div className="w-6xl mx-auto max-container-width portfolio-all-wrap gap-30">
+            <div className="portfolio-inner-heading text-center w-full">
+              <h2 className="olivera-font">
+                <span className="portfolio-inner-heading-top">{heading1}</span>{" "}
+                <br />
+                <span className="portfolio-inner-heading-span">{heading2}</span>
+              </h2>
+            </div>
 
-        <main className="relative text-white overflow-hidden z-10">
-            <section>
-                <div className="relative pt-60 flex flex-col items-center justify-center text-white text-center px-4 z-10 single-portfolio-responsive-spacing">
-                    <div className="portfolio-banner-shadow"></div>
-                    <div className="portfolio-banner-shadow-right"></div>
-                </div>
-
-                <div className="w-6xl mx-auto max-container-width portfolio-all-wrap gap-30">
-                    <div className="portfolio-inner-heading text-center w-full">
-                        <h2 className="olivera-font">
-                            <span className="portfolio-inner-heading-top">
-                                {heading1}
-                            </span>{" "}
-                            <br />
-                            <span className="portfolio-inner-heading-span">
-                                {heading2}
+            {/* <div className="portfolio-single flex justify-center gap-30"> */}
+            {chunkedData.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                className={`portfolio-single flex justify-center gap-30 ${
+                  rowIndex === chunkedData.length - 1
+                    ? "mb-0 md:mb-40"
+                    : "mb-10"
+                }`}
+              >
+                {row.map((item) => (
+                  <Link href={`/portfolio/design/${item.slug}`} key={item.id}>
+                    <div className="detail-portfolio-image-wrapper relative">
+                      <Image
+                        src={item.image || "/placeholder.png"}
+                        width={500}
+                        height={500}
+                        alt={item.title}
+                        className="object-cover"
+                      />
+                      <div className="detail-portfolio-image-overlay">
+                        <div className="detail-portfolio-banner-badge">
+                          <div className="mb-2">
+                            <span className="ms-2 poppins-font detail-portfolio-branding capitalize">
+                              {item?.slug}
                             </span>
-                        </h2>
-                    </div>
-
-                    {/* <div className="portfolio-single flex justify-center gap-30"> */}
-                    {chunkedData.map((row, rowIndex) => (
-                        <div
-                            key={rowIndex}
-                            className={`portfolio-single flex justify-center gap-30 ${rowIndex === chunkedData.length - 1
-                                ? "mb-0 md:mb-40"
-                                : "mb-10"
-                                }`}
-                        >
-                            {row.map((item) => (
-                                <Link href={`/portfolio/design/${item.slug}`} key={item.id}>
-                                    <div className="detail-portfolio-image-wrapper relative">
-                                        <Image
-                                            src={item.image || "/placeholder.png"}
-                                            width={500}
-                                            height={500}
-                                            alt={item.title}
-                                            className="object-cover"
-                                        />
-                                        <div className="detail-portfolio-image-overlay">
-                                            <div className="detail-portfolio-banner-badge">
-                                                <div className="mb-2">
-                                                    <span className="ms-2 poppins-font detail-portfolio-branding capitalize">
-                                                        {item?.slug}
-                                                    </span>
-                                                </div>
-                                                <p
-                                                    className="ms-2 poppins-font font-bold"
-                                                    dangerouslySetInnerHTML={{ __html: item.title }}
-                                                ></p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            ))}
+                          </div>
+                          <p
+                            className="ms-2 poppins-font font-bold"
+                            dangerouslySetInnerHTML={{ __html: item.title }}
+                          ></p>
                         </div>
-                    ))}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ))}
 
-                    {/* <Link href="/development-portfolio/earthane">
+            {/* <Link href="/development-portfolio/earthane">
                             <div className="detail-portfolio-image-wrapper relative">
                                 <Image src="/web-2.png" width={500} height={500} />
                                 <div className="detail-portfolio-image-overlay">
@@ -133,7 +124,7 @@ export default function SlugDesign({ layoutData }) {
                         </Link>
                     </div> */}
 
-                    {/* <div className="portfolio-single flex justify-center gap-30">
+            {/* <div className="portfolio-single flex justify-center gap-30">
                         <Link href="/development-portfolio/360-products">
                             <div className="detail-portfolio-image-wrapper relative">
                                 <Image src="/web-5.png" width={500} height={500} />
@@ -310,10 +301,9 @@ export default function SlugDesign({ layoutData }) {
                             </div>
                         </Link>
                     </div> */}
-                </div>
-            </section>
-        </main>
-
+          </div>
+        </section>
+      </main>
     </>
-    );
+  );
 }

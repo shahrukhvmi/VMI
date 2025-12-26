@@ -23,8 +23,6 @@ const portfolioImages = [
 ];
 
 export default function PortfolioSlider({ portfolio }) {
-  console.log(portfolio, "porfolio");
-
   const swiperRef = useRef(null);
   const containerRef = useRef(null);
   const [swiperReady, setSwiperReady] = useState(false);

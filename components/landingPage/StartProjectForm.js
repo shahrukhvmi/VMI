@@ -21,25 +21,27 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
   // ];
   const OPTIONS = [
     { value: "Basic Logo Bundle - $37", label: "Basic Logo Bundle - $37" },
-    { value: "Business Logo Bundle - $74", label: "Business Logo Bundle - $74" },
-    { value: "Elite Logo Identity Bundle - $167", label: "Elite Logo Identity Bundle - $167" },
-
+    {
+      value: "Business Logo Bundle - $74",
+      label: "Business Logo Bundle - $74",
+    },
+    {
+      value: "Elite Logo Identity Bundle - $167",
+      label: "Elite Logo Identity Bundle - $167",
+    },
 
     { value: "Starter Website - $199", label: "Starter Website - $199" },
     { value: "Business Website - $349", label: "Business Website - $349" },
     { value: "E-commerce Store - $645", label: "E-commerce Store - $645" },
 
-
     { value: "Combo Package - $349", label: "Combo Package — $349" },
   ];
-
 
   const mapPrefilled = (values = []) =>
     OPTIONS.filter((opt) => values.includes(opt.value));
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
 
   const {
     register,
@@ -56,7 +58,6 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
     },
   });
 
-
   // get Dynamic Route==============>
 
   const router = useRouter();
@@ -65,7 +66,6 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
     typeof window !== "undefined"
       ? `${window.location.origin}${router.asPath}`
       : "";
-
 
   /* multi-select state */
   useEffect(() => {
@@ -89,30 +89,25 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
       email: data.email,
       phone: data.phone,
       type: type,
-      url: fullUrl
+      url: fullUrl,
     };
 
     try {
-      const res = await fetch(
-        "https://vmi12.com/clients/vmi/send_lead.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch("https://vmi12.com/clients/vmi/send_lead.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) {
         throw new Error(`Request failed: ${res.status}`);
       }
 
       const result = await res.json();
-      console.log("API RESPONSE:", result);
       setLoading(false);
       setShowSuccess(true);
-
 
       reset();
       setSelected([]);
@@ -120,7 +115,6 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
       setTimeout(() => {
         setShowSuccess(false);
       }, 3000);
-
     } catch (error) {
       setLoading(false);
       console.error("API ERROR:", error);
@@ -130,12 +124,9 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
     }
   };
 
-
-
   return (
     <section className="relative">
       <div className="startProjectCard">
-
         {showSuccess && (
           <div className="successGlassWrap">
             <div className="successGlass">
@@ -145,7 +136,6 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
             </div>
           </div>
         )}
-
 
         <div className="cardInner">
           <h2 className="title">
@@ -209,7 +199,6 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
 
             <Combobox value={selected} onChange={setSelected} multiple>
               <div className="relative">
-
                 {/* SELECT BUTTON */}
                 <Combobox.Button className="input selectDisplay">
                   {selected.length === 0 && (
@@ -229,20 +218,20 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
                   <FiChevronDown className="selectArrow" />
                 </Combobox.Button>
 
-
-
-
                 {/* OPTIONS */}
                 <Combobox.Options className="comboOptions">
                   {OPTIONS.map((item) => {
-                    const isSelected = selected.some((s) => s.value === item.value);
+                    const isSelected = selected.some(
+                      (s) => s.value === item.value
+                    );
 
                     return (
                       <Combobox.Option key={item.value} value={item}>
                         {({ active }) => (
                           <div
-                            className={`comboOption ${active ? "active" : ""} ${isSelected ? "selected" : ""
-                              }`}
+                            className={`comboOption ${active ? "active" : ""} ${
+                              isSelected ? "selected" : ""
+                            }`}
                           >
                             <span>{item.label}</span>
 
@@ -266,29 +255,24 @@ export default function StartProjectForm({ onSuccessClose, prefilled, type }) {
                     );
                   })}
                 </Combobox.Options>
-
               </div>
             </Combobox>
-
-
-
-
-
-
 
             {/* SUBMIT */}
             <div className="actions full">
               <button
                 type="submit"
                 disabled={loading}
-                className={`submitBtn ${loading ? "opacity-60 cursor-not-allowed uppercase" : ""}`}
+                className={`submitBtn ${
+                  loading ? "opacity-60 cursor-not-allowed uppercase" : ""
+                }`}
               >
                 {loading ? "Submitting..." : "CLAIM OFFER NOW "}
               </button>
             </div>
           </form>
-        </div >
-      </div >
-    </section >
+        </div>
+      </div>
+    </section>
   );
 }

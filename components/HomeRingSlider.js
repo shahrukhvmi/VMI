@@ -7,8 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HomeRingSlider({ creativeData }) {
-  console.log(creativeData, "creative");
-
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
   const [isDesktop, setIsDesktop] = useState(null); // prevent SSR mismatch

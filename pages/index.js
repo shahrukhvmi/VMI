@@ -32,7 +32,6 @@ export async function getServerSideProps() {
     // Fetch dynamic content from WordPress API
     const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/main`);
     const data = await res.json(); // Assuming this gives you your layout data
-    console.log(data, "about us page data");
     return {
       props: {
         layoutData: data,
@@ -49,11 +48,8 @@ export async function getServerSideProps() {
 }
 
 export default function Index({ layoutData }) {
-  console.log(layoutData, "digital");
-
   const data = layoutData?.data?.page_data;
 
-  console.log(layoutData?.head?.json, "layoutData?.head?.json?.head?.jsontadatadatadata");
   const router = useRouter();
 
   return (

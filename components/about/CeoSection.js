@@ -2,8 +2,6 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 
 export default function CeoSection({ ceoSection }) {
-
-  console.log(ceoSection, "ceoSection")
   useEffect(() => {
     const handleImagesLoaded = () => {
       // Only refresh GSAP after all images load
@@ -22,8 +20,6 @@ export default function CeoSection({ ceoSection }) {
   const role = Mansoor?.[2]?.value;
   const linkedin = Mansoor?.[3]?.value;
   const image = Mansoor?.[4]?.value;
-
-  console.log(Mansoor, "Mansoor")
 
   const Tahseen = ceoSection?.[0]?.subfields;
   const tname = Tahseen?.[1]?.value;
@@ -49,17 +45,22 @@ export default function CeoSection({ ceoSection }) {
 
           <div className="ceo-overlay-wrap">
             <div className="ceo-overlay-heading">
-              <span className="bg-white/10 text-sm ceo-overlay-top px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font"
-                dangerouslySetInnerHTML={{ __html: role || "SEO Strategist & Growth Advisor" }}
-
-              >
-              </span>
-              <h3 className="ceo-name olivera-font mt-3">{name || "Mansoor Alam"}</h3>
-              <p className="ceo-designation poppins-font mt-[-5px]"
-
-                dangerouslySetInnerHTML={{ __html: degisnation || " Cofounder & CEO – Vibrant Media Inc." }} >
-
-              </p>
+              <span
+                className="bg-white/10 text-sm ceo-overlay-top px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font"
+                dangerouslySetInnerHTML={{
+                  __html: role || "SEO Strategist & Growth Advisor",
+                }}
+              ></span>
+              <h3 className="ceo-name olivera-font mt-3">
+                {name || "Mansoor Alam"}
+              </h3>
+              <p
+                className="ceo-designation poppins-font mt-[-5px]"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    degisnation || " Cofounder & CEO – Vibrant Media Inc.",
+                }}
+              ></p>
             </div>
             <div className="ceo-seperator"></div>
             <div className="ceo-social-wrap">
@@ -77,7 +78,9 @@ export default function CeoSection({ ceoSection }) {
                   </li> */}
                   <li>
                     <Link
-                      href={linkedin || "https://www.linkedin.com/in/alammansoor/"}
+                      href={
+                        linkedin || "https://www.linkedin.com/in/alammansoor/"
+                      }
                       target="_blank"
                     >
                       <img src={"/linkedin.svg"} />
@@ -98,15 +101,21 @@ export default function CeoSection({ ceoSection }) {
             <div className="ceo-overlay-heading">
               <span
                 className="bg-white/10 text-sm ceo-overlay-top px-4 py-1 rounded-full border border-white/20 mb-4 z-10 poppins-font"
-                dangerouslySetInnerHTML={{ __html: trole || "Head of Business & Finance" }}
+                dangerouslySetInnerHTML={{
+                  __html: trole || "Head of Business & Finance",
+                }}
               ></span>
 
-              <h3 className="ceo-name olivera-font mt-3">{tname || "M. Abdul Tahseen"}</h3>
+              <h3 className="ceo-name olivera-font mt-3">
+                {tname || "M. Abdul Tahseen"}
+              </h3>
               <p
                 className="ceo-designation poppins-font mt-[-5px]"
-                dangerouslySetInnerHTML={{ __html: tdegisnation || "Cofounder & COO – Vibrant Media Inc." }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    tdegisnation || "Cofounder & COO – Vibrant Media Inc.",
+                }}
               ></p>
-
             </div>
             <div className="ceo-seperator"></div>
             <div className="ceo-social-wrap">
@@ -124,7 +133,9 @@ export default function CeoSection({ ceoSection }) {
                   </li> */}
                   <li>
                     <Link
-                      href={tlinkedin || "https://www.linkedin.com/in/tahseenb2b/"}
+                      href={
+                        tlinkedin || "https://www.linkedin.com/in/tahseenb2b/"
+                      }
                       target="_blank"
                     >
                       <img src="/linkedin.svg" />
@@ -139,6 +150,6 @@ export default function CeoSection({ ceoSection }) {
           </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 }

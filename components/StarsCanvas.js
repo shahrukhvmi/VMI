@@ -1,10 +1,10 @@
 "use client";
-
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 // @ts-ignore
 import * as random from "maath/random/dist/maath-random.esm";
+import { silenceThreeComputeSphereWarning } from "@/utils/silenceThreeWarning";
 
 const StarBackground = (props) => {
   const ref = useRef();
@@ -35,6 +35,7 @@ const StarBackground = (props) => {
 };
 
 export default function StarsCanvas() {
+  silenceThreeComputeSphereWarning();
   const [showCanvas, setShowCanvas] = useState(false);
 
   useEffect(() => {

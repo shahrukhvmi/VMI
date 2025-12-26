@@ -2,8 +2,6 @@ import Image from "next/image";
 import React, { useRef, useEffect } from "react";
 
 const RingSection = ({ ringSec }) => {
-
-  console.log(ringSec, "ringSec")
   const wrapperRef = useRef(null);
   const glowRef = useRef(null);
   const backgroundRef = useRef(null);
@@ -47,8 +45,9 @@ const RingSection = ({ ringSec }) => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (backgroundRef.current) {
-        backgroundRef.current.style.transform = `translateY(${scrollY * 0.3
-          }px)`;
+        backgroundRef.current.style.transform = `translateY(${
+          scrollY * 0.3
+        }px)`;
       }
     };
 
@@ -155,7 +154,7 @@ const RingSection = ({ ringSec }) => {
                 gain more than a service provider, you gain a committed partner
                 dedicated to your success in every market you serve.
               </p> */}
-              <img src={"favicon2.png"}  className="w-[100px] mb-12"/>
+              <img src={"favicon2.png"} className="w-[100px] mb-12" />
 
               <p
                 className="text-white/80 leading-relaxed mt-[-20px] poppins-font mb-4"
@@ -181,8 +180,6 @@ const RingSection = ({ ringSec }) => {
       `,
                 }}
               />
-
-
             </div>
 
             {/* Right Graphic */}

@@ -2,7 +2,6 @@
 import { useRouter } from "next/router";
 import OfficeSlider from "./OfficeSlider";
 export default function AboutHero({ about, brandSecton }) {
-  console.log(about, "about from component");
   const router = useRouter();
   return (
     <>
@@ -15,7 +14,9 @@ export default function AboutHero({ about, brandSecton }) {
         <h1
           className="hero-text leading-tight z-10 olivera-font"
           dangerouslySetInnerHTML={{
-            __html: about?.[2]?.value || "Building Brands that Sustain,Expand, and Outperform"
+            __html:
+              about?.[2]?.value ||
+              "Building Brands that Sustain,Expand, and Outperform",
           }}
         ></h1>
         <p
@@ -45,11 +46,7 @@ export default function AboutHero({ about, brandSecton }) {
           </button>
         </div>
         <OfficeSlider brandSecton={brandSecton} />
-      </section >
+      </section>
     </>
   );
 }
-
-
-
-

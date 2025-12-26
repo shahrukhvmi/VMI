@@ -6,8 +6,6 @@ export default function ContactForm({
   contactUsReferral,
   contactUsServices,
 }) {
-  console.log(form_Data, "formData");
-
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -98,7 +96,6 @@ export default function ContactForm({
 
       const result = await response.json().catch(() => null);
 
-      console.log("Server response:", result);
       if (result?.success == true) {
         showToast("Form submitted successfully!");
       } else {

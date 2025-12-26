@@ -5,18 +5,6 @@ import { useRouter } from "next/router";
 export default function PortfolioSocialWrap({ Social, slider, viewAll }) {
   const router = useRouter();
 
-  const portfolioImages = [
-    { img: "/social-1.webp", url: "/social-media-portfolio/tech-ancestry/" },
-    { img: "/social-2.webp", url: "/social-media-portfolio/bridle-360/" },
-    { img: "/social-3.webp", url: "/social-media-portfolio/ravvrank/" },
-    {
-      img: "/social-4.webp",
-      url: "/social-media-portfolio/tanaal-properties/",
-    },
-    { img: "/social-5.webp", url: "/social-media-portfolio/salli-sit-happy/" },
-    { img: "/social-6.webp", url: "/social-media-portfolio/aaila-foods/" },
-  ];
-
   return (
     <section
       className="portfolio-main-wrapper relative z-10 scroll-mt-40"
@@ -29,7 +17,9 @@ export default function PortfolioSocialWrap({ Social, slider, viewAll }) {
               {Social?.[1]?.value || " It's Not Just Social"}
             </span>{" "}
             <br />
-            <span className="portfolio-inner-heading-span">{Social?.[0]?.value || "It's Strategy"}</span>
+            <span className="portfolio-inner-heading-span">
+              {Social?.[0]?.value || "It's Strategy"}
+            </span>
           </h2>
         </div>
       </div>
