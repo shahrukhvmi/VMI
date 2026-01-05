@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-// get  all data by slug and render page accordingly 🤞🤞🤞🤞🤞🤞🤞🤞🤞
+// get  all data by slug and render page accordingly
 export async function getServerSideProps(context) {
   const { slug } = context.params;
 

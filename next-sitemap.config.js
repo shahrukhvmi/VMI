@@ -6,7 +6,14 @@ module.exports = {
   changefreq: "weekly",
   priority: 0.7,
 
-  exclude: ["/404", "/500", "/api/*", "/admin/*"],
+  exclude: [
+    "/404",
+    "/500",
+    "/api/*",
+    "/admin/*",
+    "/essential-website-packages",
+    "/essential-logo-packages",
+  ],
 
   additionalPaths: async () => {
     try {

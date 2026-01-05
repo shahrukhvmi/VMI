@@ -28,6 +28,12 @@ export default function landingPageLogo() {
         title="Essential Logo Bundles - Vibrant Media Inc"
         description="Give Your Brand a Festive Holiday Logo Makeover."
         canonical={`${meta_url}essential-logo-packages/`}
+        data={{
+          robots: {
+            noindex: true,
+            nofollow: true,
+          },
+        }}
       />
 
       <main className="relative text-white min-h-screen overflow-hidden landing-main-bg">
